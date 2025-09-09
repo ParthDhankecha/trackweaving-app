@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_texmunimx/common_widgets/show_error_snakbar.dart';
+import 'package:flutter_texmunimx/models/login_auth_model.dart';
+import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:flutter_texmunimx/repository/login_repo.dart';
+import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/verify_otp_screen.dart';
 import 'package:flutter_texmunimx/screens/home/home_screen.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
@@ -18,11 +21,11 @@ class LoginControllers extends GetxController implements GetxService {
   RxBool canResend = false.obs;
   RxString remainingTimer = ''.obs;
 
-  LoginRepo repo = LoginRepo();
+  final LoginRepo repo;
 
   final Sharedprefs sp;
 
-  LoginControllers({required this.sp});
+  LoginControllers({required this.sp, required this.repo});
 
   void setPhoneNumber(String num) {
     phone.value = num;
@@ -41,10 +44,8 @@ class LoginControllers extends GetxController implements GetxService {
       isLoading.value = true;
       startTimer();
       otp.value = '';
-      int code = await repo.sendOtp(mobile: phone.value);
-      if (code == 200) {
-        Get.to(() => VerifyOtpScreen());
-      }
+      final data = await repo.sendOtp(mobile: phone.value);
+      Get.to(() => VerifyOtpScreen());
     } catch (e) {
       print('send otp error : $e');
     } finally {
@@ -55,15 +56,19 @@ class LoginControllers extends GetxController implements GetxService {
   verifyOTP() async {
     try {
       isLoading.value = true;
-      repo
-          .verifyOTP(mobile: phone.value, otp: otp.value)
-          .then((value) {
-            sp.userToken = value.token.accessToken;
-            Get.offAll(() => HomeScreen());
-          })
-          .onError((error, stackTrace) {
-            showErrorSnackbar('Invalid OTP');
-          });
+      AuthData data = await repo.verifyOTP(mobile: phone.value, otp: otp.value);
+      print('access token : ${data.token.accessToken}');
+      if (data.token.accessToken.isNotEmpty) {
+        sp.userToken = data.token.accessToken;
+        Get.offAll(() => HomeScreen());
+      }
+    } on ApiException catch (e) {
+      if (e.statusCode == 401) {
+        sp.userToken = '';
+        Get.offAll(() => LoginScreen());
+      } else {
+        showErrorSnackbar('Not Found.');
+      }
     } finally {
       isLoading.value = false;
     }

@@ -65,12 +65,20 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             child: Row(
               children: [
                 Obx(
-                  () => MainBtn(
-                    label: 'Verify OTP',
-                    onTap: loginControllers.otp.value.length == 6
-                        ? loginControllers.verifyOTP
-                        : null,
-                  ),
+                  () => loginControllers.isLoading.value
+                      ? Center(
+                          child: SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : MainBtn(
+                          label: 'Verify OTP',
+                          onTap: loginControllers.otp.value.length == 6
+                              ? loginControllers.verifyOTP
+                              : null,
+                        ),
                 ),
               ],
             ),
