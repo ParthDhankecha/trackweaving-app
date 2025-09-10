@@ -92,4 +92,9 @@ class LoginControllers extends GetxController implements GetxService {
   void timerDispose() {
     _timer?.cancel();
   }
+
+  void logout() {
+    sp.userToken = '';
+    Get.offAll(() => LoginScreen());
+  }
 }

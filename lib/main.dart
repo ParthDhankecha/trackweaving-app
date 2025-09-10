@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/screens/splash_screen.dart';
+import 'package:flutter_texmunimx/utils/app_strings.dart';
 import 'package:flutter_texmunimx/utils/app_translations.dart';
 import 'package:flutter_texmunimx/utils/my_theme_controller.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: AppStrings.appName,
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       // ),
