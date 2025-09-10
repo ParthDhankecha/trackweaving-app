@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/widgets/language_bottom_sheet.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/widgets/logout_dialog.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:flutter_texmunimx/utils/app_images.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             iconColor: AppColors.errorColor,
             title: 'logout',
             showArrow: false,
-            onTap: () => Get.find<LoginControllers>().logout(),
+            onTap: () => Get.dialog(LogoutDialog()),
           ),
           Divider(),
         ],

@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
+import 'package:flutter_texmunimx/controllers/login_controllers.dart';
+import 'package:get/get.dart';
+
+class LogoutDialog extends StatelessWidget {
+  const LogoutDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Logout'.tr),
+      content: Text('Are you sure you want to log out?'.tr),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text('Cancel'.tr),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Get.back();
+            Get.find<LoginControllers>().logout();
+            // Dismiss the dialog
+            // Then navigate to the login screen
+          },
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          child: Text(
+            'Logout'.tr,
+            style: bodyStyle1.copyWith(color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+}
