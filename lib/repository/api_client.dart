@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:get/get.dart';
@@ -17,7 +17,7 @@ class ApiClient extends GetxService {
     Map<String, String>? headers,
     Map<String, String>? body,
   }) async {
-    print('url : $baseUrl$endPoint');
+    log('url : $baseUrl$endPoint');
     final url = Uri.parse('$baseUrl$endPoint');
     http.Response response;
 

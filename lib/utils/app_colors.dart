@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppColors {
   static final Color mainColor = Color(0xff0B0BCF); // primary brand color
@@ -9,4 +8,6 @@ class AppColors {
   static final blackColor = Colors.black;
 
   static final errorColor = Colors.redAccent;
+
+  static final successColor = Colors.green;
 }

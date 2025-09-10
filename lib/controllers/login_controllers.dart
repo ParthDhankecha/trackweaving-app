@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter_texmunimx/common_widgets/show_error_snakbar.dart';
+import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:flutter_texmunimx/models/login_auth_model.dart';
 import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:flutter_texmunimx/repository/login_repo.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/verify_otp_screen.dart';
 import 'package:flutter_texmunimx/screens/home/home_screen.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:flutter_texmunimx/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
@@ -44,10 +43,10 @@ class LoginControllers extends GetxController implements GetxService {
       isLoading.value = true;
       startTimer();
       otp.value = '';
-      final data = await repo.sendOtp(mobile: phone.value);
+      await repo.sendOtp(mobile: phone.value);
       Get.to(() => VerifyOtpScreen());
     } catch (e) {
-      print('send otp error : $e');
+      //print('send otp error : $e');
     } finally {
       isLoading.value = false;
     }
@@ -57,7 +56,7 @@ class LoginControllers extends GetxController implements GetxService {
     try {
       isLoading.value = true;
       AuthData data = await repo.verifyOTP(mobile: phone.value, otp: otp.value);
-      print('access token : ${data.token.accessToken}');
+      // print('access token : ${data.token.accessToken}');
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
         Get.offAll(() => HomeScreen());
@@ -65,7 +64,7 @@ class LoginControllers extends GetxController implements GetxService {
     } on ApiException catch (e) {
       if (e.statusCode == 401) {
         sp.userToken = '';
-        Get.offAll(() => LoginScreen());
+        showErrorSnackbar('Invalid OTP', decs: 'Check Phone number and OTP.');
       } else {
         showErrorSnackbar('Not Found.');
       }

@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter_texmunimx/models/login_auth_model.dart';
 import 'package:flutter_texmunimx/repository/api_client.dart';
 import 'package:flutter_texmunimx/utils/app_const.dart';
-import 'package:http/http.dart' as http;
 
 class LoginRepo {
   final ApiClient apiClient;

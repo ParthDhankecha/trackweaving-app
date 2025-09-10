@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/verify_otp_screen.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:get/get.dart';

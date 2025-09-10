@@ -1,4 +1,5 @@
 import 'package:flutter_texmunimx/controllers/home_controller.dart';
+import 'package:flutter_texmunimx/controllers/localization_controller.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';
 import 'package:flutter_texmunimx/controllers/splash_controller.dart';
 import 'package:flutter_texmunimx/repository/api_client.dart';
@@ -19,6 +20,7 @@ Future<void> init() async {
   Get.lazyPut(() => LoginRepo(apiClient: apiClient));
 
   //controllers
+  Get.lazyPut(() => LocalizationController());
   Get.lazyPut(() => SplashController(sp: Get.find()));
   Get.lazyPut(
     () => LoginControllers(

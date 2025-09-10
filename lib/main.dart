@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/screens/splash_screen.dart';
+import 'package:flutter_texmunimx/utils/app_translations.dart';
 import 'package:flutter_texmunimx/utils/my_theme_controller.dart';
 import 'package:get/get.dart';
 import 'utils/get_di.dart' as getit;
@@ -27,6 +28,12 @@ class MyApp extends StatelessWidget {
       themeMode: themeController.themeMode,
       theme: themeController.lightTheme,
       darkTheme: themeController.darkTheme,
+      translations: AppTranslations(), // Your translations
+      locale: const Locale('en', 'US'), // Default locale
+      fallbackLocale: const Locale(
+        'en',
+        'US',
+      ), // Fallback for missing translations
       home: SplashScreen(),
     );
   }
