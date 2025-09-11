@@ -15,9 +15,7 @@ class LocalizationController extends GetxController {
   LocalizationController({required this.sp});
 
   void changeLanguage(String languageCode) {
-    print('change lan : $languageCode');
     sp.currentLanguage = languageCode;
-    print('change lan sp: ${sp.currentLanguage}}');
 
     var locale = Locale(languageCode);
     Get.updateLocale(locale);
@@ -25,7 +23,6 @@ class LocalizationController extends GetxController {
 
   Future<void> initLanguage() async {
     var languageCode = sp.currentLanguage;
-    print('already Found $languageCode');
     var locale = Locale(languageCode);
     Get.updateLocale(locale);
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/splash_controller.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:flutter_texmunimx/utils/app_strings.dart';
 import 'package:get/get.dart';

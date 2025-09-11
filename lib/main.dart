@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   final ThemeController themeController = Get.put(ThemeController());
 
-  LocalizationController localizationController = Get.find();
+  final LocalizationController localizationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
