@@ -46,7 +46,12 @@ class _DashboardCardState extends State<DashboardCard> {
                           _picksRow(AppImages.imgSpeedometer, 'speed', '302'),
                           _picksRow(AppImages.imgFabricRoll, 'mtrs', '7.401'),
                           _picksRow(AppImages.imgStopNtn, 'stops', '7'),
-                          _picksRow(AppImages.imgYarn, 'beam_left', '741'),
+                          _picksRow(
+                            AppImages.imgYarn,
+                            'beam_left',
+                            '741',
+                            isRotated: true,
+                          ),
                           _picksRow(AppImages.imgFabric1, 'set_picks', '45'),
                         ],
                       ),
@@ -113,6 +118,7 @@ class _DashboardCardState extends State<DashboardCard> {
                   ],
                 ),
                 SizedBox(height: 8),
+
                 StopDataTable(),
               ],
             ),
@@ -194,7 +200,12 @@ class _DashboardCardState extends State<DashboardCard> {
     );
   }
 
-  Widget _picksRow(String image, String title, String value) {
+  Widget _picksRow(
+    String image,
+    String title,
+    String value, {
+    bool isRotated = false,
+  }) {
     return Container(
       margin: EdgeInsets.only(top: 4),
       padding: EdgeInsets.all(6),
@@ -208,7 +219,12 @@ class _DashboardCardState extends State<DashboardCard> {
           SizedBox(
             height: 24,
             width: 24,
-            child: Image.asset(image, fit: BoxFit.cover),
+            child: isRotated
+                ? RotatedBox(
+                    quarterTurns: 1,
+                    child: Image.asset(image, fit: BoxFit.cover),
+                  )
+                : Image.asset(image, fit: BoxFit.cover),
           ),
           SizedBox(width: 6),
 

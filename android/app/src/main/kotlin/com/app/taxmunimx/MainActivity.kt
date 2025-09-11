@@ -1,4 +1,4 @@
-package com.example.flutter_texmunimx
+package com.app.taxmunimx
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/controllers/localization_controller.dart';
 import 'package:flutter_texmunimx/utils/app_translations.dart';
 import 'package:get/get.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
-  const LanguageBottomSheet({super.key});
+  LanguageBottomSheet({super.key});
+
+  final LocalizationController localizationController =
+      Get.find<LocalizationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +17,7 @@ class LanguageBottomSheet extends StatelessWidget {
       return Locale(parts[0], parts[1]);
     }).toList();
 
-    // Map language codes to display names
-    final Map<String, String> languageNames = {
-      'en_US': 'English',
-      'hi_IN': 'हिंदी',
-      'gu_IN': 'ગુજરાતી',
-    };
+    final languageNames = localizationController.languageNames;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -50,11 +49,12 @@ class LanguageBottomSheet extends StatelessWidget {
                     )
                   : null,
               onTap: () {
-                Get.updateLocale(locale);
+                localizationController.changeLanguage(languageCode);
+                // Get.updateLocale(locale);
                 Get.back();
               },
             );
-          }).toList(),
+          }),
         ],
       ),
     );

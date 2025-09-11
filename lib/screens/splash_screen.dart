@@ -26,32 +26,34 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.mainColor,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome to ${AppStrings.appName}',
-                  style: TextStyle(color: AppColors.mainColor, fontSize: 24),
+                  AppStrings.appName,
+                  style: TextStyle(
+                    fontSize: 34,
+                    color: Colors.white,
+                    letterSpacing: 1.6,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  MainBtn(
-                    label: 'Continue',
-                    onTap: () {
-                      Get.to(() => LoginScreen());
-                    },
-                  ),
-                ],
+
+            Text(
+              AppStrings.appTagLine,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+                letterSpacing: 1.6,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 22),
           ],
         ),
       ),

@@ -10,4 +10,6 @@ class AppColors {
   static final errorColor = Colors.redAccent;
 
   static final successColor = Colors.green;
+
+  static final textGray = Color(0xffc0c0c0);
 }

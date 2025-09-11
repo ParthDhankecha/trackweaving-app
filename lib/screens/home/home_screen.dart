@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/controllers/home_controller.dart';
 import 'package:flutter_texmunimx/screens/dashboard/dashboard_screen.dart';
+import 'package:flutter_texmunimx/screens/report_screen/report_screen.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/settings_screen.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> widgetsList = [
     DashboardScreen(),
-    Text('Reports'),
+    ProductionReportPage(),
     Text('Notifications'),
     SettingsScreen(),
   ];

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/controllers/login_controllers.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_group_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/maintenance_category_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry_screen.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/widgets/language_bottom_sheet.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/widgets/logout_dialog.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
@@ -24,20 +27,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _settingsRow(
             title: 'machine_group',
             image: AppImages.imgSettings,
-            onTap: () {},
+            onTap: () => Get.to(() => MachineGroupScreen()),
           ),
           Divider(),
           _settingsRow(
             title: 'machine_configure',
             image: AppImages.imgSettings1,
+            onTap: () => Get.to(() => MachineConfigurationScreen()),
           ),
           Divider(),
           _settingsRow(
             title: 'maintenance_category',
             icon: Icons.list_alt_outlined,
+            onTap: () => Get.to(() => MaintenanceCategoryScreen()),
           ),
           Divider(),
-          _settingsRow(title: 'maintenance_entry', icon: Icons.add),
+          _settingsRow(
+            title: 'maintenance_entry',
+            icon: Icons.add,
+            onTap: () => Get.to(() => MaintenanceEntryScreen()),
+          ),
           Divider(),
           _settingsRow(title: 'shift_wise_comment_update', icon: Icons.list),
           Divider(),

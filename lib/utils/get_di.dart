@@ -20,7 +20,7 @@ Future<void> init() async {
   Get.lazyPut(() => LoginRepo(apiClient: apiClient));
 
   //controllers
-  Get.lazyPut(() => LocalizationController());
+  Get.lazyPut(() => LocalizationController(sp: Get.find()));
   Get.lazyPut(() => SplashController(sp: Get.find()));
   Get.lazyPut(
     () => LoginControllers(

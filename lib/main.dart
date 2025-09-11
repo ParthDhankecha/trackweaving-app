@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/controllers/localization_controller.dart';
 import 'package:flutter_texmunimx/screens/splash_screen.dart';
 import 'package:flutter_texmunimx/utils/app_strings.dart';
 import 'package:flutter_texmunimx/utils/app_translations.dart';
@@ -16,21 +17,19 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  // This widget is the root of your application.
   final ThemeController themeController = Get.put(ThemeController());
+
+  LocalizationController localizationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: AppStrings.appName,
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      // ),
       themeMode: themeController.themeMode,
       theme: themeController.lightTheme,
       darkTheme: themeController.darkTheme,
-      translations: AppTranslations(), // Your translations
-      locale: const Locale('en', 'US'), // Default locale
+      translations: AppTranslations(), // translations
+      //locale: Locale('en', 'US'), // Default locale
       fallbackLocale: const Locale(
         'en',
         'US',

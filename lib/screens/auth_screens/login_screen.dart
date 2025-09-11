@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:flutter_texmunimx/utils/app_strings.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  AppStrings.appName,
+                  style: titleStyle.copyWith(fontSize: 20),
+                ),
+                SizedBox(height: 56),
                 Text('Welcome'),
                 Text('Please Enter your 10 digit phone number.'),
                 Padding(

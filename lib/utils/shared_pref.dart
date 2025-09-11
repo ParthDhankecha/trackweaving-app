@@ -36,4 +36,7 @@ class Sharedprefs {
   //get and set user type
   set userToken(String value) => _saveData('USER_TOKEN', value);
   String get userToken => _getData('USER_TOKEN') ?? '';
+
+  set currentLanguage(String value) => _saveData('USER_LAN', value);
+  String get currentLanguage => _getData('USER_LAN') ?? 'en';
 }
