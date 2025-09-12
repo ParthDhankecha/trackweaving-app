@@ -7,6 +7,7 @@ class AppConst {
   //apis
   static String loginWithEmail = 'device/auth/sign-in';
   static String verifyOTP = 'device/auth/verify-mobile-otp';
+  static String machineLogs = 'device/machine-logs/list';
 
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

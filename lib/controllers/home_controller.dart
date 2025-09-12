@@ -12,5 +12,7 @@ class HomeController extends GetxController implements GetxService {
     selectedNavIndex.value = i;
   }
 
-  void showToken() {}
+  void showToken() {
+    print('token : ${sp.userToken}');
+  }
 }

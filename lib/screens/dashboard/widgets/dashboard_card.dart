@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
+import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/screens/dashboard/widgets/stop_table.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:flutter_texmunimx/utils/app_images.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class DashboardCard extends StatefulWidget {
-  const DashboardCard({super.key});
+class DashboardCard extends StatelessWidget {
+  final MachineLog machineLog;
+  const DashboardCard({super.key, required this.machineLog});
 
-  @override
-  State<DashboardCard> createState() => _DashboardCardState();
-}
-
-class _DashboardCardState extends State<DashboardCard> {
   @override
   Widget build(BuildContext context) {
     return _buildCard();
@@ -42,14 +39,30 @@ class _DashboardCardState extends State<DashboardCard> {
                     Expanded(
                       child: Column(
                         children: [
-                          _picksRow(AppImages.imgFabric1, 'picks', '41762'),
-                          _picksRow(AppImages.imgSpeedometer, 'speed', '302'),
-                          _picksRow(AppImages.imgFabricRoll, 'mtrs', '7.401'),
-                          _picksRow(AppImages.imgStopNtn, 'stops', '7'),
+                          _picksRow(
+                            AppImages.imgFabric1,
+                            'picks',
+                            '${machineLog.picks}',
+                          ),
+                          _picksRow(
+                            AppImages.imgSpeedometer,
+                            'speed',
+                            '${machineLog.speed}',
+                          ),
+                          _picksRow(
+                            AppImages.imgFabricRoll,
+                            'mtrs',
+                            '${machineLog.pieceLengthM}',
+                          ),
+                          _picksRow(
+                            AppImages.imgStopNtn,
+                            'stops',
+                            '${machineLog.stops}',
+                          ),
                           _picksRow(
                             AppImages.imgYarn,
                             'beam_left',
-                            '741',
+                            '${machineLog.beamLeft}',
                             isRotated: true,
                           ),
                           _picksRow(AppImages.imgFabric1, 'set_picks', '45'),
@@ -119,7 +132,7 @@ class _DashboardCardState extends State<DashboardCard> {
                 ),
                 SizedBox(height: 8),
 
-                StopDataTable(),
+                StopDataTable(stopsData: machineLog.stopsData),
               ],
             ),
           ),
@@ -129,16 +142,26 @@ class _DashboardCardState extends State<DashboardCard> {
   }
 
   Row _progressBar() {
+    Color progressColor = Colors.yellow;
+
+    if (machineLog.efficiency >= 90) {
+      progressColor = Colors.green;
+    } else if (machineLog.efficiency > 80) {
+      progressColor = AppColors.secondColor;
+    } else {
+      progressColor = AppColors.errorColor;
+    }
+
     return Row(
       children: [
         Expanded(
           child: LinearPercentIndicator(
-            percent: 0.45,
-            progressColor: AppColors.secondColor,
+            percent: machineLog.efficiency / 100,
+            progressColor: progressColor,
             lineHeight: 20,
             barRadius: Radius.circular(20),
             center: Text(
-              '45%',
+              '${machineLog.efficiency}%',
               style: bodyStyle1.copyWith(color: Colors.white),
             ),
           ),
@@ -159,7 +182,10 @@ class _DashboardCardState extends State<DashboardCard> {
       ),
       child: Row(
         children: [
-          Text('M1', style: bodyStyle1.copyWith(color: AppColors.whiteColor)),
+          Text(
+            machineLog.machineName,
+            style: bodyStyle1.copyWith(color: AppColors.whiteColor),
+          ),
           Spacer(),
           Text(
             'Signature',
@@ -169,7 +195,7 @@ class _DashboardCardState extends State<DashboardCard> {
           Icon(Icons.play_arrow_outlined, color: Colors.white, size: 16),
           SizedBox(width: 6),
           Text(
-            '02:21',
+            machineLog.totalDuration,
             style: bodyStyle1.copyWith(color: AppColors.whiteColor),
           ),
         ],

@@ -1,4 +1,4 @@
-import 'package:flutter_texmunimx/controllers/dash_board_controller.dart';
+import 'package:flutter_texmunimx/controllers/dashboard_controller.dart';
 import 'package:flutter_texmunimx/controllers/home_controller.dart';
 import 'package:flutter_texmunimx/controllers/localization_controller.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 
 class StopDataTable extends StatelessWidget {
-  const StopDataTable({super.key});
+  final StopsData stopsData;
+  const StopDataTable({super.key, required this.stopsData});
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +86,44 @@ class StopDataTable extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
                 ),
-                for (var category in data.keys)
-                  buildTableCell(
-                    text: data[category]!['count'].toString(),
-                    textColor: AppColors.mainColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                // for (var category in data.keys)
+                //   buildTableCell(
+                //     text: data[category]!['count'].toString(),
+                //     textColor: AppColors.mainColor,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                buildTableCell(
+                  text: stopsData.warp.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+
+                buildTableCell(
+                  text: stopsData.weft.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                buildTableCell(
+                  text: stopsData.feeder.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                buildTableCell(
+                  text: stopsData.manual.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                buildTableCell(
+                  text: stopsData.other.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+
+                buildTableCell(
+                  text: stopsData.total.count.toString(),
+                  textColor: AppColors.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ],
             ),
             // Time Row
@@ -101,8 +135,14 @@ class StopDataTable extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
                 ),
-                for (var category in data.keys)
-                  buildTableCell(text: data[category]!['time'].toString()),
+                // for (var category in data.keys)
+                //   buildTableCell(text: data[category]!['time'].toString()),
+                buildTableCell(text: stopsData.warp.duration),
+                buildTableCell(text: stopsData.weft.duration),
+                buildTableCell(text: stopsData.feeder.duration),
+                buildTableCell(text: stopsData.manual.duration),
+                buildTableCell(text: stopsData.other.duration),
+                buildTableCell(text: stopsData.total.duration),
               ],
             ),
           ],

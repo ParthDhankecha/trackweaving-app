@@ -62,7 +62,7 @@ class Token {
 
 class User {
   String id;
-  int type;
+  int? type;
 
   User({required this.id, required this.type});
 
