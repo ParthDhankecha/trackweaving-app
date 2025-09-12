@@ -15,9 +15,7 @@ class DashboardScreen extends StatelessWidget {
         SizedBox(height: 8),
         Divider(thickness: 1.2),
         Expanded(
-          child: ListView(
-            children: [DashboardCard(), SizedBox(height: 10), DashboardCard()],
-          ),
+          child: ListView(children: [DashboardCard(), SizedBox(height: 10)]),
         ),
       ],
     );

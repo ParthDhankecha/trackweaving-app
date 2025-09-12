@@ -16,7 +16,7 @@ class StopDataTable extends StatelessWidget {
       'Total': {'count': 13, 'time': '00:17'},
     };
 
-    const double cellPadding = 6.0;
+    const double cellPadding = 6.7;
 
     // A reusable function for creating styled table cells
     Widget buildTableCell({
@@ -38,7 +38,7 @@ class StopDataTable extends StatelessWidget {
           style: TextStyle(
             color: textColor,
             fontWeight: fontWeight,
-            fontSize: 14,
+            fontSize: 13,
           ),
         ),
       );

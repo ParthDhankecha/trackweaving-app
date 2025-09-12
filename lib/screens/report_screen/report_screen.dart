@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/screens/report_screen/report_result_screen.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:get/get.dart';
 
 class ProductionReportPage extends StatefulWidget {
   const ProductionReportPage({super.key});
@@ -257,6 +259,8 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Showing Report...')),
                     );
+
+                    Get.to(() => ReportResultScreen());
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.mainColor,

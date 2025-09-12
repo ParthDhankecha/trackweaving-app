@@ -19,3 +19,15 @@ final bodyStyle1 = TextStyle(
   color: AppColors.blackColor,
   fontWeight: FontWeight.w600,
 );
+
+final normalTextStyle = TextStyle(
+  fontSize: 16,
+  color: AppColors.blackColor,
+  fontWeight: FontWeight.w800,
+);
+
+final normalTextStyle1 = TextStyle(
+  fontSize: 14,
+  color: AppColors.blackColor,
+  fontWeight: FontWeight.w800,
+);

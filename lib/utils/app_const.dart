@@ -1,8 +1,12 @@
 class AppConst {
+  static String host = '192.168.29.74:3000';
+  static String defHost = '192.168.29.74:3000';
   //base url
-  static String baseUrl = 'http://192.168.29.2:3000/api/v1/';
+  static String baseUrl = 'http://$host/api/v1/';
 
   //apis
-  static String loginWithMobile = 'device/auth/sign-in-with-mobile/';
+  static String loginWithEmail = 'device/auth/sign-in';
   static String verifyOTP = 'device/auth/verify-mobile-otp';
+
+  static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

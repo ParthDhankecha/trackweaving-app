@@ -1,3 +1,4 @@
+import 'package:flutter_texmunimx/utils/app_const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Sharedprefs {
@@ -39,4 +40,7 @@ class Sharedprefs {
 
   set currentLanguage(String value) => _saveData('USER_LAN', value);
   String get currentLanguage => _getData('USER_LAN') ?? 'en';
+
+  set hostUrl(String value) => _saveData('HOST', value);
+  String get hostUrl => _getData('HOST') ?? AppConst.defHost;
 }

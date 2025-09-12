@@ -7,9 +7,7 @@ import 'package:http/http.dart' as http;
 enum ApiType { get, post, put, delete }
 
 class ApiClient extends GetxService {
-  final String baseUrl;
-
-  ApiClient({required this.baseUrl});
+  ApiClient();
 
   Future<dynamic> request(
     String endPoint, {
@@ -17,9 +15,12 @@ class ApiClient extends GetxService {
     Map<String, String>? headers,
     Map<String, String>? body,
   }) async {
-    log('url : $baseUrl$endPoint');
-    final url = Uri.parse('$baseUrl$endPoint');
+    final url = Uri.parse(endPoint);
     http.Response response;
+
+    log('url :$endPoint');
+    log('req data::::::');
+    log('$body');
 
     try {
       switch (method) {
@@ -48,6 +49,8 @@ class ApiClient extends GetxService {
 
         case 404:
           throw ApiException(statusCode: 404, message: 'Not Found');
+        case 500:
+          throw ApiException(statusCode: 500, message: 'Server Error');
 
         default:
           throw ApiException(
