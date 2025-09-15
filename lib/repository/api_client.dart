@@ -18,10 +18,6 @@ class ApiClient extends GetxService {
     final url = Uri.parse(endPoint);
     http.Response response;
 
-    log('url :$endPoint');
-    log('req data::::::');
-    log('body: $body');
-
     try {
       switch (method) {
         case ApiType.post:
@@ -42,8 +38,6 @@ class ApiClient extends GetxService {
       switch (response.statusCode) {
         case 200:
         case 201:
-          log('response::::');
-          log(response.body);
           return response.body;
 
         case 401:

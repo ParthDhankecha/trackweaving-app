@@ -20,56 +20,62 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Divider(),
-          _settingsRow(
-            title: 'machine_group',
-            image: AppImages.imgSettings,
-            onTap: () => Get.to(() => MachineGroupScreen()),
-          ),
-          Divider(),
-          _settingsRow(
-            title: 'machine_configure',
-            image: AppImages.imgSettings1,
-            onTap: () => Get.to(() => MachineConfigurationScreen()),
-          ),
-          Divider(),
-          _settingsRow(
-            title: 'maintenance_category',
-            icon: Icons.list_alt_outlined,
-            onTap: () => Get.to(() => MaintenanceCategoryScreen()),
-          ),
-          Divider(),
-          _settingsRow(
-            title: 'maintenance_entry',
-            icon: Icons.add,
-            onTap: () => Get.to(() => MaintenanceEntryScreen()),
-          ),
-          Divider(),
-          _settingsRow(title: 'shift_wise_comment_update', icon: Icons.list),
-          Divider(),
-          _settingsRow(
-            title: 'language_change',
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => LanguageBottomSheet(),
-              );
-            },
-            icon: Icons.language_outlined,
-          ),
-          Divider(),
-          _settingsRow(
-            icon: Icons.logout_outlined,
-            iconColor: AppColors.errorColor,
-            title: 'logout',
-            showArrow: false,
-            onTap: () => Get.dialog(LogoutDialog()),
-          ),
-          Divider(),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('settings'.tr),
+        automaticallyImplyLeading: false,
+        elevation: 6,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _settingsRow(
+              title: 'machine_group',
+              image: AppImages.imgSettings,
+              onTap: () => Get.to(() => MachineGroupScreen()),
+            ),
+            Divider(),
+            _settingsRow(
+              title: 'machine_configure',
+              image: AppImages.imgSettings1,
+              onTap: () => Get.to(() => MachineConfigurationScreen()),
+            ),
+            Divider(),
+            _settingsRow(
+              title: 'maintenance_category',
+              icon: Icons.list_alt_outlined,
+              onTap: () => Get.to(() => MaintenanceCategoryScreen()),
+            ),
+            Divider(),
+            _settingsRow(
+              title: 'maintenance_entry',
+              icon: Icons.add,
+              onTap: () => Get.to(() => MaintenanceEntryScreen()),
+            ),
+            Divider(),
+            _settingsRow(title: 'shift_wise_comment_update', icon: Icons.list),
+            Divider(),
+            _settingsRow(
+              title: 'language_change',
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => LanguageBottomSheet(),
+                );
+              },
+              icon: Icons.language_outlined,
+            ),
+            Divider(),
+            _settingsRow(
+              icon: Icons.logout_outlined,
+              iconColor: AppColors.errorColor,
+              title: 'logout',
+              showArrow: false,
+              onTap: () => Get.dialog(LogoutDialog()),
+            ),
+            Divider(),
+          ],
+        ),
       ),
     );
   }

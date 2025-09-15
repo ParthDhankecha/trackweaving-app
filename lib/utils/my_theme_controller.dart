@@ -24,6 +24,8 @@ class ThemeController extends GetxController {
     primaryColor: Colors.blue,
     brightness: Brightness.dark,
     textTheme: GoogleFonts.poppinsTextTheme(),
+    appBarTheme: AppBarTheme(backgroundColor: Colors.deepPurple[5]),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.red,
@@ -42,7 +44,7 @@ class ThemeController extends GetxController {
     _themeMode = _themeMode == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
-    log('them mode channged : $_themeMode');
+    log('them mode changed : $_themeMode');
     Get.changeTheme(_themeMode == ThemeMode.light ? lightTheme : darkTheme);
     refresh();
   }

@@ -9,5 +9,10 @@ class AppConst {
   static String verifyOTP = 'device/auth/verify-mobile-otp';
   static String machineLogs = 'device/machine-logs/list';
 
+  static String configuration = 'device/user/sync/data';
+
+  //machine group CRUD
+  static String machineGrp = 'device/machine-groups';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

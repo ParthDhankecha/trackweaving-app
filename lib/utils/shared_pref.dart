@@ -1,4 +1,5 @@
 import 'package:flutter_texmunimx/utils/app_const.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Sharedprefs {
@@ -43,4 +44,8 @@ class Sharedprefs {
 
   set hostUrl(String value) => _saveData('HOST', value);
   String get hostUrl => _getData('HOST') ?? AppConst.defHost;
+
+  //settings configurations
+  set refreshInterval(int value) => _saveData('REFRESH_INTERVAL', value);
+  int get refreshInterval => _getData('REFRESH_INTERVAL') ?? 12;
 }

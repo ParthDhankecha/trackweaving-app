@@ -81,13 +81,13 @@ class AggregateReport {
   });
 
   factory AggregateReport.fromMap(Map<String, dynamic> json) => AggregateReport(
-    efficiency: json["efficiency"],
-    pick: json["pick"],
-    avgSpeed: json["avgSpeed"],
-    avgPicks: json["avgPicks"],
-    running: json["running"],
-    stopped: json["stopped"],
-    all: json["all"],
+    efficiency: json["efficiency"] ?? 0,
+    pick: json["pick"] ?? 0,
+    avgSpeed: json["avgSpeed"] ?? 0,
+    avgPicks: json["avgPicks"] ?? 0,
+    running: json["running"] ?? 0,
+    stopped: json["stopped"] ?? 0,
+    all: json["all"] ?? 0,
   );
 
   Map<String, dynamic> toMap() => {
@@ -102,10 +102,13 @@ class AggregateReport {
 }
 
 class MachineLog {
+  String machineCode;
   String machineName;
   int efficiency;
   int picks;
   int speed;
+  String stopReason;
+  int currentStop;
   double pieceLengthM;
   int stops;
   int beamLeft;
@@ -114,10 +117,13 @@ class MachineLog {
   String totalDuration;
 
   MachineLog({
+    required this.machineCode,
     required this.machineName,
     required this.efficiency,
     required this.picks,
     required this.speed,
+    required this.stopReason,
+    required this.currentStop,
     required this.pieceLengthM,
     required this.stops,
     required this.beamLeft,
@@ -127,10 +133,13 @@ class MachineLog {
   });
 
   factory MachineLog.fromMap(Map<String, dynamic> json) => MachineLog(
+    machineCode: json["machineCode"],
     machineName: json["machineName"],
     efficiency: json["efficiency"],
     picks: json["picks"],
     speed: json["speed"],
+    stopReason: json["stopReason"],
+    currentStop: json["currentStop"] ?? 0,
     pieceLengthM: json["pieceLengthM"]?.toDouble(),
     stops: json["stops"],
     beamLeft: json["beamLeft"],
@@ -140,10 +149,13 @@ class MachineLog {
   );
 
   Map<String, dynamic> toMap() => {
+    "machineCode": machineCode,
     "machineName": machineName,
     "efficiency": efficiency,
     "picks": picks,
     "speed": speed,
+    "stopReason": stopReason,
+    'currentStop': currentStop,
     "pieceLengthM": pieceLengthM,
     "stops": stops,
     "beamLeft": beamLeft,
@@ -171,12 +183,12 @@ class StopsData {
   });
 
   factory StopsData.fromMap(Map<String, dynamic> json) => StopsData(
-    warp: Feeder.fromMap(json["warp"]),
-    weft: Feeder.fromMap(json["weft"]),
-    feeder: Feeder.fromMap(json["feeder"]),
-    manual: Feeder.fromMap(json["manual"]),
-    other: Feeder.fromMap(json["other"]),
-    total: Feeder.fromMap(json["total"]),
+    warp: Feeder.fromMap(json["warp"] ?? Feeder(count: 0, duration: '')),
+    weft: Feeder.fromMap(json["weft"] ?? Feeder(count: 0, duration: '')),
+    feeder: Feeder.fromMap(json["feeder"] ?? Feeder(count: 0, duration: '')),
+    manual: Feeder.fromMap(json["manual"] ?? Feeder(count: 0, duration: '')),
+    other: Feeder.fromMap(json["other"] ?? Feeder(count: 0, duration: '')),
+    total: Feeder.fromMap(json["total"] ?? Feeder(count: 0, duration: '')),
   );
 
   Map<String, dynamic> toMap() => {

@@ -1,5 +1,7 @@
+import 'package:blinker/blinker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
+import 'package:flutter_texmunimx/controllers/dashboard_controller.dart';
 import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/screens/dashboard/widgets/stop_table.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
@@ -9,7 +11,9 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class DashboardCard extends StatelessWidget {
   final MachineLog machineLog;
-  const DashboardCard({super.key, required this.machineLog});
+  DashboardCard({super.key, required this.machineLog});
+
+  final DashBoardController controller = Get.find<DashBoardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,12 @@ class DashboardCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 6, right: 6),
 
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.successColor),
+        border: Border.all(
+          color: machineLog.currentStop == 0
+              ? AppColors.successColor
+              : Colors.grey,
+          width: 2,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -34,6 +43,8 @@ class DashboardCard extends StatelessWidget {
               children: [
                 SizedBox(height: 6),
                 _currentStopRow(),
+                SizedBox(height: 6),
+
                 Row(
                   children: [
                     Expanded(
@@ -54,18 +65,6 @@ class DashboardCard extends StatelessWidget {
                             'mtrs',
                             '${machineLog.pieceLengthM}',
                           ),
-                          _picksRow(
-                            AppImages.imgStopNtn,
-                            'stops',
-                            '${machineLog.stops}',
-                          ),
-                          _picksRow(
-                            AppImages.imgYarn,
-                            'beam_left',
-                            '${machineLog.beamLeft}',
-                            isRotated: true,
-                          ),
-                          _picksRow(AppImages.imgFabric1, 'set_picks', '45'),
                         ],
                       ),
                     ),
@@ -74,56 +73,22 @@ class DashboardCard extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            //progress
-                            _progressBar(),
-                            SizedBox(height: 4),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  AppImages.imgClock,
-                                  height: 14,
-                                  width: 14,
-                                  fit: BoxFit.cover,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  '02:20',
-                                  style: bodyStyle.copyWith(
-                                    color: AppColors.mainColor,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text('duration'.tr, style: bodyStyle1),
-                              ],
+                            _picksRow(
+                              AppImages.imgStopNtn,
+                              'stops',
+                              '${machineLog.stops}',
                             ),
-                            SizedBox(height: 4),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  AppImages.imgPlayBtn,
-                                  height: 14,
-                                  width: 14,
-                                  fit: BoxFit.cover,
-                                  color: AppColors.successColor,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  '02:20',
-                                  style: bodyStyle.copyWith(
-                                    color: AppColors.mainColor,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text('runtime'.tr, style: bodyStyle1),
-                              ],
+                            _picksRow(
+                              AppImages.imgYarn,
+                              'beam_left',
+                              '${machineLog.beamLeft}',
+                              isRotated: true,
                             ),
-                            SizedBox(height: 6),
-                            _actionButtons('oil_change_due', () {}),
-                            _actionButtons('greasing_due', () {}),
-                            _actionButtons('grease_and_check_shafts', () {}),
-                            _actionButtons('check_and_tight_nuts', () {}),
+                            _picksRow(
+                              AppImages.imgFabric1,
+                              'set_picks',
+                              '${machineLog.setPicks}',
+                            ),
                           ],
                         ),
                       ),
@@ -131,7 +96,8 @@ class DashboardCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 8),
-
+                _progressBar(),
+                SizedBox(height: 10),
                 StopDataTable(stopsData: machineLog.stopsData),
               ],
             ),
@@ -144,9 +110,9 @@ class DashboardCard extends StatelessWidget {
   Row _progressBar() {
     Color progressColor = Colors.yellow;
 
-    if (machineLog.efficiency >= 90) {
+    if (machineLog.efficiency >= controller.efficiencyGoodPer) {
       progressColor = Colors.green;
-    } else if (machineLog.efficiency > 80) {
+    } else if (machineLog.efficiency > controller.efficiencyGoodPer) {
       progressColor = AppColors.secondColor;
     } else {
       progressColor = AppColors.errorColor;
@@ -174,21 +140,29 @@ class DashboardCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppColors.successColor,
+        color: machineLog.currentStop == 0
+            ? AppColors.successColor
+            : Colors.grey,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+        border: Border.all(
+          width: 2,
+          color: machineLog.currentStop == 0
+              ? AppColors.successColor
+              : Colors.grey,
         ),
       ),
       child: Row(
         children: [
           Text(
-            machineLog.machineName,
+            machineLog.machineCode,
             style: bodyStyle1.copyWith(color: AppColors.whiteColor),
           ),
           Spacer(),
           Text(
-            'Signature',
+            machineLog.machineName,
             style: bodyStyle1.copyWith(color: AppColors.whiteColor),
           ),
           Spacer(),
@@ -204,26 +178,74 @@ class DashboardCard extends StatelessWidget {
   }
 
   Widget _currentStopRow() {
-    return Container(
-      padding: EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.blackColor, width: 0.75),
-      ),
-      child: Row(
-        children: [
-          Text('current_stop'.tr, style: bodyStyle1.copyWith()),
-          SizedBox(width: 100),
-          Text(
-            ' - ',
-            style: bodyStyle1.copyWith(
-              color: AppColors.errorColor,
-              fontSize: 14,
+    return machineLog.currentStop != 0
+        ? Stack(
+            children: [
+              Blinker.fade(
+                startColor: Colors.red[200],
+                endColor: Colors.red[50],
+                duration: Duration(seconds: 1),
+
+                child: Container(
+                  padding: EdgeInsets.all(6),
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.blackColor),
+                    color: Colors.red,
+                  ),
+                  child: Row(
+                    children: [
+                      Text('current_stop'.tr, style: bodyStyle1.copyWith()),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColors.blackColor, width: 0),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      'current_stop'.tr,
+                      style: bodyStyle1.copyWith(color: Colors.black),
+                    ),
+                    SizedBox(width: 100),
+                    Text(
+                      machineLog.stopReason,
+                      style: bodyStyle1.copyWith(
+                        color: AppColors.blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        : Container(
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.blackColor, width: 0.75),
             ),
-          ),
-        ],
-      ),
-    );
+            child: Row(
+              children: [
+                Text('current_stop'.tr, style: bodyStyle1.copyWith()),
+                SizedBox(width: 100),
+                Text(
+                  machineLog.stopReason,
+                  style: bodyStyle1.copyWith(
+                    color: AppColors.errorColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 
   Widget _picksRow(
@@ -274,33 +296,6 @@ class DashboardCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _actionButtons(String title, Function()? onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.only(top: 4),
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.blackColor, width: 0.75),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title.tr,
-              textAlign: TextAlign.center,
-              style: bodyStyle.copyWith(
-                color: AppColors.errorColor,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

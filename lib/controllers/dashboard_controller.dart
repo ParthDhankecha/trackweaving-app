@@ -1,4 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
+import 'package:flutter_texmunimx/models/status_enum.dart';
 import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:flutter_texmunimx/repository/dashboard_repo.dart';
 import 'package:flutter_texmunimx/utils/shared_pref.dart';
@@ -23,10 +29,54 @@ class DashBoardController extends GetxController implements GetxService {
 
   RxList<MachineLog> machineLogList = RxList<MachineLog>();
 
-  void getData() async {
+  late Timer timer;
+
+  RxString showStatus = 'all'.obs; //running and stopped,
+  Rx<MachineStatus> currentStatus = Rx(MachineStatus.all);
+
+  int efficiencyAveragePer = 85;
+  int efficiencyGoodPer = 90;
+
+  //change status
+  void changeStatus(MachineStatus status) {
+    currentStatus.value = status;
+    switch (status) {
+      case MachineStatus.running:
+        showStatus.value = 'running';
+        break;
+
+      case MachineStatus.stopped:
+        showStatus.value = 'stopped';
+        break;
+      default:
+        showStatus.value = 'all';
+    }
+
+    getData();
+  }
+
+  //get configurations
+
+  Future<void> getSettings() async {
     try {
       isLoading.value = true;
-      var data = await dashboardRepo.getMachineLogs();
+      var data = await dashboardRepo.getConfiguration();
+      sp.refreshInterval = data['refreshInterval'];
+      efficiencyAveragePer = data['efficiencyAveragePer'];
+      efficiencyGoodPer = data['efficiencyGoodPer'];
+    } on ApiException catch (e) {
+      showErrorSnackbar('Remote Settings not Loaded. Try again');
+      log('getSettings : error : $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getData() async {
+    try {
+      isLoading.value = true;
+
+      var data = await dashboardRepo.getMachineLogs(status: showStatus.value);
 
       AggregateReport aggregateReport = data.data.aggregateReport;
       eff.value = '${aggregateReport.efficiency}';
@@ -40,8 +90,22 @@ class DashBoardController extends GetxController implements GetxService {
       machineLogList.value = data.data.machineLogs;
     } on ApiException catch (e) {
       print('on machine logs : $e');
+      machineLogList.value = [];
     } finally {
       isLoading.value = false;
     }
+  }
+
+  startTimer() {
+    print('intervel : ${sp.refreshInterval}');
+    timer = Timer.periodic(Duration(seconds: sp.refreshInterval), (timer) {
+      getData();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
   }
 }

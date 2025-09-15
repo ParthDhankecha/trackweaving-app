@@ -1,3 +1,4 @@
+import 'package:flutter_texmunimx/repository/dashboard_repo.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/screens/home/home_screen.dart';
 import 'package:flutter_texmunimx/utils/shared_pref.dart';
@@ -5,10 +6,11 @@ import 'package:get/get.dart';
 
 class SplashController extends GetxController implements GetxService {
   final Sharedprefs sp;
+  final DashboardRepo dashboardRepo;
 
-  SplashController({required this.sp});
+  SplashController({required this.sp, required this.dashboardRepo});
 
-  checkUser() {
+  checkUser() async {
     Future.delayed(Duration(seconds: 2), () {
       if (sp.userToken.isNotEmpty) {
         Get.offAll(() => HomeScreen());

@@ -32,27 +32,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Obx(() {
-          String title = '';
-          switch (homeController.selectedNavIndex.value) {
-            case 1:
-              title = 'reports'.tr;
-              break;
+      // appBar: AppBar(
+      //   title: Obx(() {
+      //     String title = '';
+      //     switch (homeController.selectedNavIndex.value) {
+      //       case 1:
+      //         title = 'reports'.tr;
+      //         break;
 
-            case 2:
-              title = 'notifications'.tr;
-              break;
+      //       case 2:
+      //         title = 'notifications'.tr;
+      //         break;
 
-            case 3:
-              title = 'settings'.tr;
-              break;
-            default:
-              title = 'live_tracking'.tr;
-          }
-          return Text(title);
-        }),
-      ),
+      //       case 3:
+      //         title = 'settings'.tr;
+      //         break;
+      //       default:
+      //         title = 'live_tracking'.tr;
+      //     }
+      //     return Text(title);
+      //   }),
+      // ),
       body: Obx(
         () => widgetsList.elementAt(homeController.selectedNavIndex.value),
       ),

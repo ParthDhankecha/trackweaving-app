@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/controllers/dashboard_controller.dart';
+import 'package:flutter_texmunimx/models/status_enum.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:get/get.dart';
 
@@ -22,30 +23,22 @@ class TopRowWidget extends StatelessWidget {
                 title: 'efficiency'.tr,
                 value: '${controller.eff.value}%',
               ),
+              SizedBox(width: 6),
               _buildRowItemBox(
                 title: "picks".tr,
                 value: controller.picks.value,
               ),
+              SizedBox(width: 6),
+
               _buildRowItemBox(
                 title: 'avg_picks'.tr,
                 value: controller.avgPick.value,
               ),
+              SizedBox(width: 6),
+
               _buildRowItemBox(
                 title: 'avg_speed'.tr,
                 value: controller.avgSpeed.value,
-              ),
-              _buildRowItemBox(
-                title: 'running'.tr,
-                value: controller.running.value,
-              ),
-              _buildRowItemBox(
-                title: 'stopped'.tr,
-                value: controller.stopped.value,
-              ),
-              _buildRowItemBox(
-                title: 'all'.tr,
-                value: controller.all.value,
-                isRed: true,
               ),
             ],
           ),
@@ -70,7 +63,7 @@ class TopRowWidget extends StatelessWidget {
             Text(
               value,
               style: titleStyle.copyWith(
-                fontSize: 14,
+                fontSize: 12,
                 color: isRed ? AppColors.errorColor : null,
               ),
             ),

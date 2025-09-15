@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
+import 'package:flutter_texmunimx/controllers/settings_controller.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_group/create_machine_group.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_group/machin_group_card.dart';
 import 'package:get/get.dart';
 
 class MachineGroupScreen extends StatefulWidget {
@@ -11,10 +14,24 @@ class MachineGroupScreen extends StatefulWidget {
 }
 
 class _MachineGroupScreenState extends State<MachineGroupScreen> {
+  SettingsController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('machine_group'.tr)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => CreateMachineGroup(
+              onSave: (String name) {
+                controller.createMachineGroup(name);
+              },
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
       body: Column(
         children: [
           //machine group card
@@ -44,24 +61,7 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: MyTextWidget(text: '#1', textStyle: bodyStyle),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: MyTextWidget(
-                    textAlign: TextAlign.left,
-                    text: 'Jacquard',
-                    textStyle: bodyStyle,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          MachineGroupCard(),
         ],
       ),
     );
