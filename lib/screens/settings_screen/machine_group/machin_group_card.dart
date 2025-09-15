@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
+import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 
 class MachineGroupCard extends StatelessWidget {
-  const MachineGroupCard({super.key});
+  final MachineGroup machineGroup;
+  final int index;
+  final Function() onEdit;
+  const MachineGroupCard({
+    super.key,
+    required this.machineGroup,
+    required this.index,
+    required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +21,17 @@ class MachineGroupCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: MyTextWidget(text: '#1', textStyle: bodyStyle),
+            child: MyTextWidget(text: '#${index + 1}', textStyle: bodyStyle),
           ),
           Expanded(
             flex: 4,
             child: MyTextWidget(
               textAlign: TextAlign.left,
-              text: 'Jacquard',
+              text: machineGroup.groupName,
               textStyle: bodyStyle,
             ),
           ),
-          TextButton(onPressed: () {}, child: Text('Edit')),
+          TextButton(onPressed: () => onEdit(), child: Text('Edit')),
         ],
       ),
     );

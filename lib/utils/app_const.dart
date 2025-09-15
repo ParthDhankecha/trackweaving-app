@@ -14,5 +14,8 @@ class AppConst {
   //machine group CRUD
   static String machineGrp = 'device/machine-groups';
 
+  //machines
+  static String machines = 'device/machines';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

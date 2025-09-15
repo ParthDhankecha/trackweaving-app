@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
 import 'package:flutter_texmunimx/controllers/settings_controller.dart';
+import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_group/create_machine_group.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_group/machin_group_card.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,13 @@ class MachineGroupScreen extends StatefulWidget {
 
 class _MachineGroupScreenState extends State<MachineGroupScreen> {
   SettingsController controller = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +69,35 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
             ),
           ),
 
-          MachineGroupCard(),
+          Expanded(
+            child: Obx(
+              () => controller.isLoading.value
+                  ? CircularProgressIndicator()
+                  : ListView.builder(
+                      itemCount: controller.machineGroupList.length,
+                      itemBuilder: (context, index) {
+                        MachineGroup machineGroup =
+                            controller.machineGroupList[index];
+                        controller.setSelectedMachineId(machineGroup.id);
+                        return MachineGroupCard(
+                          machineGroup: machineGroup,
+                          index: index,
+                          onEdit: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => CreateMachineGroup(
+                                initialName: machineGroup.groupName,
+                                onSave: (String name) {
+                                  controller.updateMachineGroup(name);
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ),
         ],
       ),
     );

@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/controllers/settings_controller.dart';
+import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
+import 'package:get/get.dart';
+
+class MachineConfigurationScreen extends StatefulWidget {
+  const MachineConfigurationScreen({super.key});
+
+  @override
+  State<MachineConfigurationScreen> createState() =>
+      _MachineConfigurationScreenState();
+}
+
+class _MachineConfigurationScreenState
+    extends State<MachineConfigurationScreen> {
+  SettingsController controller = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getMachineList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('machine_configure'.tr)),
+      body: Column(
+        children: [
+          //machine configuration card
+          Expanded(
+            child: Obx(() {
+              return ListView.builder(
+                itemCount: controller.machineList.length,
+                itemBuilder: (context, index) {
+                  Machine machine = controller.machineList[index];
+                  return MachineConfigurationCard(
+                    srNo: '#${machine.serialNumber}',
+                    machineCode: machine.machineCode,
+                    machineName: machine.machineName,
+                    machineGroup: machine.machineGroupId ?? '',
+                    udid: machine.ip,
+                    alertEnabled: machine.isAlertActive,
+                    efficiencyLimit: '90',
+                    onAlertChange: (isOn) {},
+                  );
+                },
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
