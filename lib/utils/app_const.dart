@@ -17,5 +17,8 @@ class AppConst {
   //machines
   static String machines = 'device/machines';
 
+  //maintenance category
+  static String maintenanceCategories = 'device/maintenance-categories';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }
