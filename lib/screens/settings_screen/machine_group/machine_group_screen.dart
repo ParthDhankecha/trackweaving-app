@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
-import 'package:flutter_texmunimx/controllers/settings_controller.dart';
+import 'package:flutter_texmunimx/controllers/machine_controller.dart';
 import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_group/create_machine_group.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_group/machin_group_card.dart';
@@ -15,7 +15,7 @@ class MachineGroupScreen extends StatefulWidget {
 }
 
 class _MachineGroupScreenState extends State<MachineGroupScreen> {
-  SettingsController controller = Get.find();
+  MachineController controller = Get.find();
 
   @override
   void initState() {

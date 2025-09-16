@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:get/get.dart';
 
 class CreateMachineGroup extends StatefulWidget {
@@ -85,6 +86,11 @@ class _CreateMachineGroupState extends State<CreateMachineGroup> {
                       if (name.isNotEmpty) {
                         widget.onSave(name);
                         Get.back();
+                      } else {
+                        showErrorSnackbar(
+                          'Enter Group Name',
+                          decs: 'Machine Group Name is mandatory.',
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -94,7 +100,7 @@ class _CreateMachineGroupState extends State<CreateMachineGroup> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text('Save'),
+                    child: Text(widget.initialName == null ? 'Save' : 'Update'),
                   ),
                 ),
               ],

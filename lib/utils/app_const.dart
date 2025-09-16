@@ -20,5 +20,8 @@ class AppConst {
   //maintenance category
   static String maintenanceCategories = 'device/maintenance-categories';
 
+  //maintenance alert
+  static String maintenanceAlert = 'device/alerts';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

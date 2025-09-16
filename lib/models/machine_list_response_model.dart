@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
+
 MachineListResponseModel machineListResponseModelFromMap(String str) =>
     MachineListResponseModel.fromMap(json.decode(str));
 
@@ -36,7 +38,7 @@ class MachineListResponseModel {
 }
 
 class Machine {
-  dynamic machineGroupId;
+  MachineGroup? machineGroupId;
   String id;
   String serialNumber;
   String machineCode;
@@ -55,7 +57,9 @@ class Machine {
   });
 
   factory Machine.fromMap(Map<String, dynamic> json) => Machine(
-    machineGroupId: json["machineGroupId"],
+    machineGroupId: json["machineGroupId"] != null
+        ? MachineGroup.fromMap(json['machineGroupId'])
+        : null,
     id: json["_id"],
     serialNumber: json["serialNumber"],
     machineCode: json["machineCode"],

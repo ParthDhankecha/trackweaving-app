@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_group/machine_group_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_category_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/shift_comments.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/widgets/language_bottom_sheet.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/widgets/logout_dialog.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
@@ -53,7 +54,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => Get.to(() => MaintenanceEntryScreen()),
             ),
             Divider(),
-            _settingsRow(title: 'shift_wise_comment_update', icon: Icons.list),
+            _settingsRow(
+              title: 'shift_wise_comment_update',
+              icon: Icons.list,
+              onTap: () => Get.to(() => ShiftComments()),
+            ),
             Divider(),
             _settingsRow(
               title: 'language_change',

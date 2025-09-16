@@ -11,6 +11,7 @@ class SplashController extends GetxController implements GetxService {
   SplashController({required this.sp, required this.dashboardRepo});
 
   checkUser() async {
+    sp.hostUrl = '192.168.29.213:3000';
     Future.delayed(Duration(seconds: 2), () {
       if (sp.userToken.isNotEmpty) {
         Get.offAll(() => HomeScreen());

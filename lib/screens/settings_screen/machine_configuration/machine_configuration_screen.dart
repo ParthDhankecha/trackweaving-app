@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/settings_controller.dart';
+import 'package:flutter_texmunimx/controllers/machine_controller.dart';
 import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/edit_machine_configuration.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class MachineConfigurationScreen extends StatefulWidget {
 
 class _MachineConfigurationScreenState
     extends State<MachineConfigurationScreen> {
-  SettingsController controller = Get.find();
+  MachineController controller = Get.find();
 
   @override
   void initState() {
@@ -39,11 +40,21 @@ class _MachineConfigurationScreenState
                     srNo: '#${machine.serialNumber}',
                     machineCode: machine.machineCode,
                     machineName: machine.machineName,
-                    machineGroup: machine.machineGroupId ?? '',
+                    machineGroup:
+                        controller
+                            .getGroupFromID(machine.machineGroupId?.id ?? '')
+                            ?.groupName ??
+                        '',
                     udid: machine.ip,
                     alertEnabled: machine.isAlertActive,
                     efficiencyLimit: '90',
-                    onAlertChange: (isOn) {},
+                    onAlertChange: (isOn) {
+                      controller.changeMachineAlert();
+                      controller.updateMachineConfigAlert(machine.id);
+                    },
+                    onTap: () => Get.to(
+                      () => EditMachineConfiguration(machine: machine),
+                    ),
                   );
                 },
               );

@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/animated_active_switch.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
+import 'package:flutter_texmunimx/models/maintenance_category_list_model.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 
 class MaintenanceCategoryCard extends StatelessWidget {
-  final String srNo;
-  final String categoryName;
-  final String type;
-  final String scheduleDays;
-  final String alertDays;
-  final bool status;
-  final String alertMessage;
-
+  final MaintenanceCategory maintenanceCategory;
+  final int index;
+  final Function(bool value) onChange;
   const MaintenanceCategoryCard({
     super.key,
-    required this.srNo,
-    required this.categoryName,
-    required this.type,
-    required this.scheduleDays,
-    required this.alertDays,
-    required this.status,
-    required this.alertMessage,
+    required this.maintenanceCategory,
+    required this.index,
+    required this.onChange,
   });
 
   @override
@@ -37,42 +30,35 @@ class MaintenanceCategoryCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildInfoRow('sr_no', srNo.toString()),
-                Container(
-                  decoration: BoxDecoration(
-                    color: status ? Colors.green : Colors.deepOrange,
+                _buildInfoRow('sr_no', '${index + 1}'),
 
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    child: MyTextWidget(
-                      text: status ? 'active' : 'inactive',
-                      textStyle: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                SizedBox(
+                  width: 120,
+                  child: AnimatedActiveSwitch(
+                    current: maintenanceCategory.isActive,
+                    onChanged: onChange,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            _buildInfoRow('category', categoryName),
+            _buildInfoRow('category', maintenanceCategory.name),
             const SizedBox(height: 8),
-            _buildInfoRow('type', type),
+            _buildInfoRow('type', maintenanceCategory.categoryType),
             const SizedBox(height: 8),
-            _buildInfoRow('schedule_days', scheduleDays),
+            _buildInfoRow(
+              'schedule_days',
+              '${maintenanceCategory.scheduleDays}',
+            ),
             const SizedBox(height: 8),
-            _buildInfoRow('alert_days', alertDays),
+            _buildInfoRow('alert_days', '${maintenanceCategory.alertDays}'),
             const SizedBox(height: 8),
             _buildInfoRow('alert_message', ''),
             const SizedBox(height: 2),
-            MyTextWidget(text: alertMessage, textColor: AppColors.errorColor),
+            MyTextWidget(
+              text: maintenanceCategory.alertMessage,
+              textColor: AppColors.errorColor,
+            ),
           ],
         ),
       ),

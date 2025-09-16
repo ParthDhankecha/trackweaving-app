@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
 import 'package:flutter_texmunimx/repository/api_client.dart';
@@ -9,14 +8,14 @@ import 'package:flutter_texmunimx/utils/app_const.dart';
 import 'package:flutter_texmunimx/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
-class SettingsRepository {
+class MachineRepository {
   final ApiClient apiClient;
 
-  SettingsRepository({required this.apiClient});
+  MachineRepository({required this.apiClient});
 
   Sharedprefs sp = Get.find<Sharedprefs>();
 
-  //lsit of machine groups
+  //list of machine groups
   Future<List<MachineGroup>> getMachineGroupList() async {
     String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machineGrp);
     var data = await apiClient.request(
@@ -69,5 +68,55 @@ class SettingsRepository {
     List<Machine> list = [];
     list = machineListResponseModelFromMap(data).data;
     return list;
+  }
+
+  Future<dynamic> updateMachineConfiguration({
+    required String id,
+    required String machineCode,
+    required String machineName,
+    required String machineGroupId,
+    required bool isAlertActive,
+  }) async {
+    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
+    var reqBody = {
+      'machineCode': machineCode,
+      'machineName': machineName,
+      'machineGroupId': machineGroupId,
+      'isAlertActive': '$isAlertActive',
+    };
+
+    log('end point :: $endPoint');
+    log('req body  : $reqBody');
+    log('token:: ${sp.userToken}');
+
+    var data = await apiClient.request(
+      '$endPoint/$id',
+      body: reqBody,
+      headers: {'authorization': sp.userToken},
+      method: ApiType.put,
+    );
+    log('result body  : $data');
+    return data;
+  }
+
+  Future<dynamic> updateMachineConfigurationAlert({
+    required String id,
+
+    required bool isAlertActive,
+  }) async {
+    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
+    var reqBody = {'isAlertActive': '$isAlertActive'};
+    log('end point :: $endPoint');
+    log('req body  : $reqBody');
+    log('token:: ${sp.userToken}');
+
+    var data = await apiClient.request(
+      '$endPoint/$id',
+      body: reqBody,
+      headers: {'authorization': sp.userToken},
+      method: ApiType.put,
+    );
+    log('result body  : $data');
+    return data;
   }
 }

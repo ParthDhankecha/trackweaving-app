@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           elevation: 10,
           currentIndex: homeController.selectedNavIndex.value,
           onTap: (value) => homeController.changeNavIndex(value),

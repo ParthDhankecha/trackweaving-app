@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/controllers/dashboard_controller.dart';
-import 'package:flutter_texmunimx/models/status_enum.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:get/get.dart';
 

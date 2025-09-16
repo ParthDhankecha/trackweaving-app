@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/models/status_enum.dart';
 import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:flutter_texmunimx/repository/dashboard_repo.dart';
+import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
@@ -89,15 +89,21 @@ class DashBoardController extends GetxController implements GetxService {
 
       machineLogList.value = data.data.machineLogs;
     } on ApiException catch (e) {
-      print('on machine logs : $e');
       machineLogList.value = [];
+      switch (e.statusCode) {
+        case 401:
+          showErrorSnackbar('Unauthenticated. Login and Try again.');
+          timer.cancel();
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
     } finally {
       isLoading.value = false;
     }
   }
 
   startTimer() {
-    print('intervel : ${sp.refreshInterval}');
     timer = Timer.periodic(Duration(seconds: sp.refreshInterval), (timer) {
       getData();
     });
