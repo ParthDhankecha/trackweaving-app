@@ -4,10 +4,8 @@ import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/custom_progress_btn_.dart';
 import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/machine_controller.dart';
-import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
 import 'package:get/get.dart';
 
 class EditMachineConfiguration extends StatefulWidget {

@@ -89,7 +89,7 @@ class MachineController extends GetxController implements GetxService {
     try {
       isLoading.value = true;
 
-      var data = await repository.createUpdateMachineGroup(
+      await repository.createUpdateMachineGroup(
         name: name,
         id: selectedMachineId,
         isUpdate: true,
@@ -112,7 +112,7 @@ class MachineController extends GetxController implements GetxService {
     try {
       isLoading.value = true;
 
-      var data = await repository.createUpdateMachineGroup(name: name);
+      await repository.createUpdateMachineGroup(name: name);
       getList();
     } on ApiException catch (e) {
       log('error : $e');
@@ -136,7 +136,7 @@ class MachineController extends GetxController implements GetxService {
   }
 
   ////get Machine list for machine configuration module
-  getMachineList() async {
+  Future<void> getMachineList() async {
     try {
       isLoading.value = true;
 

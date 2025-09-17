@@ -1,9 +1,7 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/animated_alert_switch.dart';
 import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
 import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
-import 'package:get/get.dart';
 
 class MachineConfigurationCard extends StatelessWidget {
   final String srNo;
@@ -12,7 +10,6 @@ class MachineConfigurationCard extends StatelessWidget {
   final String machineGroup;
   final String udid;
   final bool alertEnabled;
-  final String efficiencyLimit;
   final Function(bool isOn) onAlertChange;
   final Function()? onTap;
 
@@ -24,7 +21,6 @@ class MachineConfigurationCard extends StatelessWidget {
     required this.machineGroup,
     required this.udid,
     required this.alertEnabled,
-    required this.efficiencyLimit,
     required this.onAlertChange,
     this.onTap,
   });

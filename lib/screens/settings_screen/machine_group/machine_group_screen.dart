@@ -72,7 +72,13 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
           Expanded(
             child: Obx(
               () => controller.isLoading.value
-                  ? CircularProgressIndicator()
+                  ? Center(
+                      child: SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
                   : ListView.builder(
                       itemCount: controller.machineGroupList.length,
                       itemBuilder: (context, index) {

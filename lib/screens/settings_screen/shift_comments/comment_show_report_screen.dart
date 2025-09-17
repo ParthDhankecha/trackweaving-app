@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
@@ -103,7 +101,6 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
 
                     // Now you can send `commentsList` to your backend API
                     var payload = {"list": commentsList};
-                    print(payload);
                     shiftCommentController.updateShiftComment(payload);
                   },
                 ),

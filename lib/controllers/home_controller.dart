@@ -13,6 +13,6 @@ class HomeController extends GetxController implements GetxService {
   }
 
   void showToken() {
-    print('token : ${sp.userToken}');
+    //print('token : ${sp.userToken}');
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
 
 class MachineGroupDropdown extends StatelessWidget {
   final String title;

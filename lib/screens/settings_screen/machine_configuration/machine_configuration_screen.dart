@@ -47,9 +47,7 @@ class _MachineConfigurationScreenState
                         '',
                     udid: machine.ip,
                     alertEnabled: machine.isAlertActive,
-                    efficiencyLimit: '90',
                     onAlertChange: (isOn) {
-                      print('alert : $isOn');
                       controller.changeMachineAlert();
                       controller.updateMachineConfigAlert(machine.id);
                     },

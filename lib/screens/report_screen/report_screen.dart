@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/controllers/machine_controller.dart';
+import 'package:flutter_texmunimx/controllers/report_controller.dart';
 import 'package:flutter_texmunimx/screens/report_screen/report_result_screen.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
 import 'package:get/get.dart';
 
@@ -13,13 +17,12 @@ class ProductionReportPage extends StatefulWidget {
 class _ProductionReportPageState extends State<ProductionReportPage> {
   // State variables for form fields
   String _selectedReportType = 'Production Shiftwise Report';
-  String _selectedShift = 'All Shift';
   DateTime _fromDate = DateTime.now();
   DateTime _endDate = DateTime.now();
-  bool _groupWiseMachine = false;
-  bool _selectAllMachines = false;
-  List<String> _selectedMachines = [];
-  final List<String> _availableMachines = ['M1', 'M2', 'M3', 'M4'];
+
+  MachineController machineController = Get.find<MachineController>();
+  ReportController reportController = Get.find<ReportController>();
+  RxBool isLoading = false.obs;
 
   // Reusable widget for a title with a dropdown
   Widget _buildDropdownField(
@@ -128,28 +131,22 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
     );
   }
 
-  // Function to handle "Select All" checkbox logic
-  void _onSelectAllChanged(bool? value) {
-    setState(() {
-      _selectAllMachines = value ?? false;
-      if (_selectAllMachines) {
-        _selectedMachines = List.from(_availableMachines);
-      } else {
-        _selectedMachines.clear();
-      }
-    });
+  loadAllData() async {
+    isLoading.value = true;
+    await machineController.getMachineList();
+    await machineController.getList();
+    reportController.setAvailableMachines(machineController.machineList);
+    reportController.setAvailableMachinesGroups(
+      machineController.machineGroupList,
+    );
+    reportController.changeShiftType(reportController.shiftTypeList.first);
+    isLoading.value = false;
   }
 
-  // Function to handle individual machine checkbox logic
-  void _onMachineChanged(String machine, bool? value) {
-    setState(() {
-      if (value == true) {
-        _selectedMachines.add(machine);
-      } else {
-        _selectedMachines.remove(machine);
-        _selectAllMachines = false;
-      }
-    });
+  @override
+  void initState() {
+    super.initState();
+    loadAllData();
   }
 
   @override
@@ -157,130 +154,192 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildDropdownField(
-                  'Report Type',
-                  _selectedReportType,
-                  ['Production Shiftwise Report'],
-                  (newValue) {
-                    setState(() {
-                      _selectedReportType = newValue!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildDateField('From Date', _fromDate, (newDate) {
-                        setState(() {
-                          _fromDate = newDate;
-                          _endDate = newDate;
-                        });
-                      }),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: _buildDateField('End Date', _endDate, (newDate) {
-                        setState(() {
-                          _endDate = newDate;
-                        });
-                      }),
-                    ),
-                  ],
-                ),
+        child: Column(
+          children: [
+            SizedBox(height: 45),
 
-                const SizedBox(height: 16),
-                _buildDropdownField(
-                  'Shift',
-                  _selectedShift,
-                  ['All Shift', 'Day Shift', 'Night Shift'],
-                  (newValue) {
-                    setState(() {
-                      _selectedShift = newValue!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                      child: Text(
-                        'Machine:',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Obx(
+                  () => isLoading.value
+                      ? Center(
+                          child: SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _buildDropdownField(
+                              'Report Type',
+                              _selectedReportType,
+                              ['Production Shiftwise Report'],
+                              (newValue) {
+                                setState(() {
+                                  _selectedReportType = newValue!;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildDateField(
+                                    'From Date',
+                                    _fromDate,
+                                    (newDate) {
+                                      setState(() {
+                                        _fromDate = newDate;
+                                        _endDate = newDate;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildDateField('End Date', _endDate, (
+                                    newDate,
+                                  ) {
+                                    setState(() {
+                                      _endDate = newDate;
+                                    });
+                                  }),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 16),
+                            ShiftDropdown(
+                              title: 'Shift',
+                              items: reportController.shiftTypeList,
+                              selectedValue:
+                                  reportController.selectedShift.value,
+                              onChanged: (value) {
+                                reportController.changeShiftType(value);
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    bottom: 4.0,
+                                  ),
+                                  child: Text(
+                                    'Machine:',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Obx(
+                                  () => _buildCheckboxRow(
+                                    'Group Wise Machine',
+                                    reportController.isGroupVisible.value,
+                                    (value) {
+                                      reportController.changeGroupVisible();
+                                      reportController.filerMachineByGroup(
+                                        'select',
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Visibility(
+                              visible: reportController.isGroupVisible.value,
+                              child: MachineGroupDropdown(
+                                title: 'Machine Groups',
+                                items:
+                                    reportController.availableMachineGroupList,
+                                onChanged: (value) {
+                                  if (value?.id == 'all') {
+                                    reportController.filerMachineByGroup(
+                                      'select',
+                                    );
+                                  } else {
+                                    reportController.filerMachineByGroup(
+                                      value!.id,
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+
+                            Obx(
+                              () => _buildCheckboxRow(
+                                'Select All',
+                                reportController.selectAllMachines.value,
+                                reportController.onSelectAllChanged,
+                              ),
+                            ),
+
+                            Obx(
+                              () => Wrap(
+                                direction: Axis.horizontal,
+                                children: reportController.checkboxMachineList
+                                    .map((machine) {
+                                      return _buildCheckboxRow(
+                                        machine.machineCode,
+                                        reportController.selectedMachineList
+                                            .contains(machine),
+                                        (value) {
+                                          reportController.onMachineSelect(
+                                            machine,
+                                            value,
+                                          );
+                                        },
+                                      );
+                                    })
+                                    .toList(),
+                              ),
+                            ),
+
+                            ElevatedButton(
+                              onPressed: () {
+                                // Logic to show the report
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Showing Report...'),
+                                  ),
+                                );
+
+                                Get.to(() => ReportResultScreen());
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.mainColor,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'Show Report',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                    _buildCheckboxRow('Group Wise Machine', _groupWiseMachine, (
-                      value,
-                    ) {
-                      setState(() {
-                        _groupWiseMachine = value!;
-                      });
-                    }),
-                  ],
                 ),
-
-                _buildCheckboxRow(
-                  'Select All',
-                  _selectAllMachines,
-                  _onSelectAllChanged,
-                ),
-                Wrap(
-                  //spacing: 8.0,
-                  //unSpacing: 4.0,
-                  direction: Axis.horizontal,
-                  children: _availableMachines.map((machine) {
-                    return _buildCheckboxRow(
-                      machine,
-                      _selectedMachines.contains(machine),
-                      (value) {
-                        _onMachineChanged(machine, value);
-                      },
-                    );
-                  }).toList(),
-                ),
-
-                ElevatedButton(
-                  onPressed: () {
-                    // Logic to show the report
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Showing Report...')),
-                    );
-
-                    Get.to(() => ReportResultScreen());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.mainColor,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Show Report',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

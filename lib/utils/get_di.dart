@@ -4,6 +4,7 @@ import 'package:flutter_texmunimx/controllers/localization_controller.dart';
 import 'package:flutter_texmunimx/controllers/login_controllers.dart';
 import 'package:flutter_texmunimx/controllers/machine_controller.dart';
 import 'package:flutter_texmunimx/controllers/maintenance_category_controller.dart';
+import 'package:flutter_texmunimx/controllers/report_controller.dart';
 import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
 import 'package:flutter_texmunimx/controllers/splash_controller.dart';
 import 'package:flutter_texmunimx/repository/api_client.dart';
@@ -55,4 +56,5 @@ Future<void> init() async {
   );
 
   Get.lazyPut(() => ShiftCommentController(repository: Get.find()));
+  Get.lazyPut(() => ReportController());
 }

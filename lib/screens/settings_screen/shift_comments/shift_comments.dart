@@ -38,12 +38,10 @@ class _ShiftCommentsState extends State<ShiftComments> {
                       items: machineController.machineList,
                       onChanged: (value) {
                         if (value!.machineCode == 'Select All') {
-                          print('i am all');
                           shiftCommentController.selectAllMachine(
                             machineController.machineList,
                           );
                         } else {
-                          print(' i am one');
                           shiftCommentController.selectMachine(value);
                         }
                       },
