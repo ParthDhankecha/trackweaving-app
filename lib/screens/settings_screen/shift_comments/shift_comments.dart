@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/machine_controller.dart';
+import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:get/get.dart';
 
 class ShiftComments extends StatefulWidget {
@@ -12,6 +15,7 @@ class ShiftComments extends StatefulWidget {
 
 class _ShiftCommentsState extends State<ShiftComments> {
   MachineController machineController = Get.find();
+  ShiftCommentController shiftCommentController = Get.find();
   @override
   void initState() {
     super.initState();
@@ -26,16 +30,65 @@ class _ShiftCommentsState extends State<ShiftComments> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: MachineDropdown(
-              title: 'Select Machine',
-              items: machineController.machineList,
-              onChanged: (value) {},
+            child: Obx(
+              () => machineController.isLoading.value
+                  ? CircularProgressIndicator()
+                  : MachineDropdown(
+                      title: 'Select Machine',
+                      items: machineController.machineList,
+                      onChanged: (value) {
+                        if (value!.machineCode == 'Select All') {
+                          print('i am all');
+                          shiftCommentController.selectAllMachine(
+                            machineController.machineList,
+                          );
+                        } else {
+                          print(' i am one');
+                          shiftCommentController.selectMachine(value);
+                        }
+                      },
+                    ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
 
             child: _buildDateField('Report Date', DateTime.now(), (value) {}),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+
+            child: ShiftDropdown(
+              title: 'Shift',
+              items: shiftCommentController.shiftTypes,
+              onChanged: (value) {
+                shiftCommentController.selectShiftType(value?.type ?? 'all');
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                MainBtn(
+                  label: 'Show Report',
+                  onTap: () {
+                    if (shiftCommentController.machineCodes.isEmpty) {
+                      shiftCommentController.selectAllMachine(
+                        machineController.machineList.value,
+                      );
+                    }
+
+                    if (shiftCommentController.machineCodes.length == 1) {
+                      shiftCommentController
+                          .generateRecordsForSelectedMachine();
+                    } else {
+                      shiftCommentController.generateRecords();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),

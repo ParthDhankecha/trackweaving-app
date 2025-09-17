@@ -6,6 +6,8 @@ import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/machine_controller.dart';
 import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
 import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
+import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
 import 'package:get/get.dart';
 
 class EditMachineConfiguration extends StatefulWidget {
@@ -72,14 +74,19 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                 ),
                 SizedBox(height: 12),
 
-                _buildDropdownField(
-                  'Machine Group Name',
-                  controller.selectedMachineGrpId.value,
-                  controller.machineGroupList,
-                  (value) {
-                    controller.selectedMachineGrpId.value = value;
+                MachineGroupDropdown(
+                  title: 'Machine Group Name',
+                  items: controller.machineGroupList,
+                  selectedValue: controller.selectedMachineGrpId.value,
+                  onChanged: (value) {
+                    if (value?.groupName == 'Select') {
+                      controller.selectedMachineGrpId.value = null;
+                    } else {
+                      controller.selectedMachineGrpId.value = value;
+                    }
                   },
                 ),
+
                 SizedBox(height: 16),
                 Row(
                   children: [
@@ -166,45 +173,6 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
             // labelText: title,
             //hintText: hintText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDropdownField(
-    String title,
-    MachineGroup? selectedValue,
-    List<MachineGroup> items,
-    ValueChanged<MachineGroup?> onChanged,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-          child: Text(
-            '$title:',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-        ),
-        Obx(
-          () => DropdownButtonFormField<MachineGroup>(
-            initialValue: selectedValue,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            ),
-            items: items.map((MachineGroup value) {
-              return DropdownMenuItem<MachineGroup>(
-                value: value,
-                child: Text(value.groupName),
-              );
-            }).toList(),
-            onChanged: onChanged,
           ),
         ),
       ],

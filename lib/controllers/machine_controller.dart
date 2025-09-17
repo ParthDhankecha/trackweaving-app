@@ -199,10 +199,11 @@ class MachineController extends GetxController implements GetxService {
       );
 
       log('onUpdateMAchinConfig ::: $data');
-      getMachineList();
+
       showSuccessSnackbar(
         'Machine Alert Set ${machineAlert.value ? 'ON' : 'OFF'}',
       );
+      getMachineList();
     } on ApiException catch (e) {
       log('error:onUpdateMAchinConfig : $e');
       showErrorSnackbar('Error - Something Went Wrong.');

@@ -23,5 +23,8 @@ class AppConst {
   //maintenance alert
   static String maintenanceAlert = 'device/alerts';
 
+  //shift wise comment
+  static String shiftWiseComment = 'device/shift-wise-comments';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 }

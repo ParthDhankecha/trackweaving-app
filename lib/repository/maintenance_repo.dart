@@ -30,21 +30,15 @@ class MaintenanceRepo {
     String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.maintenanceAlert);
     var data = await apiClient.request(
       endPoint,
-      headers: {'authorization': sp.userToken},
+      headers: {
+        'authorization': sp.userToken,
+        'Content-Type': 'application/json',
+      },
     );
     List<MaintenanceEntryModel> list = [];
     list = maintenanceAlertListResponseFromMap(data).data;
     return list;
   }
-
-  //update alert (maintenance entry)
-  /*
-maintenanceCategoryId: "",
-machineId: "",
-nextMaintenanceDate: "",
-lastMaintenanceDate:  "",
-remarks: ""
-*/
 
   Future<dynamic> updateAlertEntry({
     required String id,
@@ -74,7 +68,10 @@ remarks: ""
     log('$reqBody');
     var data = await apiClient.request(
       '$endPoint/$id',
-      headers: {'authorization': sp.userToken},
+      headers: {
+        'authorization': sp.userToken,
+        'Content-Type': 'application/json',
+      },
       body: reqBody,
       method: ApiType.put,
     );
@@ -94,7 +91,7 @@ remarks: ""
     var data = await apiClient.request(
       '$endPoint/$id',
       headers: {'authorization': sp.userToken},
-      body: {'isActive': '$status'},
+      body: {'isActive': '$status', 'Content-Type': 'application/json'},
       method: ApiType.put,
     );
 

@@ -38,15 +38,16 @@ class MachineRepository {
     var reqBody = isUpdate
         ? {'groupName': name, 'id': id}
         : {'groupName': name};
-    log('end point :: $endPoint');
-    log('req body  : $reqBody');
-    log('token:: ${sp.userToken}');
+
     var data = isUpdate
         ? await apiClient.request(
             '$endPoint/$id',
             method: ApiType.put,
             body: reqBody,
-            headers: {'authorization': sp.userToken},
+            headers: {
+              'authorization': sp.userToken,
+              'Content-Type': 'application/json',
+            },
           )
         : await apiClient.request(
             endPoint,
@@ -85,10 +86,6 @@ class MachineRepository {
       'isAlertActive': '$isAlertActive',
     };
 
-    log('end point :: $endPoint');
-    log('req body  : $reqBody');
-    log('token:: ${sp.userToken}');
-
     var data = await apiClient.request(
       '$endPoint/$id',
       body: reqBody,
@@ -106,14 +103,14 @@ class MachineRepository {
   }) async {
     String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
     var reqBody = {'isAlertActive': '$isAlertActive'};
-    log('end point :: $endPoint');
-    log('req body  : $reqBody');
-    log('token:: ${sp.userToken}');
 
     var data = await apiClient.request(
       '$endPoint/$id',
       body: reqBody,
-      headers: {'authorization': sp.userToken},
+      headers: {
+        'authorization': sp.userToken,
+        'Content-Type': 'application/json',
+      },
       method: ApiType.put,
     );
     log('result body  : $data');

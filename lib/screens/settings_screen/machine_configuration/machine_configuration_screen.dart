@@ -31,8 +31,8 @@ class _MachineConfigurationScreenState
         children: [
           //machine configuration card
           Expanded(
-            child: Obx(() {
-              return ListView.builder(
+            child: Obx(
+              () => ListView.builder(
                 itemCount: controller.machineList.length,
                 itemBuilder: (context, index) {
                   Machine machine = controller.machineList[index];
@@ -49,6 +49,7 @@ class _MachineConfigurationScreenState
                     alertEnabled: machine.isAlertActive,
                     efficiencyLimit: '90',
                     onAlertChange: (isOn) {
+                      print('alert : $isOn');
                       controller.changeMachineAlert();
                       controller.updateMachineConfigAlert(machine.id);
                     },
@@ -57,8 +58,8 @@ class _MachineConfigurationScreenState
                     ),
                   );
                 },
-              );
-            }),
+              ),
+            ),
           ),
         ],
       ),

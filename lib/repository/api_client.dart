@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +13,7 @@ class ApiClient extends GetxService {
     String endPoint, {
     ApiType method = ApiType.get,
     Map<String, String>? headers,
-    Map<String, String?>? body,
+    Object? body,
   }) async {
     final url = Uri.parse(endPoint);
     http.Response response;
@@ -23,7 +25,11 @@ class ApiClient extends GetxService {
           break;
 
         case ApiType.put:
-          response = await http.put(url, body: body, headers: headers);
+          response = await http.put(
+            url,
+            body: json.encode(body),
+            headers: {...headers!, 'Content-Type': 'application/json'},
+          );
           break;
 
         case ApiType.delete:
