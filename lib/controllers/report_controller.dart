@@ -15,9 +15,9 @@ class ReportController extends GetxController implements GetxService {
   RxList<MachineGroup> availableMachineGroupList = RxList();
 
   List<ShiftTypesModel> shiftTypeList = [
-    ShiftTypesModel(type: 'all', title: 'All Shift'),
-    ShiftTypesModel(type: 'day', title: 'Day Shift'),
-    ShiftTypesModel(type: 'night', title: 'Night Shift'),
+    ShiftTypesModel(type: 'all', title: 'all_shift'),
+    ShiftTypesModel(type: 'day', title: 'day_shift'),
+    ShiftTypesModel(type: 'night', title: 'night_shift'),
   ];
 
   Rx<ShiftTypesModel> selectedShift = ShiftTypesModel(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/models/shift_types_model.dart';
+import 'package:get/get.dart';
 
 class ShiftDropdown extends StatelessWidget {
   final String title;
@@ -40,7 +41,7 @@ class ShiftDropdown extends StatelessWidget {
           items: items.map((ShiftTypesModel value) {
             return DropdownMenuItem<ShiftTypesModel>(
               value: value,
-              child: Text(value.title),
+              child: Text(value.title.tr),
             );
           }).toList(),
           onChanged: onChanged,

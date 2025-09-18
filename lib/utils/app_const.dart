@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class AppConst {
   static String host = '192.168.29.74:3000';
   static String defHost = '192.168.29.74:3000';
@@ -27,4 +29,8 @@ class AppConst {
   static String shiftWiseComment = 'device/shift-wise-comments';
 
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
+
+  //API LOG
+  static void showLog({String tag = 'TAG', required String logText}) =>
+      log('[$tag]-$logText');
 }

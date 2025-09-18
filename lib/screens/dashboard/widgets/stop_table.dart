@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
 import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:get/get.dart';
 
 class StopDataTable extends StatelessWidget {
   final StopsData stopsData;
@@ -62,7 +63,7 @@ class StopDataTable extends StatelessWidget {
             TableRow(
               children: [
                 buildTableCell(
-                  text: 'Stops',
+                  text: 'stops'.tr,
                   backgroundColor: const Color(0xFF424242),
                   textColor: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -70,7 +71,7 @@ class StopDataTable extends StatelessWidget {
                 ),
                 for (var category in data.keys)
                   buildTableCell(
-                    text: category,
+                    text: category.tr,
                     backgroundColor: const Color(0xFF424242),
                     textColor: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -81,7 +82,7 @@ class StopDataTable extends StatelessWidget {
             TableRow(
               children: [
                 buildTableCell(
-                  text: 'Count',
+                  text: 'Count'.tr,
                   backgroundColor: const Color(0xFFE0E0E0),
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
@@ -130,7 +131,7 @@ class StopDataTable extends StatelessWidget {
             TableRow(
               children: [
                 buildTableCell(
-                  text: 'Time',
+                  text: 'Time'.tr,
                   backgroundColor: const Color(0xFFE0E0E0),
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,

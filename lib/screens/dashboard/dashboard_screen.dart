@@ -70,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       itemCount: dashBoardController.machineLogList.length,
                       itemBuilder: (context, index) {
                         MachineLog machineLog =
-                            dashBoardController.machineLogList.value[index];
+                            dashBoardController.machineLogList[index];
                         return DashboardCard(machineLog: machineLog);
                       },
                       separatorBuilder: (context, index) =>

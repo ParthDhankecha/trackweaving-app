@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         'US',
       ), // Fallback for missing translations
       home: SplashScreen(),
+      //
     );
   }
 }

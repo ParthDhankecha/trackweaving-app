@@ -19,11 +19,6 @@ class ApiClient extends GetxService {
     final url = Uri.parse(endPoint);
     http.Response response;
 
-    log('---- API CALL ----');
-    log('Url : $endPoint');
-    log('body :');
-    log('$body');
-
     try {
       switch (method) {
         case ApiType.post:
@@ -44,10 +39,6 @@ class ApiClient extends GetxService {
         default:
           response = await http.get(url, headers: headers);
       }
-
-      log('response -${response.statusCode}');
-      log(response.body);
-      log('----- END CALL ----');
 
       switch (response.statusCode) {
         case 200:

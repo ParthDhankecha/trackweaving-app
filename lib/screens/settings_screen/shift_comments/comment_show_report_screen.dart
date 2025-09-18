@@ -3,6 +3,7 @@ import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
 import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
 import 'package:flutter_texmunimx/models/shift_comment_model.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_comment_list_item.dart';
+import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class CommentShowReportScreen extends StatefulWidget {
@@ -35,14 +36,28 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                       itemBuilder: (context, index) {
                         ShiftCommentModel comment =
                             shiftCommentController.shiftCommentList[index];
+
+                        String commentDay = shiftCommentController.getComment(
+                          comment.machineId,
+                          comment.shiftTime,
+                          'day',
+                        );
+
+                        String commentNight = shiftCommentController.getComment(
+                          comment.machineId,
+                          comment.shiftTime,
+                          'night',
+                        );
+                        print('day -- $commentDay');
+                        print('night -- $commentNight');
                         // Initialize controllers if they don't exist
                         if (!_dayCommentControllers.containsKey(comment.id)) {
                           _dayCommentControllers['${comment.machineId}_day'] =
-                              TextEditingController(text: comment.dayComment);
+                              TextEditingController(text: commentDay);
                         }
                         if (!_nightCommentControllers.containsKey(comment.id)) {
                           _nightCommentControllers['${comment.machineId}_night'] =
-                              TextEditingController(text: comment.nightComment);
+                              TextEditingController(text: commentNight);
                         }
                         return ShiftCommentListItem(
                           comment: comment,
@@ -101,6 +116,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
 
                     // Now you can send `commentsList` to your backend API
                     var payload = {"list": commentsList};
+                    print(payload);
                     shiftCommentController.updateShiftComment(payload);
                   },
                 ),

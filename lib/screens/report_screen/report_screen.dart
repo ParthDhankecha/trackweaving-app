@@ -178,7 +178,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             _buildDropdownField(
-                              'Report Type',
+                              'report_type'.tr,
                               _selectedReportType,
                               ['Production Shiftwise Report'],
                               (newValue) {
@@ -192,7 +192,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                               children: [
                                 Expanded(
                                   child: _buildDateField(
-                                    'From Date',
+                                    'from_date'.tr,
                                     _fromDate,
                                     (newDate) {
                                       setState(() {
@@ -204,20 +204,22 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                 ),
                                 SizedBox(width: 8),
                                 Expanded(
-                                  child: _buildDateField('End Date', _endDate, (
-                                    newDate,
-                                  ) {
-                                    setState(() {
-                                      _endDate = newDate;
-                                    });
-                                  }),
+                                  child: _buildDateField(
+                                    'end_date'.tr,
+                                    _endDate,
+                                    (newDate) {
+                                      setState(() {
+                                        _endDate = newDate;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
 
                             const SizedBox(height: 16),
                             ShiftDropdown(
-                              title: 'Shift',
+                              title: 'shift'.tr,
                               items: reportController.shiftTypeList,
                               selectedValue:
                                   reportController.selectedShift.value,
@@ -234,7 +236,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                     bottom: 4.0,
                                   ),
                                   child: Text(
-                                    'Machine:',
+                                    '${'machine'.tr}: ',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -243,7 +245,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                 ),
                                 Obx(
                                   () => _buildCheckboxRow(
-                                    'Group Wise Machine',
+                                    'group_wise_machine'.tr,
                                     reportController.isGroupVisible.value,
                                     (value) {
                                       reportController.changeGroupVisible();
@@ -259,7 +261,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                             Visibility(
                               visible: reportController.isGroupVisible.value,
                               child: MachineGroupDropdown(
-                                title: 'Machine Groups',
+                                title: 'machine_group'.tr,
                                 items:
                                     reportController.availableMachineGroupList,
                                 onChanged: (value) {
@@ -325,8 +327,8 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: const Text(
-                                'Show Report',
+                              child: Text(
+                                'show_report'.tr,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
 import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
 import 'package:flutter_texmunimx/models/shift_coment_update_model.dart';
+import 'package:flutter_texmunimx/models/shift_comment_list_response.dart';
 import 'package:flutter_texmunimx/models/shift_comment_model.dart';
 import 'package:flutter_texmunimx/models/shift_machine_model.dart';
 import 'package:flutter_texmunimx/models/shift_types_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_texmunimx/repository/api_exception.dart';
 import 'package:flutter_texmunimx/repository/shift_comment_repository.dart';
 import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
 import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/comment_show_report_screen.dart';
+import 'package:flutter_texmunimx/utils/app_const.dart';
 import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +20,9 @@ class ShiftCommentController extends GetxController implements GetxService {
   RxBool loading = false.obs;
 
   RxList<ShiftMachineModel> machineCodes = <ShiftMachineModel>[].obs;
+
+  //for shift comments
+  RxList<ShiftComment> availableComments = RxList<ShiftComment>();
 
   RxString selectedShift = 'all'.obs; //day and night
   Rx<DateTime> selectedDate = Rx(DateTime.now());
@@ -51,6 +56,58 @@ class ShiftCommentController extends GetxController implements GetxService {
     log('Selected Machine : ${machineCodes.length}');
   }
 
+  String getComment(String machineId, String date, String type) {
+    String commentFound = '';
+
+    for (var element in availableComments) {
+      print(
+        '${element.machineId} - ${element.date.ddmmyyFormat} - ${element.shift} - ${element.comment}',
+      );
+    }
+
+    ShiftComment? comment = availableComments.firstWhereOrNull(
+      (element) =>
+          element.date.ddmmyyFormat == date &&
+          element.machineId == machineId &&
+          element.shift == type,
+    );
+
+    if (comment != null) {
+      log('Found @@@@@ ${comment.comment}');
+      commentFound = comment.comment;
+    }
+
+    return commentFound;
+  }
+
+  //function to get all comments
+  Future<void> getComments() async {
+    try {
+      loading.value = true;
+      if (availableComments.isNotEmpty) {
+        availableComments.value = [];
+      }
+      var list = await repository.getComments(
+        date: selectedDate.value,
+        shift: selectedShift.value,
+        machineId: machineCodes.length == 1
+            ? machineCodes.first.machineId
+            : null,
+      );
+      availableComments.value = list.data.list;
+    } on ApiException catch (e) {
+      AppConst.showLog(logText: '$e', tag: 'getComments');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
   selectMachine(Machine machine) {
     List<ShiftMachineModel> machineIDs = [];
 
@@ -70,7 +127,7 @@ class ShiftCommentController extends GetxController implements GetxService {
     selectedShift.value = type;
   }
 
-  generateRecords() {
+  generateRecords() async {
     List<ShiftCommentModel> list = [];
 
     for (var machine in machineCodes) {
@@ -104,10 +161,11 @@ class ShiftCommentController extends GetxController implements GetxService {
     }
 
     shiftCommentList.value = list;
+    await getComments();
     Get.to(() => CommentShowReportScreen());
   }
 
-  generateRecordsForSelectedMachine() {
+  generateRecordsForSelectedMachine() async {
     // for all month
     List<ShiftCommentModel> list = [];
     List<DateTime> datesList = getDatesInMonth(
@@ -147,6 +205,8 @@ class ShiftCommentController extends GetxController implements GetxService {
       }
     }
     shiftCommentList.value = list;
+
+    await getComments();
     Get.to(() => CommentShowReportScreen());
   }
 
