@@ -1,6 +1,6 @@
 //title text
 import 'package:flutter/widgets.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 final titleStyle = TextStyle(
   fontSize: 16,

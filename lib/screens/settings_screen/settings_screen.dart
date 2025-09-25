@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/machine_group/machine_group_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/shift_comments.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/widgets/language_bottom_sheet.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/widgets/logout_dialog.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
-import 'package:flutter_texmunimx/utils/app_images.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
+import 'package:trackweaving/screens/settings_screen/machine_group/machine_group_screen.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/shift_comments.dart';
+import 'package:trackweaving/screens/settings_screen/widgets/language_bottom_sheet.dart';
+import 'package:trackweaving/screens/settings_screen/widgets/logout_dialog.dart';
+import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_images.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatefulWidget {

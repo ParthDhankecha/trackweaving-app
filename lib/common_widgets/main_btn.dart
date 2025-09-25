@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class MainBtn extends StatelessWidget {
   const MainBtn({super.key, required this.label, this.onTap});

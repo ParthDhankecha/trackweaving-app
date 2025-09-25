@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/repository/api_exception.dart';
-import 'package:flutter_texmunimx/repository/login_repo.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
-import 'package:flutter_texmunimx/screens/home/home_screen.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/login_repo.dart';
+import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/screens/home/home_screen.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class LoginControllers extends GetxController implements GetxService {

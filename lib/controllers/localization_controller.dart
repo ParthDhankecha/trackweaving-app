@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class LocalizationController extends GetxController {

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter_texmunimx/models/shift_comment_list_response.dart';
-import 'package:flutter_texmunimx/repository/api_client.dart';
-import 'package:flutter_texmunimx/utils/app_const.dart';
-import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/models/shift_comment_list_response.dart';
+import 'package:trackweaving/repository/api_client.dart';
+import 'package:trackweaving/utils/app_const.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 
 class ShiftCommentRepository {
   final Sharedprefs sp;

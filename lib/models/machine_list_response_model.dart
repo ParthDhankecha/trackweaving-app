@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_group_response_model.dart';
 
 MachineListResponseModel machineListResponseModelFromMap(String str) =>
     MachineListResponseModel.fromMap(json.decode(str));

@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
-import 'package:flutter_texmunimx/common_widgets/show_success_snackbar.dart';
-import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
-import 'package:flutter_texmunimx/repository/api_exception.dart';
-import 'package:flutter_texmunimx/repository/machine_repository.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
+import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
+import 'package:trackweaving/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/machine_repository.dart';
+import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class MachineController extends GetxController implements GetxService {

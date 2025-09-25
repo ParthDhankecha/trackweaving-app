@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/models/maintenance_alert_reponse.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry/maintenance_entry_update.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
-import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/models/maintenance_alert_reponse.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_update.dart';
+import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class MaintenanceEntryCard extends StatelessWidget {

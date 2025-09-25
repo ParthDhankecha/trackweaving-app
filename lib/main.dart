@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/localization_controller.dart';
-import 'package:flutter_texmunimx/screens/splash_screen.dart';
-import 'package:flutter_texmunimx/utils/app_strings.dart';
-import 'package:flutter_texmunimx/utils/internationalization.dart';
-import 'package:flutter_texmunimx/utils/my_theme_controller.dart';
+import 'package:trackweaving/controllers/localization_controller.dart';
+import 'package:trackweaving/screens/splash_screen.dart';
+import 'package:trackweaving/utils/app_strings.dart';
+import 'package:trackweaving/utils/internationalization.dart';
+import 'package:trackweaving/utils/my_theme_controller.dart';
 import 'package:get/get.dart';
 import 'utils/get_di.dart' as getit;
 

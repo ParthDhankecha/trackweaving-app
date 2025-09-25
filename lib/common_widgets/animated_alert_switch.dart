@@ -1,6 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
 
 class AnimatedAlertSwitch extends StatelessWidget {
   final bool current;

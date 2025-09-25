@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
-import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
-import 'package:flutter_texmunimx/models/shift_comment_model.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_comment_list_item.dart';
-import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
+import 'package:trackweaving/common_widgets/main_btn.dart';
+import 'package:trackweaving/controllers/shift_comment_controller.dart';
+import 'package:trackweaving/models/shift_comment_model.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_comment_list_item.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class CommentShowReportScreen extends StatefulWidget {

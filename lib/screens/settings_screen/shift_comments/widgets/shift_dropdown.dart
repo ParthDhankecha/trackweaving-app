@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/models/shift_types_model.dart';
+import 'package:trackweaving/models/shift_types_model.dart';
 import 'package:get/get.dart';
 
 class ShiftDropdown extends StatelessWidget {

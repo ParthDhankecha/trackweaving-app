@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
 
 class PasswordTextField extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/localization_controller.dart';
-import 'package:flutter_texmunimx/utils/internationalization.dart';
+import 'package:trackweaving/controllers/localization_controller.dart';
+import 'package:trackweaving/utils/internationalization.dart';
 import 'package:get/get.dart';
 
 class LanguageBottomSheet extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
-import 'package:flutter_texmunimx/repository/api_client.dart';
-import 'package:flutter_texmunimx/utils/app_const.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/repository/api_client.dart';
+import 'package:trackweaving/utils/app_const.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class DashboardRepo {

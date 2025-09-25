@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/common_widgets/custom_progress_btn_.dart';
-import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
-import 'package:flutter_texmunimx/common_widgets/password_input.dart';
-import 'package:flutter_texmunimx/controllers/login_controllers.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/widgets/host_url.dialog.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/widgets/privacy_bar.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
-import 'package:flutter_texmunimx/utils/app_strings.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
+import 'package:trackweaving/common_widgets/main_btn.dart';
+import 'package:trackweaving/common_widgets/password_input.dart';
+import 'package:trackweaving/controllers/login_controllers.dart';
+import 'package:trackweaving/screens/auth_screens/widgets/host_url.dialog.dart';
+import 'package:trackweaving/screens/auth_screens/widgets/privacy_bar.dart';
+import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_strings.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/animated_active_switch.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
-import 'package:flutter_texmunimx/models/maintenance_category_list_model.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/common_widgets/animated_active_switch.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/my_text_widget.dart';
+import 'package:trackweaving/models/maintenance_category_list_model.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class MaintenanceCategoryCard extends StatelessWidget {
   final MaintenanceCategory maintenanceCategory;

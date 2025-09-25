@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/maintenance_category_controller.dart';
-import 'package:flutter_texmunimx/models/maintenance_alert_reponse.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/maintenance_entry/maintenance_entry_card.dart';
+import 'package:trackweaving/controllers/maintenance_category_controller.dart';
+import 'package:trackweaving/models/maintenance_alert_reponse.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_card.dart';
 import 'package:get/get.dart';
 
 class MaintenanceEntryScreen extends StatefulWidget {

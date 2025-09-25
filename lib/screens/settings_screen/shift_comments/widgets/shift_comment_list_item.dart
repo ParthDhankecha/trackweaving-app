@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/models/shift_comment_model.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/models/shift_comment_model.dart';
 
 class ShiftCommentListItem extends StatelessWidget {
   const ShiftCommentListItem({

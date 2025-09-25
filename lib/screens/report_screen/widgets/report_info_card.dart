@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/common_widgets/my_text_widget.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/my_text_widget.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class ReportInfoCard extends StatelessWidget {
   final String date;

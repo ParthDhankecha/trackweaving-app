@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
-import 'package:flutter_texmunimx/controllers/machine_controller.dart';
-import 'package:flutter_texmunimx/controllers/shift_comment_controller.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
-import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
+import 'package:trackweaving/common_widgets/main_btn.dart';
+import 'package:trackweaving/controllers/machine_controller.dart';
+import 'package:trackweaving/controllers/shift_comment_controller.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class ShiftComments extends StatefulWidget {

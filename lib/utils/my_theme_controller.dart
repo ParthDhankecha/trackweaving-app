@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 

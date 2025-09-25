@@ -1,4 +1,4 @@
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController implements GetxService {

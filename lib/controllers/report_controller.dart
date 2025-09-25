@@ -1,6 +1,6 @@
-import 'package:flutter_texmunimx/models/machine_group_response_model.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
-import 'package:flutter_texmunimx/models/shift_types_model.dart';
+import 'package:trackweaving/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/shift_types_model.dart';
 import 'package:get/get.dart';
 
 class ReportController extends GetxController implements GetxService {

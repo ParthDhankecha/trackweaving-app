@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/common_widgets/custom_progress_btn_.dart';
-import 'package:flutter_texmunimx/common_widgets/main_btn.dart';
-import 'package:flutter_texmunimx/controllers/maintenance_category_controller.dart';
-import 'package:flutter_texmunimx/models/maintenance_alert_reponse.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
+import 'package:trackweaving/common_widgets/main_btn.dart';
+import 'package:trackweaving/controllers/maintenance_category_controller.dart';
+import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:get/get.dart';
 
 class MaintenanceEntryUpdate extends StatefulWidget {

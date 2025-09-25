@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/machine_controller.dart';
-import 'package:flutter_texmunimx/controllers/report_controller.dart';
-import 'package:flutter_texmunimx/screens/report_screen/report_result_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/controllers/machine_controller.dart';
+import 'package:trackweaving/controllers/report_controller.dart';
+import 'package:trackweaving/screens/report_screen/report_result_screen.dart';
+import 'package:trackweaving/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
 
 class ProductionReportPage extends StatefulWidget {

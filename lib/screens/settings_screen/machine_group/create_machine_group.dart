@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:get/get.dart';
 
 class CreateMachineGroup extends StatefulWidget {

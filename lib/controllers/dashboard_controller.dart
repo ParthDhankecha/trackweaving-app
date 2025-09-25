@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
-import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
-import 'package:flutter_texmunimx/models/status_enum.dart';
-import 'package:flutter_texmunimx/repository/api_exception.dart';
-import 'package:flutter_texmunimx/repository/dashboard_repo.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
-import 'package:flutter_texmunimx/utils/shared_pref.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
+import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/models/status_enum.dart';
+import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/dashboard_repo.dart';
+import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class DashBoardController extends GetxController implements GetxService {

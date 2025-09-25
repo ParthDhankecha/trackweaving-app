@@ -1,18 +1,18 @@
 import 'dart:developer';
 
-import 'package:flutter_texmunimx/common_widgets/show_error_snackbar.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
-import 'package:flutter_texmunimx/models/shift_coment_update_model.dart';
-import 'package:flutter_texmunimx/models/shift_comment_list_response.dart';
-import 'package:flutter_texmunimx/models/shift_comment_model.dart';
-import 'package:flutter_texmunimx/models/shift_machine_model.dart';
-import 'package:flutter_texmunimx/models/shift_types_model.dart';
-import 'package:flutter_texmunimx/repository/api_exception.dart';
-import 'package:flutter_texmunimx/repository/shift_comment_repository.dart';
-import 'package:flutter_texmunimx/screens/auth_screens/login_screen.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/shift_comments/comment_show_report_screen.dart';
-import 'package:flutter_texmunimx/utils/app_const.dart';
-import 'package:flutter_texmunimx/utils/date_formate_extension.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/shift_coment_update_model.dart';
+import 'package:trackweaving/models/shift_comment_list_response.dart';
+import 'package:trackweaving/models/shift_comment_model.dart';
+import 'package:trackweaving/models/shift_machine_model.dart';
+import 'package:trackweaving/models/shift_types_model.dart';
+import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/shift_comment_repository.dart';
+import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/comment_show_report_screen.dart';
+import 'package:trackweaving/utils/app_const.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class ShiftCommentController extends GetxController implements GetxService {

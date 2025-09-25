@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_texmunimx/repository/api_exception.dart';
+import 'package:trackweaving/repository/api_exception.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 

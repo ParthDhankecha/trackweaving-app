@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
+import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
 
 class StopDataTable extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/controllers/login_controllers.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:get/get.dart';
 
 class LogoutDialog extends StatelessWidget {

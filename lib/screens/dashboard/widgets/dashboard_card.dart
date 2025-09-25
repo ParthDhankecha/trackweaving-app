@@ -1,11 +1,11 @@
 import 'package:blinker/blinker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/controllers/dashboard_controller.dart';
-import 'package:flutter_texmunimx/models/get_machinelog_model.dart';
-import 'package:flutter_texmunimx/screens/dashboard/widgets/stop_table.dart';
-import 'package:flutter_texmunimx/utils/app_colors.dart';
-import 'package:flutter_texmunimx/utils/app_images.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/controllers/dashboard_controller.dart';
+import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/screens/dashboard/widgets/stop_table.dart';
+import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_images.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

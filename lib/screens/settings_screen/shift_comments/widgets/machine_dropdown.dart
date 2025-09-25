@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
 
 class MachineDropdown extends StatelessWidget {
   final String title;

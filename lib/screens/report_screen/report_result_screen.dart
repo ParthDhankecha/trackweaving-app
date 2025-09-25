@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/common_widgets/app_text_styles.dart';
-import 'package:flutter_texmunimx/screens/report_screen/widgets/report_info_card.dart';
+import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/screens/report_screen/widgets/report_info_card.dart';
 
 class ReportResultScreen extends StatefulWidget {
   const ReportResultScreen({super.key});

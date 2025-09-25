@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_texmunimx/controllers/machine_controller.dart';
-import 'package:flutter_texmunimx/models/machine_list_response_model.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/edit_machine_configuration.dart';
-import 'package:flutter_texmunimx/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
+import 'package:trackweaving/controllers/machine_controller.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/screens/settings_screen/machine_configuration/edit_machine_configuration.dart';
+import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
 import 'package:get/get.dart';
 
 class MachineConfigurationScreen extends StatefulWidget {
