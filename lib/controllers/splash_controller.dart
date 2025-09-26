@@ -47,7 +47,7 @@ class SplashController extends GetxController implements GetxService {
   }
 
   checkUser() async {
-    sp.hostUrl = '192.168.29.129:3000';
+    // sp.hostUrl = '192.168.29.129:3000';
 
     print(sp.userToken);
 

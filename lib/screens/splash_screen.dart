@@ -24,45 +24,43 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.appBg,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AppImages.splashLogo, height: 140, width: 140),
-              ],
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppStrings.appName,
-                  style: GoogleFonts.poppins(
-                    fontSize: 36,
-                    color: AppColors.mainColor,
-                    fontWeight: FontWeight.w700,
-                  ),
+    return Scaffold(
+      backgroundColor: AppColors.appBg,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(AppImages.splashLogo, height: 140, width: 140),
+            ],
+          ),
+    
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                AppStrings.appName,
+                style: GoogleFonts.poppins(
+                  fontSize: 36,
+                  color: AppColors.mainColor,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
-
-            Text(
-              AppStrings.appTagLine,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                color: AppColors.mainColor,
-
-                fontWeight: FontWeight.w700,
               ),
+            ],
+          ),
+    
+          Text(
+            AppStrings.appTagLine,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              color: AppColors.mainColor,
+    
+              fontWeight: FontWeight.w700,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
