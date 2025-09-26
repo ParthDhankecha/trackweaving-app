@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
@@ -7,6 +8,7 @@ import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:trackweaving/screens/auth_screens/widgets/host_url.dialog.dart';
 import 'package:trackweaving/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_images.dart';
 import 'package:trackweaving/utils/app_strings.dart';
 import 'package:get/get.dart';
 
@@ -25,80 +27,100 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Get.dialog(const HostUrlDialog());
-                      },
-                      child: Text(
-                        'Change Base Url',
-                        style: bodyStyle1.copyWith(color: AppColors.errorColor),
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  AppStrings.appName,
-                  style: titleStyle.copyWith(fontSize: 20),
-                ),
-                SizedBox(height: 56),
-                Text('Welcome'),
-                Text('Login with User Name and Password.'),
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: _buildInput(
-                    hintText: 'Enter User Name',
-                    labelText: 'User Name',
-                    controller: loginController.emailCont,
-
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter an User Name';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: PasswordTextField(
-                    controller: loginController.passwordCont,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Obx(
-                        () => loginController.isLoading.value
-                            ? CustomProgressBtn()
-                            : MainBtn(
-                                label: 'Login',
-                                onTap: () {
-                                  if (formKey.currentState!.validate()) {
-                                    loginController.loginWithEmailPassword();
-                                  }
-                                },
-                              ),
-                      ),
-                    ],
+                TextButton(
+                  onPressed: () {
+                    Get.dialog(const HostUrlDialog());
+                  },
+                  child: Text(
+                    'Change Base Url',
+                    style: bodyStyle1.copyWith(color: AppColors.errorColor),
                   ),
                 ),
               ],
             ),
-          ),
-          Positioned(bottom: 16, left: 0, right: 0, child: PrivacyBar()),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(AppImages.splashLogo, height: 120, width: 120),
+              ],
+            ),
+            SizedBox(height: 16),
+            Text(
+              AppStrings.appName,
+              style: GoogleFonts.poppins(
+                fontSize: 30,
+                color: AppColors.mainColor,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                  child: Text(
+                    'Login',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: _buildInput(
+                hintText: 'Enter User Name',
+                labelText: 'User Name',
+                controller: loginController.emailCont,
+
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an User Name';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: PasswordTextField(
+                controller: loginController.passwordCont,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(
+                    () => loginController.isLoading.value
+                        ? CustomProgressBtn()
+                        : MainBtn(
+                            label: 'Login',
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                loginController.loginWithEmailPassword();
+                              }
+                            },
+                          ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -121,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
             validator: validator,
             keyboardType: keyboardType,
             obscureText: isPassword,
-
+            style: GoogleFonts.poppins(color: AppColors.blackColor),
             decoration: InputDecoration(
               hintText: hintText,
               labelText: labelText,

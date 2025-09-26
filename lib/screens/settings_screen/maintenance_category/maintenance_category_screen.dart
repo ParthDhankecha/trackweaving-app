@@ -3,6 +3,7 @@ import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/models/maintenance_category_list_model.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_card.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class MaintenanceCategoryScreen extends StatefulWidget {
   const MaintenanceCategoryScreen({super.key});
@@ -25,6 +26,8 @@ class _MaintenanceCategoryScreenState extends State<MaintenanceCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBg,
+
       appBar: AppBar(title: Text('maintenance_category'.tr)),
       body: Column(
         children: [

@@ -75,7 +75,7 @@ class DashBoardController extends GetxController implements GetxService {
   Future<void> getData() async {
     try {
       isLoading.value = true;
-
+      print('Getting Data...');
       var data = await dashboardRepo.getMachineLogs(status: showStatus.value);
 
       AggregateReport aggregateReport = data.data.aggregateReport;
@@ -92,7 +92,7 @@ class DashBoardController extends GetxController implements GetxService {
       machineLogList.value = [];
       switch (e.statusCode) {
         case 401:
-          showErrorSnackbar('Unauthenticated. Login and Try again.');
+          //  showErrorSnackbar('Unauthenticated. Login and Try again.');
           timer.cancel();
           Get.offAll(() => LoginScreen());
           break;
@@ -109,9 +109,15 @@ class DashBoardController extends GetxController implements GetxService {
     });
   }
 
+  stopTimer() {
+    if (timer.isActive) {
+      timer.cancel();
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+    stopTimer();
   }
 }

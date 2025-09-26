@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:trackweaving/screens/dashboard/widgets/refresh_loading_widget.dart';
-import 'package:trackweaving/screens/dashboard/widgets/tab_widget.dart';
 import 'package:trackweaving/screens/dashboard/widgets/top_row_widget.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +20,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+
+    print('Init state called');
     dashBoardController.getSettings().then((value) {
       dashBoardController.getData();
       dashBoardController.startTimer();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('Dispose called');
+    dashBoardController.stopTimer();
   }
 
   @override
@@ -33,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         automaticallyImplyLeading: false,
         title: Text('live_tracking'.tr),
         scrolledUnderElevation: 1,
-        elevation: 6,
+
         actions: [
           Obx(
             () => IconButton(
@@ -54,10 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Column(
             children: [
-              Container(
-                color: Colors.deepPurple[50],
-                child: Column(children: [TopRowWidget(), SizedBox(height: 8)]),
-              ),
+              Column(children: [TopRowWidget(), SizedBox(height: 8)]),
               SizedBox(height: 10),
               Expanded(
                 child: RefreshIndicator(
@@ -82,15 +88,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
 
-          Positioned(
-            bottom: 8,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [TabWidget()],
-            ),
-          ),
+          // Positioned(
+          //   bottom: 8,
+          //   left: 0,
+          //   right: 0,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [TabWidget()],
+          //   ),
+          // ),
         ],
       ),
     );

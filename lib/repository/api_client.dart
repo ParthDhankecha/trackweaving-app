@@ -56,7 +56,7 @@ class ApiClient extends GetxService {
         default:
           throw ApiException(
             statusCode: response.statusCode,
-            message: response.reasonPhrase ?? '',
+            message: jsonDecode(response.body)['message'] ?? '',
           );
       }
     } catch (e) {

@@ -152,14 +152,14 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('reports'.tr)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            SizedBox(height: 45),
-
             Card(
-              elevation: 4,
+              elevation: 2,
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -309,13 +309,6 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
 
                             ElevatedButton(
                               onPressed: () {
-                                // Logic to show the report
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Showing Report...'),
-                                  ),
-                                );
-
                                 Get.to(() => ReportResultScreen());
                               },
                               style: ElevatedButton.styleFrom(

@@ -23,7 +23,9 @@ class AnimatedAlertSwitch extends StatelessWidget {
         first: false,
         second: true,
         spacing: 2.0,
+
         style: const ToggleStyle(
+          backgroundColor: Colors.white,
           borderColor: Colors.transparent,
           boxShadow: [
             BoxShadow(

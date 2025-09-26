@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void showErrorSnackbar(
-  String title, {
-  String decs = 'Something went wrong. Please try again.',
-}) {
+void showErrorSnackbar(String title, {String decs = ''}) {
   Get.snackbar(
     title, // Title of the SnackBar
     decs, // Message content
+    messageText: decs.isEmpty ? Container() : Text(decs),
     snackPosition: SnackPosition.TOP, // Position of the SnackBar
     backgroundColor: Colors.red, // Background color for error indication
     colorText: Colors.white, // Text color

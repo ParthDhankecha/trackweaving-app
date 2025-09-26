@@ -51,6 +51,17 @@ class LoginControllers extends GetxController implements GetxService {
       } else {}
     } on ApiException catch (e) {
       log('Login Error : $e');
+      if (e.message.isNotEmpty) {
+        Get.snackbar(
+          e.message,
+          '',
+
+          messageText: Container(),
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } finally {
       isLoading.value = false;
     }

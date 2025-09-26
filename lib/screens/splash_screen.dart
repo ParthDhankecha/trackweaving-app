@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trackweaving/controllers/splash_controller.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_images.dart';
 import 'package:trackweaving/utils/app_strings.dart';
 import 'package:get/get.dart';
 
@@ -24,20 +26,26 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.mainColor,
+        backgroundColor: AppColors.appBg,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(AppImages.splashLogo, height: 140, width: 140),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Text(
                   AppStrings.appName,
-                  style: TextStyle(
-                    fontSize: 34,
-                    color: Colors.white,
-                    letterSpacing: 1.6,
-                    fontWeight: FontWeight.bold,
+                  style: GoogleFonts.poppins(
+                    fontSize: 36,
+                    color: AppColors.mainColor,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -45,11 +53,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
             Text(
               AppStrings.appTagLine,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                letterSpacing: 1.6,
-                fontWeight: FontWeight.bold,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
+                color: AppColors.mainColor,
+
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],

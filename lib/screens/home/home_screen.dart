@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/screens/dashboard/dashboard_screen.dart';
 import 'package:trackweaving/screens/report_screen/report_screen.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
+import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
 import 'package:trackweaving/screens/settings_screen/settings_screen.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
@@ -25,34 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> widgetsList = [
     DashboardScreen(),
     ProductionReportPage(),
-    Text('Notifications'),
+    MaintenanceEntryScreen(),
     SettingsScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Obx(() {
-      //     String title = '';
-      //     switch (homeController.selectedNavIndex.value) {
-      //       case 1:
-      //         title = 'reports'.tr;
-      //         break;
-
-      //       case 2:
-      //         title = 'notifications'.tr;
-      //         break;
-
-      //       case 3:
-      //         title = 'settings'.tr;
-      //         break;
-      //       default:
-      //         title = 'live_tracking'.tr;
-      //     }
-      //     return Text(title);
-      //   }),
-      // ),
       body: Obx(
         () => widgetsList.elementAt(homeController.selectedNavIndex.value),
       ),

@@ -4,6 +4,7 @@ import 'package:trackweaving/controllers/machine_controller.dart';
 import 'package:trackweaving/controllers/shift_comment_controller.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/machine_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +27,8 @@ class _ShiftCommentsState extends State<ShiftComments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBg,
+
       appBar: AppBar(title: Text('shift_wise_comment_update'.tr)),
       body: Obx(
         () => machineController.isLoading.value
@@ -60,7 +63,7 @@ class _ShiftCommentsState extends State<ShiftComments> {
                     ),
 
                     child: _buildDateField(
-                      'report_date',
+                      'report_date'.tr,
                       shiftCommentController.selectedDate.value,
                       (value) {
                         shiftCommentController.selectedDate.value = value;

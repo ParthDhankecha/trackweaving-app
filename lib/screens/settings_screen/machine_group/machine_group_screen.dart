@@ -6,6 +6,7 @@ import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/create_machine_group.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/machin_group_card.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class MachineGroupScreen extends StatefulWidget {
   const MachineGroupScreen({super.key});
@@ -26,8 +27,10 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBg,
       appBar: AppBar(title: Text('machine_group'.tr)),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.mainColor,
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -38,7 +41,7 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
             ),
           );
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       body: Column(
         children: [

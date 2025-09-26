@@ -14,58 +14,61 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Shiftwise Production Report')),
-      body: Column(
-        children: [
-          //date and title
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('Date: 12-sep-2025 to 12-sep-2025')],
-          ),
-          Divider(),
-          _buildTotalBox(
-            title: 'Total',
-            picks: '1864818',
-            eff: '90',
-            prodAvg: '384.72',
-            picksAvg: '155402',
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            //date and title
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text('Date: 12-sep-2025 to 12-sep-2025')],
+            ),
+            Divider(),
+            _buildTotalBox(
+              title: 'Total',
+              picks: '1864818',
+              eff: '90',
+              prodAvg: '384.72',
+              picksAvg: '155402',
+            ),
 
-          Row(
-            children: [
-              Expanded(
-                child: _buildTotalBoxHorizontal(
-                  title: 'Day Shift Total',
-                  picks: '274275',
-                  eff: '90',
-                  prodAvg: '57.63',
-                  picksAvg: '68569',
+            Row(
+              children: [
+                Expanded(
+                  child: _buildTotalBoxHorizontal(
+                    title: 'Day Shift Total',
+                    picks: '274275',
+                    eff: '90',
+                    prodAvg: '57.63',
+                    picksAvg: '68569',
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _buildTotalBoxHorizontal(
-                  title: 'Night Shift Total',
-                  picks: '864442',
-                  eff: '90',
-                  prodAvg: '179.2',
-                  picksAvg: '216111',
+                Expanded(
+                  child: _buildTotalBoxHorizontal(
+                    title: 'Night Shift Total',
+                    picks: '864442',
+                    eff: '90',
+                    prodAvg: '179.2',
+                    picksAvg: '216111',
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          //data
-          ReportInfoCard(
-            date: '12-sep-2025',
-            shift: 'Night Shift',
-            machine: 'm1',
-            prodMTRS: '41.4',
-            eff: '91',
-            runtime: '11:49:00',
-            beamLeft: '0',
+            //data
+            ReportInfoCard(
+              date: '12-sep-2025',
+              shift: 'Night Shift',
+              machine: 'm1',
+              prodMTRS: '41.4',
+              eff: '91',
+              runtime: '11:49:00',
+              beamLeft: '0',
 
-            picks: '213477',
-          ),
-        ],
+              picks: '213477',
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -87,6 +90,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
           child: Column(
             children: [
               Text(title, style: normalTextStyle1),
+              SizedBox(height: 6),
               _buildTotalBoxRow('Picks', picks),
               SizedBox(height: 6),
               _buildTotalBoxRow('Eff', eff),
@@ -108,40 +112,39 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
     required String prodAvg,
     required String picksAvg,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Card(
-        color: Colors.white,
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(color: Colors.white),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text(title, style: normalTextStyle1)],
-                ),
-                Row(
-                  children: [
-                    Expanded(child: _buildTotalBoxRow('Picks', picks)),
-                    SizedBox(width: 8),
+    return Card(
+      color: Colors.white,
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text(title, style: normalTextStyle1)],
+              ),
+              SizedBox(height: 6),
 
-                    Expanded(child: _buildTotalBoxRow('Eff. ', eff)),
-                  ],
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(child: _buildTotalBoxRow('Prod.Avg.', prodAvg)),
-                    SizedBox(width: 8),
-                    Expanded(child: _buildTotalBoxRow('Picks Avg.', picksAvg)),
-                  ],
-                ),
-              ],
-            ),
+              Row(
+                children: [
+                  Expanded(child: _buildTotalBoxRow('Picks', picks)),
+                  SizedBox(width: 8),
+
+                  Expanded(child: _buildTotalBoxRow('Eff. ', eff)),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child: _buildTotalBoxRow('Prod.Avg.', prodAvg)),
+                  SizedBox(width: 8),
+                  Expanded(child: _buildTotalBoxRow('Picks Avg.', picksAvg)),
+                ],
+              ),
+            ],
           ),
         ),
       ),

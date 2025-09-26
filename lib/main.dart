@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appName,
       themeMode: themeController.themeMode,
       theme: themeController.lightTheme,
-      darkTheme: themeController.darkTheme,
+      darkTheme: themeController.lightTheme,
       translations: AppTranslations(), // translations
       //locale: Locale('en', 'US'), // Default locale
       fallbackLocale: const Locale(

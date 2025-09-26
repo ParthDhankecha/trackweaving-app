@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class CreateMachineGroup extends StatefulWidget {
   final String? initialName;
@@ -47,7 +49,7 @@ class _CreateMachineGroupState extends State<CreateMachineGroup> {
           children: [
             Text(
               widget.initialName == null
-                  ? 'Enter Group Name'
+                  ? 'enter_group_name'.tr
                   : 'Update Group Name',
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
@@ -75,7 +77,10 @@ class _CreateMachineGroupState extends State<CreateMachineGroup> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(
+                      'cancel'.tr,
+                      style: GoogleFonts.poppins(color: AppColors.mainColor),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -94,13 +99,16 @@ class _CreateMachineGroupState extends State<CreateMachineGroup> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue.shade800,
+                      backgroundColor: AppColors.mainColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text(widget.initialName == null ? 'Save' : 'Update'),
+                    child: Text(
+                      widget.initialName == null ? 'save'.tr : 'update'.tr,
+                      style: GoogleFonts.poppins(),
+                    ),
                   ),
                 ),
               ],

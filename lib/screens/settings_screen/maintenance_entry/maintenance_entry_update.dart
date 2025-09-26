@@ -5,6 +5,7 @@ import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class MaintenanceEntryUpdate extends StatefulWidget {
   final MaintenanceEntryModel maintenanceEntryModel;
@@ -33,6 +34,8 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBg,
+
       appBar: AppBar(title: Text('Maintenance Entry Update')),
       body: Form(
         key: formKey,

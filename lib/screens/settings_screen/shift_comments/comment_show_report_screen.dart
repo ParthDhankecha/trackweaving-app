@@ -3,6 +3,7 @@ import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/controllers/shift_comment_controller.dart';
 import 'package:trackweaving/models/shift_comment_model.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_comment_list_item.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,8 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBg,
+
       appBar: AppBar(title: Text('Show Report')),
       body: Column(
         children: [
@@ -76,7 +79,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
             child: Row(
               children: [
                 MainBtn(
-                  label: 'Update',
+                  label: 'save'.tr,
                   onTap: () {
                     List<Map<String, dynamic>> commentsList = [];
                     for (var comment

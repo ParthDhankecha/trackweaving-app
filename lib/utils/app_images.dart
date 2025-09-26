@@ -10,4 +10,6 @@ class AppImages {
   static final imgClock = '$baseImageUrl/time.png';
   static final imgSettings = '$baseImageUrl/settings.png';
   static final imgSettings1 = '$baseImageUrl/settings_1.png';
+  static final imgLogo = '$baseImageUrl/main_logo.png';
+  static final splashLogo = '$baseImageUrl/splash_logo.png';
 }

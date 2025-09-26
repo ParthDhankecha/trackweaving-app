@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/models/shift_comment_model.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class ShiftCommentListItem extends StatelessWidget {
   const ShiftCommentListItem({
@@ -19,6 +21,8 @@ class ShiftCommentListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12, bottom: 16),
       child: Card(
+        color: AppColors.whiteColor,
+        elevation: 2,
         child: Container(
           margin: EdgeInsets.all(14),
           child: Column(
@@ -42,7 +46,7 @@ class ShiftCommentListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-                        Text('Day Shift'),
+                        Text('day_shift'.tr),
                         SizedBox(height: 10),
 
                         TextFormField(
@@ -68,7 +72,7 @@ class ShiftCommentListItem extends StatelessWidget {
                         ),
                         SizedBox(height: 14),
 
-                        Text('Night Shift'),
+                        Text('night_shift'.tr),
                         SizedBox(height: 10),
 
                         TextFormField(
