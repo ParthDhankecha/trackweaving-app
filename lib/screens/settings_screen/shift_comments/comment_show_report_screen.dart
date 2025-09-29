@@ -101,7 +101,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
               children: [
                 MainBtn(
                   label: 'save'.tr,
-                  onTap: () {
+                  onTap: () async {
                     List<Map<String, dynamic>> commentsList = [];
                     for (var comment
                         in shiftCommentController.shiftCommentList) {
@@ -142,11 +142,11 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                     var payload = {"list": commentsList};
                     print(payload);
 
-                    shiftCommentController.updateShiftComment(payload).then((
-                      _,
-                    ) {
-                      shiftCommentController.getComments();
-                      FocusScope.of(context).unfocus();
+                    await shiftCommentController.updateShiftComment(payload);
+                    await shiftCommentController.getComments().then((value) {
+                      FocusScope.of(context).unfocus(
+                        disposition: UnfocusDisposition.previouslyFocusedChild,
+                      );
                     });
                   },
                 ),
