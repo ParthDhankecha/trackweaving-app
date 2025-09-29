@@ -72,7 +72,7 @@ class MachineController extends GetxController implements GetxService {
       machineGroupList.value = data;
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error Creating Group Name: ${e.message}');
+      //showErrorSnackbar('Error Creating Group Name: ${e.message}');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -96,7 +96,7 @@ class MachineController extends GetxController implements GetxService {
       );
       getList();
     } on ApiException catch (e) {
-      showErrorSnackbar('Error Updating Group Name: ${e.message}');
+      //showErrorSnackbar('Error Updating Group Name: ${e.message}');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -116,7 +116,7 @@ class MachineController extends GetxController implements GetxService {
       getList();
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error Creating Group Name: ${e.message}');
+      //showErrorSnackbar('Error Creating Group Name: ${e.message}');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -147,7 +147,7 @@ class MachineController extends GetxController implements GetxService {
       machineList.value = data;
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error - Machine List Load');
+      //showErrorSnackbar('Error - Machine List Load');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -177,7 +177,7 @@ class MachineController extends GetxController implements GetxService {
       showSuccessSnackbar('Machine Configuration Updated');
     } on ApiException catch (e) {
       log('error:onUpdateMAchinConfig : $e');
-      showErrorSnackbar('Error - Something Went Wrong.');
+      //showErrorSnackbar('Error - Something Went Wrong.');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -204,7 +204,7 @@ class MachineController extends GetxController implements GetxService {
       getMachineList();
     } on ApiException catch (e) {
       log('error:onUpdateMAchinConfig : $e');
-      showErrorSnackbar('Error - Something Went Wrong.');
+      //showErrorSnackbar('Error - Something Went Wrong.');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

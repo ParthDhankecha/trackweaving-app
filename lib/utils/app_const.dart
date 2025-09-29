@@ -28,6 +28,9 @@ class AppConst {
   //shift wise comment
   static String shiftWiseComment = 'device/shift-wise-comments';
 
+  //reports
+  static String reports = 'device/reports';
+
   static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
 
   //API LOG

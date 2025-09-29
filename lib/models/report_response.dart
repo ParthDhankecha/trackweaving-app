@@ -72,12 +72,12 @@ class DataList {
   DataList({required this.reportDate, required this.reportData});
 
   factory DataList.fromMap(Map<String, dynamic> json) => DataList(
-    reportDate: DateTime.parse(json["reportDate"]),
+    reportDate: DateTime.parse(json["reportDate"]).toLocal(),
     reportData: ReportData.fromMap(json["reportData"]),
   );
 
   Map<String, dynamic> toMap() => {
-    "reportDate": reportDate.toIso8601String(),
+    "reportDate": reportDate.toLocal(),
     "reportData": reportData.toMap(),
   };
 }
@@ -217,33 +217,44 @@ class StopsData {
 
 class Feeder {
   int count;
-  Duration duration;
-
+  String duration;
   Feeder({required this.count, required this.duration});
 
-  factory Feeder.fromMap(Map<String, dynamic> json) => Feeder(
-    count: json["count"],
-    duration: durationValues.map[json["duration"]]!,
-  );
+  factory Feeder.fromMap(Map<String, dynamic> json) =>
+      Feeder(count: json["count"], duration: json["duration"]);
 
-  Map<String, dynamic> toMap() => {
-    "count": count,
-    "duration": durationValues.reverse[duration],
-  };
+  Map<String, dynamic> toMap() => {"count": count, "duration": duration};
 }
 
-enum Duration { THE_0045 }
+// Extension updated to use the new class name StopsData
+extension StopsDataExtensions on StopsData {
+  int get totalCount =>
+      warp.count + weft.count + feeder.count + manual.count + other.count;
 
-final durationValues = EnumValues({"00:45": Duration.THE_0045});
+  String get totalDuration {
+    // Helper to convert "HH:MM" string to total minutes (assuming HH:MM or MM:SS)
+    int durationToMinutes(String duration) {
+      final parts = duration.split(':');
+      if (parts.length == 2) {
+        final h = int.tryParse(parts[0]) ?? 0;
+        final m = int.tryParse(parts[1]) ?? 0;
+        // Treating as H:M for production run time data
+        return (h * 60) + m;
+      }
+      return 0;
+    }
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
+    int totalMinutes =
+        durationToMinutes(warp.duration) +
+        durationToMinutes(weft.duration) +
+        durationToMinutes(feeder.duration) +
+        durationToMinutes(manual.duration) +
+        durationToMinutes(other.duration);
 
-  EnumValues(this.map);
+    // Convert total minutes back to "HH:MM" format for display
+    final hours = (totalMinutes ~/ 60).toString().padLeft(2, '0');
+    final minutes = (totalMinutes % 60).toString().padLeft(2, '0');
 
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
+    return "$hours:$minutes";
   }
 }

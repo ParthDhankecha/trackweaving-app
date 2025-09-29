@@ -5,6 +5,10 @@ extension DateFormatter on DateTime {
     return DateFormat('dd-MMM-yyyy').format(this);
   }
 
+  String get ddmmyyFormat2 {
+    return DateFormat('dd-MM-yyyy').format(this);
+  }
+
   /// Formats a UTC DateTime object to a 'dd-MMM-yyyy' string.
   /// Converts the date to UTC before formatting to handle all timezones correctly.
   /// Example: '19-Jun-2025'

@@ -6,6 +6,7 @@ import 'package:trackweaving/screens/settings_screen/machine_configuration/widge
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class ProductionReportPage extends StatefulWidget {
   const ProductionReportPage({super.key});
@@ -77,21 +78,33 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
         ),
         TextFormField(
           readOnly: true,
-          controller: TextEditingController(
-            text:
-                '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
-          ),
+          onTap: () async {
+            final DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: selectedDate,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+            );
+            if (pickedDate != null && pickedDate != selectedDate) {
+              onDateSelected(pickedDate);
+            }
+          },
+          controller: TextEditingController(text: selectedDate.ddmmyyFormat2),
           decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               borderSide: BorderSide(color: Colors.grey),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
+              horizontal: 7,
               vertical: 8,
             ),
             suffixIcon: IconButton(
-              icon: const Icon(Icons.calendar_today, color: Colors.grey),
+              icon: const Icon(
+                Icons.calendar_today,
+                color: Colors.grey,
+                size: 16,
+              ),
               onPressed: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
@@ -196,6 +209,8 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                     _fromDate,
                                     (newDate) {
                                       setState(() {
+                                        reportController.startDate.value =
+                                            newDate;
                                         _fromDate = newDate;
                                         _endDate = newDate;
                                       });
@@ -209,6 +224,8 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                     _endDate,
                                     (newDate) {
                                       setState(() {
+                                        reportController.endDate.value =
+                                            newDate;
                                         _endDate = newDate;
                                       });
                                     },
@@ -307,27 +324,47 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                               ),
                             ),
 
-                            ElevatedButton(
-                              onPressed: () {
-                                Get.to(() => ReportResultScreen());
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.mainColor,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: Text(
-                                'show_report'.tr,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            Obx(
+                              () => reportController.isLoading.value
+                                  ? Center(
+                                      child: SizedBox(
+                                        height: 25,
+                                        width: 25,
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: () async {
+                                        var reportData = await reportController
+                                            .getReportData();
+                                        if (reportData != null) {
+                                          Get.to(
+                                            () => ReportResultScreen(
+                                              reportResponse: reportData,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.mainColor,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 8,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'show_report'.tr,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ],
                         ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
-import 'package:trackweaving/screens/report_screen/widgets/report_info_card.dart';
+import 'package:trackweaving/models/report_response.dart';
+import 'package:trackweaving/screens/report_screen/report_table/report_table_2.dart';
+import 'package:trackweaving/screens/report_screen/report_table/report_table_widget.dart';
 
 class ReportResultScreen extends StatefulWidget {
-  const ReportResultScreen({super.key});
+  final ReportsResponse reportResponse;
+  const ReportResultScreen({super.key, required this.reportResponse});
 
   @override
   State<ReportResultScreen> createState() => _ReportResultScreenState();
@@ -19,54 +22,55 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
         child: Column(
           children: [
             //date and title
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text('Date: 12-sep-2025 to 12-sep-2025')],
-            ),
-            Divider(),
-            _buildTotalBox(
-              title: 'Total',
-              picks: '1864818',
-              eff: '90',
-              prodAvg: '384.72',
-              picksAvg: '155402',
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [Text('Date: 12-sep-2025 to 12-sep-2025')],
+            // ),
+            // Divider(),
+            // _buildTotalBox(
+            //   title: 'Total',
+            //   picks: '1864818',
+            //   eff: '90',
+            //   prodAvg: '384.72',
+            //   picksAvg: '155402',
+            // ),
 
-            Row(
-              children: [
-                Expanded(
-                  child: _buildTotalBoxHorizontal(
-                    title: 'Day Shift Total',
-                    picks: '274275',
-                    eff: '90',
-                    prodAvg: '57.63',
-                    picksAvg: '68569',
-                  ),
-                ),
-                Expanded(
-                  child: _buildTotalBoxHorizontal(
-                    title: 'Night Shift Total',
-                    picks: '864442',
-                    eff: '90',
-                    prodAvg: '179.2',
-                    picksAvg: '216111',
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: _buildTotalBoxHorizontal(
+            //         title: 'Day Shift Total',
+            //         picks: '274275',
+            //         eff: '90',
+            //         prodAvg: '57.63',
+            //         picksAvg: '68569',
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: _buildTotalBoxHorizontal(
+            //         title: 'Night Shift Total',
+            //         picks: '864442',
+            //         eff: '90',
+            //         prodAvg: '179.2',
+            //         picksAvg: '216111',
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-            //data
-            ReportInfoCard(
-              date: '12-sep-2025',
-              shift: 'Night Shift',
-              machine: 'm1',
-              prodMTRS: '41.4',
-              eff: '91',
-              runtime: '11:49:00',
-              beamLeft: '0',
+            // //data
+            // ReportInfoCard(
+            //   date: '12-sep-2025',
+            //   shift: 'Night Shift',
+            //   machine: 'm1',
+            //   prodMTRS: '41.4',
+            //   eff: '91',
+            //   runtime: '11:49:00',
+            //   beamLeft: '0',
 
-              picks: '213477',
-            ),
+            //   picks: '213477',
+            // ),
+            ReportTableWidget2(reportResponse: widget.reportResponse),
           ],
         ),
       ),

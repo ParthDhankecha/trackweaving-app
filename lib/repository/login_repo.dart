@@ -22,6 +22,7 @@ class LoginRepo {
     var data = await apiClient.request(
       endPoint,
       method: ApiType.post,
+      headers: {},
       body: reqBody,
     );
 

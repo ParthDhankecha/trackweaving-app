@@ -6,6 +6,7 @@ import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class MaintenanceEntryUpdate extends StatefulWidget {
   final MaintenanceEntryModel maintenanceEntryModel;
@@ -96,11 +97,10 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
                   },
                 ),
                 SizedBox(height: 10),
-                _buildInputField(
+                _buildPhoneField(
                   title: '',
                   hintText: 'Phone',
                   controller: controller.completedPhone,
-                  inputType: TextInputType.phone,
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Phone Field can not Empty';
@@ -177,10 +177,7 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
               onDateSelected(pickedDate);
             }
           },
-          controller: TextEditingController(
-            text:
-                '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
-          ),
+          controller: TextEditingController(text: selectedDate.ddmmyyFormat2),
           decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -221,6 +218,40 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
           controller: controller,
           validator: validator,
           decoration: InputDecoration(
+            // labelText: title,
+            hintText: hintText,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhoneField({
+    required String title,
+    required String hintText,
+    required TextEditingController controller,
+    required String? Function(String? value) validator,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
+            child: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+          ),
+        TextFormField(
+          keyboardType: TextInputType.phone,
+          controller: controller,
+          validator: validator,
+          maxLength: 10,
+
+          decoration: InputDecoration(
+            counter: SizedBox.shrink(),
             // labelText: title,
             hintText: hintText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

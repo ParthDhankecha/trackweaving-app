@@ -63,11 +63,15 @@ class Token {
 class User {
   String id;
   int? type;
+  String? userId;
 
-  User({required this.id, required this.type});
+  User({required this.id, required this.type, this.userId});
 
-  factory User.fromMap(Map<String, dynamic> json) =>
-      User(id: json["_id"], type: json["type"]);
+  factory User.fromMap(Map<String, dynamic> json) => User(
+    id: json["_id"],
+    type: json["type"],
+    userId: json["userId"].toString(),
+  );
 
-  Map<String, dynamic> toMap() => {"_id": id, "type": type};
+  Map<String, dynamic> toMap() => {"_id": id, "type": type, "userId": userId};
 }

@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:flutter/material.dart';
-import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/models/maintenance_category_list_model.dart';
@@ -32,6 +32,41 @@ class MaintenanceCategoryController extends GetxController
   TextEditingController completedPhone = TextEditingController();
   TextEditingController remarkCont = TextEditingController();
 
+  RxList<String> selectedMaintenanceEntry = RxList(); // save only ids
+
+  //filtered list to show users
+  RxList<MaintenanceEntryModel> filteredMaintenanceEntryList = RxList();
+
+  selectMaintenanceEntry(MaintenanceEntryModel model) {
+    if (selectedMaintenanceEntry.contains(model.machineId)) {
+      selectedMaintenanceEntry.remove(model.machineId);
+      selectedMaintenanceEntry.refresh();
+      return;
+    }
+    selectedMaintenanceEntry.add(model.machineId);
+    selectedMaintenanceEntry.refresh();
+  }
+
+  clearSelection() {
+    selectedMaintenanceEntry.clear();
+    selectedMaintenanceEntry.refresh();
+    filterListByMachineCode();
+  }
+
+  filterListByMachineCode() {
+    for (var e in selectedMaintenanceEntry) {
+      log('selectedMaintenanceEntry ::: $e');
+    }
+
+    if (selectedMaintenanceEntry.isEmpty) {
+      filteredMaintenanceEntryList.value = List.from(maintenanceEntryList);
+    } else {
+      filteredMaintenanceEntryList.value = maintenanceEntryList
+          .where((entry) => selectedMaintenanceEntry.contains(entry.machineId))
+          .toList();
+    }
+  }
+
   changeCompleteDate(DateTime newDate) {
     selectedCompleteDate.value = newDate;
   }
@@ -49,7 +84,7 @@ class MaintenanceCategoryController extends GetxController
       log('getMaintenanceCategoryList ::: $list');
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error - Machine List Load');
+      //showErrorSnackbar('Error - Machine List Load');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -67,10 +102,11 @@ class MaintenanceCategoryController extends GetxController
 
       var list = await repo.getMaintenanceAlert();
       maintenanceEntryList.value = list;
+      filteredMaintenanceEntryList.value = list;
       log('getMaintenanceEntryList ::: $list');
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error - Maintenance List load');
+      //showErrorSnackbar('Error - Maintenance List load');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -103,7 +139,7 @@ class MaintenanceCategoryController extends GetxController
       remarkCont.text = '';
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error - Maintenance Entry List load');
+      //showErrorSnackbar('Error - Maintenance Entry List load');
 
       switch (e.statusCode) {
         case 401:
@@ -124,7 +160,7 @@ class MaintenanceCategoryController extends GetxController
       getMaintenanceCategoryList();
     } on ApiException catch (e) {
       log('error : $e');
-      showErrorSnackbar('Error - Maintenance List load');
+      //showErrorSnackbar('Error - Maintenance List load');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

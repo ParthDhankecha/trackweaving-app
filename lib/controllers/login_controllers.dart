@@ -22,6 +22,8 @@ class LoginControllers extends GetxController implements GetxService {
 
   LoginControllers({required this.sp, required this.repo});
 
+  String get usertID => sp.userID;
+
   void setLoading(bool load) {
     isLoading.value = load;
   }
@@ -48,6 +50,7 @@ class LoginControllers extends GetxController implements GetxService {
       log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
+        sp.userID = data.user.userId ?? '';
         Get.offAll(() => HomeScreen());
       } else {}
     } on ApiException catch (e) {

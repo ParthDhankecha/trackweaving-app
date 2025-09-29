@@ -76,6 +76,8 @@ class AppTranslations extends Translations {
       'update': 'Update',
       'save': 'Save',
       'cancel': 'Cancel',
+      'filter': 'Filter',
+      'clear_selection': 'Clear Selection',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -152,6 +154,8 @@ class AppTranslations extends Translations {
       'update': 'अपडेट',
       'save': 'सेव करें',
       'cancel': 'रद्द करें',
+      'filter': 'फ़िल्टर',
+      'clear_selection': 'चयन साफ़ करें',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -225,6 +229,8 @@ class AppTranslations extends Translations {
       'update': 'અપડેટ',
       'save': 'સેવ કરો',
       'cancel': 'રદ્દ કરો',
+      'filter': 'ફિલ્ટર',
+      'clear_selection': 'ચયન સાફ કરો',
     },
   };
 }

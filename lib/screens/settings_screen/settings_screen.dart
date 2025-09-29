@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/machine_group_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
@@ -19,6 +20,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  LoginControllers loginController = Get.find<LoginControllers>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +82,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => Get.dialog(LogoutDialog()),
             ),
             Divider(),
+            SizedBox(height: 20),
+            Text(
+              'Customer ID: ${loginController.usertID}',
+              style: bodyStyle.copyWith(fontSize: 14, color: Colors.grey),
+            ),
+            SizedBox(height: 20),
           ],
         ),
       ),

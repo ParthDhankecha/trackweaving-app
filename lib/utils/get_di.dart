@@ -12,6 +12,7 @@ import 'package:trackweaving/repository/dashboard_repo.dart';
 import 'package:trackweaving/repository/login_repo.dart';
 import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/repository/maintenance_repo.dart';
+import 'package:trackweaving/repository/report_repository.dart';
 import 'package:trackweaving/repository/shift_comment_repository.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,9 @@ Future<void> init() async {
   Get.lazyPut(
     () => ShiftCommentRepository(apiClient: apiClient, sp: Get.find()),
   );
+
+  Get.lazyPut(() => apiClient);
+  Get.lazyPut(() => ReportRepository());
 
   //controllers
   Get.lazyPut(() => LocalizationController(sp: Get.find()));

@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/models/shift_types_model.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/report_repository.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class ReportController extends GetxController implements GetxService {
+  ReportRepository repository = Get.find<ReportRepository>();
   RxBool selectAllMachines = false.obs;
 
   RxBool isGroupVisible = false.obs;
@@ -20,10 +27,15 @@ class ReportController extends GetxController implements GetxService {
     ShiftTypesModel(type: 'night', title: 'night_shift'),
   ];
 
+  Rx<DateTime> startDate = DateTime.now().obs;
+  Rx<DateTime> endDate = DateTime.now().obs;
+
   Rx<ShiftTypesModel> selectedShift = ShiftTypesModel(
     type: 'all',
     title: 'All Shift',
   ).obs;
+
+  RxBool isLoading = false.obs;
 
   changeShiftType(ShiftTypesModel? model) {
     selectedShift.value = model ?? shiftTypeList.first;
@@ -73,6 +85,51 @@ class ReportController extends GetxController implements GetxService {
     } else {
       selectedMachineList.remove(machine);
       selectAllMachines.value = false;
+    }
+  }
+
+  //function to get report data
+  Future<ReportsResponse?> getReportData() async {
+    List<String> machineIds = [];
+    List<int> shift = [];
+    if (selectedShift.value.type == 'all') {
+      shift = [1, 2];
+    } else if (selectedShift.value.type == 'day') {
+      shift = [1];
+    } else if (selectedShift.value.type == 'night') {
+      shift = [2];
+    }
+
+    for (var machine in selectedMachineList) {
+      machineIds.add(machine.id);
+    }
+
+    //validation
+    if (machineIds.isEmpty) {
+      log('Please select at least one machine');
+      return null;
+    }
+
+    if (startDate.value.isAfter(endDate.value)) {
+      log('Start date cannot be after end date');
+      return null;
+    }
+
+    try {
+      isLoading.value = true;
+
+      var data = repository.getReportData(
+        machineIds,
+        startDate.value.yyyymmddFormat,
+        endDate.value.yyyymmddFormat,
+        shift,
+        'productionShiftWise',
+      );
+      return data;
+    } on ApiException catch (e) {
+      log('Error in getReportData: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }
