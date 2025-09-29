@@ -48,8 +48,8 @@ class _MachineConfigurationScreenState
                     udid: machine.ip,
                     alertEnabled: machine.isAlertActive,
                     onAlertChange: (isOn) {
-                      controller.changeMachineAlert();
-                      controller.updateMachineConfigAlert(machine.id);
+                      //controller.changeMachineAlert();
+                      controller.updateMachineConfigAlert(machine.id, isOn);
                     },
                     onTap: () => Get.to(
                       () => EditMachineConfiguration(machine: machine),

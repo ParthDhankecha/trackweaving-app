@@ -87,11 +87,12 @@ class _MachineGroupScreenState extends State<MachineGroupScreen> {
                       itemBuilder: (context, index) {
                         MachineGroup machineGroup =
                             controller.machineGroupList[index];
-                        controller.setSelectedMachineId(machineGroup.id);
+
                         return MachineGroupCard(
                           machineGroup: machineGroup,
                           index: index,
                           onEdit: () {
+                            controller.setSelectedMachineId(machineGroup.id);
                             showModalBottomSheet(
                               context: context,
                               builder: (context) => CreateMachineGroup(

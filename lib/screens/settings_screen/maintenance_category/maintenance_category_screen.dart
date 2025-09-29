@@ -32,27 +32,26 @@ class _MaintenanceCategoryScreenState extends State<MaintenanceCategoryScreen> {
       body: Column(
         children: [
           Obx(
-            () => controller.isLoading.value
-                ? Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: controller.maintenanceList.length,
-                      itemBuilder: (context, index) {
-                        MaintenanceCategory maintenanceCategory =
-                            controller.maintenanceList[index];
-                        return MaintenanceCategoryCard(
-                          maintenanceCategory: maintenanceCategory,
-                          index: index,
-                          onChange: (bool value) {
-                            controller.changeCategoryStatus(
-                              maintenanceCategory.id,
-                              maintenanceCategory.isActive ? false : true,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
+            () => Expanded(
+              child: ListView.builder(
+                itemCount: controller.maintenanceList.length,
+                itemBuilder: (context, index) {
+                  MaintenanceCategory maintenanceCategory =
+                      controller.maintenanceList[index];
+
+                  return MaintenanceCategoryCard(
+                    maintenanceCategory: maintenanceCategory,
+                    index: index,
+                    onChange: (bool value) {
+                      controller.changeCategoryStatus(
+                        maintenanceCategory.id,
+                        maintenanceCategory.isActive ? false : true,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),

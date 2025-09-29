@@ -51,24 +51,45 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                           comment.shiftTime,
                           'night',
                         );
-                        print('day -- $commentDay');
-                        print('night -- $commentNight');
+                        print(
+                          'Comment Day: $commentDay, Comment Night: $commentNight',
+                        );
                         // Initialize controllers if they don't exist
                         if (!_dayCommentControllers.containsKey(comment.id)) {
                           _dayCommentControllers['${comment.machineId}_day'] =
                               TextEditingController(text: commentDay);
+                        } else {
+                          _dayCommentControllers['${comment.machineId}_day']!
+                                  .text =
+                              commentDay;
                         }
                         if (!_nightCommentControllers.containsKey(comment.id)) {
                           _nightCommentControllers['${comment.machineId}_night'] =
                               TextEditingController(text: commentNight);
+                        } else {
+                          _nightCommentControllers['${comment.machineId}_night']!
+                                  .text =
+                              commentNight;
                         }
                         return ShiftCommentListItem(
                           comment: comment,
 
                           dayComment:
                               _dayCommentControllers['${comment.machineId}_day'],
+                          onDayCommentChanged: (value) {
+                            shiftCommentController
+                                    .shiftCommentList[index]
+                                    .dayComment =
+                                value;
+                          },
                           nightComment:
                               _nightCommentControllers['${comment.machineId}_night'],
+                          onNightCommentChanged: (value) {
+                            shiftCommentController
+                                    .shiftCommentList[index]
+                                    .nightComment =
+                                value;
+                          },
                         );
                       },
                     ),
@@ -120,7 +141,13 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                     // Now you can send `commentsList` to your backend API
                     var payload = {"list": commentsList};
                     print(payload);
-                    shiftCommentController.updateShiftComment(payload);
+
+                    shiftCommentController.updateShiftComment(payload).then((
+                      _,
+                    ) {
+                      shiftCommentController.getComments();
+                      FocusScope.of(context).unfocus();
+                    });
                   },
                 ),
               ],

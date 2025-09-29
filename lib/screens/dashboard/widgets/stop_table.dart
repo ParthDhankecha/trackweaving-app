@@ -19,7 +19,7 @@ class StopDataTable extends StatelessWidget {
       'Total': {'count': 13, 'time': '00:17'},
     };
 
-    const double cellPadding = 5.2;
+    const double cellPadding = 6.4;
 
     // A reusable function for creating styled table cells
     Widget buildTableCell({
@@ -41,7 +41,7 @@ class StopDataTable extends StatelessWidget {
           style: TextStyle(
             color: textColor,
             fontWeight: fontWeight,
-            fontSize: 14,
+            fontSize: 12,
           ),
         ),
       );
@@ -50,7 +50,8 @@ class StopDataTable extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadiusGeometry.circular(10),
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        // scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
         child: Table(
           border: TableBorder.all(
             color: Colors.grey,

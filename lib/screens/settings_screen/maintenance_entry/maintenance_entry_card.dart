@@ -24,10 +24,10 @@ class MaintenanceEntryCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: AppColors.successColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

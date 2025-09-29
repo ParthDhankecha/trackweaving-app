@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/login_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
@@ -47,20 +48,12 @@ class LoginControllers extends GetxController implements GetxService {
       log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
         sp.userToken = data.token.accessToken;
-        Get.to(() => HomeScreen());
+        Get.offAll(() => HomeScreen());
       } else {}
     } on ApiException catch (e) {
       log('Login Error : $e');
       if (e.message.isNotEmpty) {
-        Get.snackbar(
-          e.message,
-          '',
-
-          messageText: Container(),
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        showErrorSnackbar(e.message);
       }
     } finally {
       isLoading.value = false;

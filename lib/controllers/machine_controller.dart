@@ -189,20 +189,18 @@ class MachineController extends GetxController implements GetxService {
     }
   }
 
-  updateMachineConfigAlert(String id) async {
+  updateMachineConfigAlert(String id, bool isOn) async {
     try {
       isLoading.value = true;
 
       var data = await repository.updateMachineConfigurationAlert(
         id: id,
-        isAlertActive: machineAlert.value,
+        isAlertActive: isOn,
       );
 
       log('onUpdateMAchinConfig ::: $data');
 
-      showSuccessSnackbar(
-        'Machine Alert Set ${machineAlert.value ? 'ON' : 'OFF'}',
-      );
+      showSuccessSnackbar('Machine Alert Set ${isOn ? 'ON' : 'OFF'}');
       getMachineList();
     } on ApiException catch (e) {
       log('error:onUpdateMAchinConfig : $e');

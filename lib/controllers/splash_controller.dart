@@ -32,31 +32,31 @@ class SplashController extends GetxController implements GetxService {
   }
 
   //get configurations
-  Future<void> getSettings() async {
-    await checkPackageInfo();
-    try {
-      isLoading.value = true;
-      var data = await dashboardRepo.getConfiguration();
-      sp.refreshInterval = data['refreshInterval'];
-    } on ApiException catch (e) {
-      //showErrorSnackbar('Remote Settings not Loaded. Try again');
-      log('getSettings : error : $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> getSettings() async {
+  //   await checkPackageInfo();
+  //   try {
+  //     isLoading.value = true;
+  //     var data = await dashboardRepo.getConfiguration();
+  //     sp.refreshInterval = data['refreshInterval'];
+  //   } on ApiException catch (e) {
+  //     //showErrorSnackbar('Remote Settings not Loaded. Try again');
+  //     log('getSettings : error : $e');
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   checkUser() async {
-    // sp.hostUrl = '192.168.29.129:3000';
+    sp.hostUrl = '192.168.29.140:3000';
 
     print(sp.userToken);
 
-    await getSettings();
+    //await getSettings();
     Future.delayed(Duration(seconds: 2), () {
       if (sp.userToken.isNotEmpty) {
         Get.offAll(() => HomeScreen());
       } else {
-        Get.off(() => LoginScreen());
+        Get.offAll(() => LoginScreen());
       }
     });
   }

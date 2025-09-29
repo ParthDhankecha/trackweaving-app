@@ -5,6 +5,9 @@ void showSuccessSnackbar(String title, {String decs = ''}) {
   Get.snackbar(
     title, // Title of the SnackBar
     decs, // Message content
+    messageText: decs.isNotEmpty
+        ? Text(decs, style: const TextStyle(color: Colors.white))
+        : Container(),
     snackPosition: SnackPosition.TOP, // Position of the SnackBar
     backgroundColor: Colors.green, // Background color for error indication
     colorText: Colors.white, // Text color

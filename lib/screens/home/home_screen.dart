@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications_outlined),
-              label: 'notifications'.tr,
+              label: 'alert'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),

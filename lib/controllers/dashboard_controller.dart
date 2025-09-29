@@ -65,7 +65,6 @@ class DashBoardController extends GetxController implements GetxService {
       efficiencyAveragePer = data['efficiencyAveragePer'];
       efficiencyGoodPer = data['efficiencyGoodPer'];
     } on ApiException catch (e) {
-      showErrorSnackbar('Remote Settings not Loaded. Try again');
       log('getSettings : error : $e');
     } finally {
       isLoading.value = false;

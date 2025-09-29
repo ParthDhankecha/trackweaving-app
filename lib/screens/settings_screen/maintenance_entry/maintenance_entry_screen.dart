@@ -27,7 +27,7 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBg,
 
-      appBar: AppBar(title: Text('maintenance_entry'.tr)),
+      appBar: AppBar(title: Text('alert'.tr)),
       body: Column(
         children: [
           Obx(

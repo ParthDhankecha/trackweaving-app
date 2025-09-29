@@ -10,11 +10,15 @@ class ShiftCommentListItem extends StatelessWidget {
     required this.comment,
     this.dayComment,
     this.nightComment,
+    required this.onDayCommentChanged,
+    required this.onNightCommentChanged,
   });
 
   final ShiftCommentModel comment;
   final TextEditingController? dayComment;
   final TextEditingController? nightComment;
+  final Function(String value) onDayCommentChanged;
+  final Function(String vlaue) onNightCommentChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class ShiftCommentListItem extends StatelessWidget {
 
                         TextFormField(
                           controller: dayComment,
-
+                          onChanged: onDayCommentChanged,
                           style: TextStyle(fontSize: 14),
                           decoration: InputDecoration(
                             hintText: 'Comments',
@@ -77,6 +81,7 @@ class ShiftCommentListItem extends StatelessWidget {
 
                         TextFormField(
                           controller: nightComment,
+                          onChanged: onNightCommentChanged,
                           style: TextStyle(fontSize: 14),
                           decoration: InputDecoration(
                             hintText: 'Comments',

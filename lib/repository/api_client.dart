@@ -37,7 +37,9 @@ class ApiClient extends GetxService {
           response = await http.delete(url, body: body, headers: headers);
           break;
         default:
-          response = await http.get(url, headers: headers);
+          response = await http
+              .get(url, headers: headers)
+              .timeout(Duration(seconds: 15));
       }
 
       switch (response.statusCode) {
