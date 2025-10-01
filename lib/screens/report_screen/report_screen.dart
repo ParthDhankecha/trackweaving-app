@@ -42,6 +42,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
         ),
         DropdownButtonFormField<String>(
           initialValue: selectedValue,
+          dropdownColor: Colors.white,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),

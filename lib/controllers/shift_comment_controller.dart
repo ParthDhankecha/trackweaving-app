@@ -37,6 +37,11 @@ class ShiftCommentController extends GetxController implements GetxService {
 
   List<CommentUpdateModel> commentUpdateList = [];
 
+  Rx<Machine?> selectedMachine = Rx<Machine?>(null);
+  set selectedMachineValue(Machine? machine) {
+    selectedMachine.value = machine;
+  }
+
   ShiftCommentController({required this.repository});
 
   addNewComment() {}
@@ -106,6 +111,12 @@ class ShiftCommentController extends GetxController implements GetxService {
     } finally {
       loading.value = false;
     }
+  }
+
+  clearMachineSelection() {
+    machineCodes.value = [];
+    selectedMachine.value = null;
+    log('Cleared Machine Selection');
   }
 
   selectMachine(Machine machine) {

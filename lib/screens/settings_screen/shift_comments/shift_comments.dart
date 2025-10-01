@@ -22,6 +22,7 @@ class _ShiftCommentsState extends State<ShiftComments> {
   void initState() {
     super.initState();
     machineController.getMachineList();
+    shiftCommentController.clearMachineSelection();
   }
 
   @override
@@ -43,6 +44,9 @@ class _ShiftCommentsState extends State<ShiftComments> {
                     ),
                     child: MachineDropdown(
                       title: 'machine'.tr,
+                      selectedValue: shiftCommentController.machineCodes.isEmpty
+                          ? null
+                          : shiftCommentController.selectedMachine.value,
                       items: machineController.machineList,
                       onChanged: (value) {
                         if (value!.machineCode == 'Select All') {
@@ -51,6 +55,7 @@ class _ShiftCommentsState extends State<ShiftComments> {
                           );
                         } else {
                           shiftCommentController.selectMachine(value);
+                          shiftCommentController.selectedMachineValue = value;
                         }
                       },
                     ),

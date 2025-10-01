@@ -56,18 +56,18 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                         );
                         // Initialize controllers if they don't exist
                         if (!_dayCommentControllers.containsKey(comment.id)) {
-                          _dayCommentControllers['${comment.machineId}_day'] =
+                          _dayCommentControllers['${comment.machineId}_day_${comment.shiftTime}'] =
                               TextEditingController(text: commentDay);
                         } else {
-                          _dayCommentControllers['${comment.machineId}_day']!
+                          _dayCommentControllers['${comment.machineId}_day_${comment.shiftTime}']!
                                   .text =
                               commentDay;
                         }
                         if (!_nightCommentControllers.containsKey(comment.id)) {
-                          _nightCommentControllers['${comment.machineId}_night'] =
+                          _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}'] =
                               TextEditingController(text: commentNight);
                         } else {
-                          _nightCommentControllers['${comment.machineId}_night']!
+                          _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}']!
                                   .text =
                               commentNight;
                         }
@@ -75,7 +75,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                           comment: comment,
 
                           dayComment:
-                              _dayCommentControllers['${comment.machineId}_day'],
+                              _dayCommentControllers['${comment.machineId}_day_${comment.shiftTime}'],
                           onDayCommentChanged: (value) {
                             shiftCommentController
                                     .shiftCommentList[index]
@@ -83,7 +83,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                                 value;
                           },
                           nightComment:
-                              _nightCommentControllers['${comment.machineId}_night'],
+                              _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}'],
                           onNightCommentChanged: (value) {
                             shiftCommentController
                                     .shiftCommentList[index]
@@ -106,12 +106,15 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                     for (var comment
                         in shiftCommentController.shiftCommentList) {
                       final dayComment =
-                          _dayCommentControllers['${comment.machineId}_day']
+                          _dayCommentControllers['${comment.machineId}_day_${comment.shiftTime}']
                               ?.text;
                       final nightComment =
-                          _nightCommentControllers['${comment.machineId}_night']
+                          _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}']
                               ?.text;
 
+                      print(
+                        'dayComment: $dayComment, nightComment: $nightComment',
+                      );
                       // Conditionally build the list based on shift type
                       if (comment.shiftType == 'all' ||
                           comment.shiftType == 'day') {

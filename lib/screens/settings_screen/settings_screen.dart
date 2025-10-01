@@ -83,9 +83,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Divider(),
             SizedBox(height: 20),
-            Text(
-              'Customer ID: ${loginController.usertID}',
-              style: bodyStyle.copyWith(fontSize: 14, color: Colors.grey),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 16),
+                Text(
+                  'Customer ID: ${loginController.usertID}',
+                  style: bodyStyle.copyWith(fontSize: 14, color: Colors.grey),
+                ),
+              ],
             ),
             SizedBox(height: 20),
           ],
