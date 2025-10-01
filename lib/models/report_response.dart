@@ -83,26 +83,28 @@ class DataList {
 }
 
 class ReportData {
-  Shift dayShift;
-  Shift nightShift;
+  Shift? dayShift;
+  Shift? nightShift;
 
   ReportData({required this.dayShift, required this.nightShift});
 
   factory ReportData.fromMap(Map<String, dynamic> json) => ReportData(
-    dayShift: Shift.fromMap(json["dayShift"]),
-    nightShift: Shift.fromMap(json["nightShift"]),
+    dayShift: json["dayShift"] != null ? Shift.fromMap(json["dayShift"]) : null,
+    nightShift: json["nightShift"] != null
+        ? Shift.fromMap(json["nightShift"])
+        : null,
   );
 
   Map<String, dynamic> toMap() => {
-    "dayShift": dayShift.toMap(),
-    "nightShift": nightShift.toMap(),
+    "dayShift": dayShift?.toMap(),
+    "nightShift": nightShift?.toMap(),
   };
 }
 
 class Shift {
   List<DayShiftList> list;
   int totalPicks;
-  int efficiency;
+  double efficiency;
   double prodMeter;
   int avgPicks;
 
@@ -119,7 +121,7 @@ class Shift {
       json["list"].map((x) => DayShiftList.fromMap(x)),
     ),
     totalPicks: json["totalPicks"],
-    efficiency: json["efficiency"],
+    efficiency: double.tryParse(json["efficiency"].toString()) ?? 0.0,
     prodMeter: json["prodMeter"]?.toDouble(),
     avgPicks: json["avgPicks"],
   );
@@ -158,7 +160,7 @@ class DayShiftList {
 
   factory DayShiftList.fromMap(Map<String, dynamic> json) => DayShiftList(
     shift: json["shift"],
-    machineCode: json["machineCode"],
+    machineCode: json["machineCode"] ?? '',
     pieceLengthM: json["pieceLengthM"]?.toDouble(),
     picksCurrentShift: json["picksCurrentShift"],
     efficiencyPercent: json["efficiencyPercent"]?.toDouble(),
@@ -221,9 +223,9 @@ class Feeder {
   Feeder({required this.count, required this.duration});
 
   factory Feeder.fromMap(Map<String, dynamic> json) =>
-      Feeder(count: json["count"], duration: json["duration"]);
+      Feeder(count: json["count"], duration: json["totalDuration"]);
 
-  Map<String, dynamic> toMap() => {"count": count, "duration": duration};
+  Map<String, dynamic> toMap() => {"count": count, "totalDuration": duration};
 }
 
 // Extension updated to use the new class name StopsData

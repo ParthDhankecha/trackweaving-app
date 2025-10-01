@@ -36,4 +36,8 @@ class AppConst {
   //API LOG
   static void showLog({String tag = 'TAG', required String logText}) =>
       log('[$tag]-$logText');
+
+  //shift types
+  static int dayShift = 0;
+  static int nightShift = 1;
 }

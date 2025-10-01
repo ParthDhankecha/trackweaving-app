@@ -7,6 +7,7 @@ import 'package:trackweaving/models/shift_types_model.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/report_repository.dart';
+import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class ReportController extends GetxController implements GetxService {
@@ -93,11 +94,11 @@ class ReportController extends GetxController implements GetxService {
     List<String> machineIds = [];
     List<int> shift = [];
     if (selectedShift.value.type == 'all') {
-      shift = [1, 2];
+      shift = [AppConst.dayShift, AppConst.nightShift];
     } else if (selectedShift.value.type == 'day') {
-      shift = [1];
+      shift = [AppConst.dayShift];
     } else if (selectedShift.value.type == 'night') {
-      shift = [2];
+      shift = [AppConst.nightShift];
     }
 
     for (var machine in selectedMachineList) {
@@ -118,7 +119,7 @@ class ReportController extends GetxController implements GetxService {
     try {
       isLoading.value = true;
 
-      var data = repository.getReportData(
+      var data = await repository.getReportData(
         machineIds,
         startDate.value.yyyymmddFormat,
         endDate.value.yyyymmddFormat,

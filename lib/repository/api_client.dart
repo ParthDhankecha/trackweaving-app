@@ -63,7 +63,10 @@ class ApiClient extends GetxService {
         case 404:
           throw ApiException(statusCode: 404, message: 'Not Found');
         case 500:
-          throw ApiException(statusCode: 500, message: 'Server Error');
+          throw ApiException(
+            statusCode: 500,
+            message: 'Server Error - ${jsonDecode(response.body)['message']}',
+          );
 
         default:
           throw ApiException(

@@ -18,8 +18,6 @@ class ProductionReportPage extends StatefulWidget {
 class _ProductionReportPageState extends State<ProductionReportPage> {
   // State variables for form fields
   String _selectedReportType = 'Production Shiftwise Report';
-  DateTime _fromDate = DateTime.now();
-  DateTime _endDate = DateTime.now();
 
   MachineController machineController = Get.find<MachineController>();
   ReportController reportController = Get.find<ReportController>();
@@ -203,32 +201,39 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                             const SizedBox(height: 16),
                             Row(
                               children: [
-                                Expanded(
-                                  child: _buildDateField(
-                                    'from_date'.tr,
-                                    _fromDate,
-                                    (newDate) {
-                                      setState(() {
+                                Obx(
+                                  () => Expanded(
+                                    child: _buildDateField(
+                                      'from_date'.tr,
+                                      reportController.startDate.value,
+                                      (newDate) {
                                         reportController.startDate.value =
                                             newDate;
-                                        _fromDate = newDate;
-                                        _endDate = newDate;
-                                      });
-                                    },
+
+                                        reportController.endDate.value =
+                                            newDate;
+
+                                        print(
+                                          'end date :${reportController.endDate}',
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                                 SizedBox(width: 8),
-                                Expanded(
-                                  child: _buildDateField(
-                                    'end_date'.tr,
-                                    _endDate,
-                                    (newDate) {
-                                      setState(() {
+                                Obx(
+                                  () => Expanded(
+                                    child: _buildDateField(
+                                      'end_date'.tr,
+                                      reportController.endDate.value,
+                                      (newDate) {
                                         reportController.endDate.value =
                                             newDate;
-                                        _endDate = newDate;
-                                      });
-                                    },
+                                        print(
+                                          'end date :${reportController.endDate}',
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],

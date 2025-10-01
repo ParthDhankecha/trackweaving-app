@@ -1,8 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
-import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/screens/report_screen/report_table/report_table_2.dart';
-import 'package:trackweaving/screens/report_screen/report_table/report_table_widget.dart';
 
 class ReportResultScreen extends StatefulWidget {
   final ReportsResponse reportResponse;
@@ -21,157 +30,177 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            //date and title
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [Text('Date: 12-sep-2025 to 12-sep-2025')],
-            // ),
-            // Divider(),
-            // _buildTotalBox(
-            //   title: 'Total',
-            //   picks: '1864818',
-            //   eff: '90',
-            //   prodAvg: '384.72',
-            //   picksAvg: '155402',
-            // ),
-
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: _buildTotalBoxHorizontal(
-            //         title: 'Day Shift Total',
-            //         picks: '274275',
-            //         eff: '90',
-            //         prodAvg: '57.63',
-            //         picksAvg: '68569',
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: _buildTotalBoxHorizontal(
-            //         title: 'Night Shift Total',
-            //         picks: '864442',
-            //         eff: '90',
-            //         prodAvg: '179.2',
-            //         picksAvg: '216111',
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
-            // //data
-            // ReportInfoCard(
-            //   date: '12-sep-2025',
-            //   shift: 'Night Shift',
-            //   machine: 'm1',
-            //   prodMTRS: '41.4',
-            //   eff: '91',
-            //   runtime: '11:49:00',
-            //   beamLeft: '0',
-
-            //   picks: '213477',
-            // ),
             ReportTableWidget2(reportResponse: widget.reportResponse),
+            Spacer(),
+            Row(
+              children: [
+                MainBtn(
+                  label: 'Export',
+                  onTap: () {
+                    _generateCsv(widget.reportResponse);
+                  },
+                ),
+                SizedBox(width: 12),
+                MainBtn(
+                  label: 'PDF',
+                  onTap: () {
+                    _generatePdf(widget.reportResponse);
+                  },
+                ),
+                SizedBox(width: 12),
+                MainBtn(
+                  label: 'Close',
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTotalBoxHorizontal({
-    required String title,
-    required String picks,
-    required String eff,
-    required String prodAvg,
-    required String picksAvg,
-  }) {
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: Column(
-            children: [
-              Text(title, style: normalTextStyle1),
-              SizedBox(height: 6),
-              _buildTotalBoxRow('Picks', picks),
-              SizedBox(height: 6),
-              _buildTotalBoxRow('Eff', eff),
-              SizedBox(height: 6),
-              _buildTotalBoxRow('Prod. Avg.', prodAvg),
-              SizedBox(height: 6),
-              _buildTotalBoxRow('Picks Avg.', picksAvg),
-            ],
-          ),
+  // --- EXPORT FUNCTIONS ---
+
+  // Helper function to save file content to the user's device (Web/Desktop compatible)
+  void _saveFile(List<int> bytes, String fileName, String mimeType) async {
+    final PermissionStatus permissionGranted = await Permission.storage
+        .request();
+
+    if (!permissionGranted.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Storage permission denied. Cannot save file.'),
         ),
-      ),
-    );
+      );
+      return;
+    }
+
+    try {
+      Directory? directory = await getDownloadsDirectory();
+      if (directory == null) {
+        // Fallback or error if Downloads directory is unavailable (rare, but possible)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not access the public Downloads directory.'),
+          ),
+        );
+        return;
+      }
+
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      log('Using directory path: ${directory.path}');
+      final filePath = '${directory.path}/$fileName';
+      log('Using directory path: ${filePath}');
+
+      final file = File(filePath);
+      await file.writeAsBytes(bytes);
+
+      await OpenFile.open(filePath);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Exported $fileName successfully to: $filePath'),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error saving file: $e')));
+      print('Mobile/Desktop File Save Error: $e');
+    }
   }
 
-  Widget _buildTotalBox({
-    required String title,
-    required String picks,
-    required String eff,
-    required String prodAvg,
-    required String picksAvg,
-  }) {
-    return Card(
-      color: Colors.white,
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text(title, style: normalTextStyle1)],
-              ),
-              SizedBox(height: 6),
-
-              Row(
-                children: [
-                  Expanded(child: _buildTotalBoxRow('Picks', picks)),
-                  SizedBox(width: 8),
-
-                  Expanded(child: _buildTotalBoxRow('Eff. ', eff)),
-                ],
-              ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(child: _buildTotalBoxRow('Prod.Avg.', prodAvg)),
-                  SizedBox(width: 8),
-                  Expanded(child: _buildTotalBoxRow('Picks Avg.', picksAvg)),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  // Generate CSV data and trigger download
+  Future<void> _generateCsv(ReportsResponse report) async {
+    final exportData = ReportTableWidget2.getExportData(report.data);
+    final csvString = const ListToCsvConverter().convert(exportData);
+    final bytes = utf8.encode(csvString);
+    print('CSV Data:\n$csvString');
+    _openFile(bytes, 'production_report.csv', 'text/csv');
+    _saveFile(bytes, 'production_report.csv', 'text/csv');
   }
 
-  Widget _buildTotalBoxRow(String title, String value) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.green[50],
-        border: Border.all(color: Colors.green),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title, style: bodyStyle1),
-            Text(value, style: bodyStyle),
-          ],
-        ),
+  _openFile(List<int> bytes, String fileName, String mimeType) async {
+    try {
+      final tempDir = await getTemporaryDirectory();
+      final filePath = '${tempDir.path}/$fileName';
+      final file = File(filePath);
+      await file.writeAsBytes(bytes);
+      var result = await OpenFile.open(filePath);
+      if (result.type != ResultType.done) {
+        print('Error opening file: ${result.message}');
+      } else {
+        print('File opened successfully: $filePath');
+      }
+    } catch (e) {
+      print('Error opening file: $e');
+    }
+  }
+
+  // Generate PDF document and trigger download
+  Future<void> _generatePdf(ReportsResponse report) async {
+    final pdf = pw.Document();
+    final exportData = ReportTableWidget2.getExportData(report.data);
+
+    // Determine column widths for PDF (proportional)
+    final List<double> columnWidths = [
+      2.0, 1.5, 1.0, 1.2, 1.2, 0.8, 1.2, 1.0, // Main columns
+      ...List.generate(12, (_) => 0.8), // Stop columns
+    ];
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat:
+            PdfPageFormat.a3.landscape, // Wide format for the many columns
+        build: (pw.Context context) {
+          return [
+            pw.Header(level: 0, text: 'Production Report'),
+            pw.SizedBox(height: 10),
+            pw.TableHelper.fromTextArray(
+              headers: exportData.first,
+              data: exportData.sublist(1),
+              border: pw.TableBorder.all(color: PdfColors.grey500, width: 0.5),
+              headerStyle: pw.TextStyle(
+                fontWeight: pw.FontWeight.bold,
+                color: PdfColors.white,
+                fontSize: 8,
+              ),
+              headerDecoration: const pw.BoxDecoration(
+                color: PdfColor.fromInt(0xFF1D5C93),
+              ),
+              cellStyle: const pw.TextStyle(fontSize: 7),
+              columnWidths: Map.fromEntries(
+                List.generate(
+                  columnWidths.length,
+                  (i) => MapEntry(i, pw.FlexColumnWidth(columnWidths[i])),
+                ),
+              ),
+              cellAlignment: pw.Alignment.center,
+              // Apply specific styling to total rows if possible (PDF package limitations apply)
+              // cellFormat: (index, data) {
+              //   if (data.row.contains('TOTAL')) {
+              //     return pw.DefaultTextStyle.fallback().copyWith(
+              //       fontWeight: pw.FontWeight.bold,
+              //       color: PdfColors.black,
+              //       fontSize: 8,
+              //     );
+              //   }
+              //   return null;
+              // },
+            ),
+          ];
+        },
       ),
     );
+
+    final bytes = await pdf.save();
+    _saveFile(bytes.toList(), 'production_report.pdf', 'application/pdf');
   }
 }
