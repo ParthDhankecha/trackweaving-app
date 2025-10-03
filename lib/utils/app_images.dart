@@ -12,4 +12,6 @@ class AppImages {
   static final imgSettings1 = '$baseImageUrl/settings_1.png';
   static final imgLogo = '$baseImageUrl/main_logo.png';
   static final splashLogo = '$baseImageUrl/splash_logo.png';
+
+  static final imgFilterIcon = '$baseImageUrl/filter.png';
 }

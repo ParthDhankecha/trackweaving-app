@@ -7,7 +7,33 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeController extends GetxController {
   final ThemeData lightTheme = ThemeData(
-    primaryColor: AppColors.mainSwatch,
+    colorScheme: ColorScheme.light(
+      primary: AppColors
+          .mainColor, // Used for primary elements (e.g., button colors, selected state, DatePicker header)
+      onPrimary: Colors
+          .white, // Used for text/icons on the primary color background (e.g., text inside buttons)
+      secondary: AppColors
+          .mainColor, // Optional: For secondary accents, often set to primary for simplicity
+    ),
+
+    // 2. Optional: Set primary color directly (for backward compatibility, but ColorScheme is preferred)
+    primaryColor: AppColors.mainColor,
+
+    // 3. Optional: Customize specific widget themes (e.g., TextButton style for dialogs)
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors
+            .mainColor, // Sets the color for OK/CANCEL text in DatePicker/Dialogs
+      ),
+    ),
+
+    // 5. Optional: Customize Floating Action Button (FAB)
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.mainColor,
+    ),
+
+    // Use Material 3
+    useMaterial3: true,
 
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.white,

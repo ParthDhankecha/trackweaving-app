@@ -5,6 +5,7 @@ import 'package:trackweaving/screens/settings_screen/maintenance_category/widget
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_card.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_images.dart';
 
 class MaintenanceEntryScreen extends StatefulWidget {
   const MaintenanceEntryScreen({super.key});
@@ -35,7 +36,25 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
             onPressed: () {
               Get.bottomSheet(FilterBottomSheet(), isScrollControlled: true);
             },
-            child: Text('filter'.tr, style: TextStyle(fontSize: 16)),
+            child: Row(
+              children: [
+                Text(
+                  'filter'.tr,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.mainColor,
+                  ),
+                ),
+                SizedBox(width: 5),
+                Image.asset(
+                  AppImages.imgFilterIcon,
+                  width: 20,
+                  height: 20,
+                  color: AppColors.mainColor,
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -32,20 +32,20 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Get.dialog(const HostUrlDialog());
-                  },
-                  child: Text(
-                    'Change Base Url',
-                    style: bodyStyle1.copyWith(color: AppColors.errorColor),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     TextButton(
+            //       onPressed: () {
+            //         Get.dialog(const HostUrlDialog());
+            //       },
+            //       child: Text(
+            //         'Change Base Url',
+            //         style: bodyStyle1.copyWith(color: AppColors.errorColor),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

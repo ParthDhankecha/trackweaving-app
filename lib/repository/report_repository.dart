@@ -25,7 +25,7 @@ class ReportRepository {
       'reportType': reportType,
     };
 
-    String endpoint = AppConst.getUrl(sp.hostUrl, AppConst.reports);
+    String endpoint = AppConst.getUrl(AppConst.reports);
     var data = await apiClient.request(
       endpoint,
       method: ApiType.post,

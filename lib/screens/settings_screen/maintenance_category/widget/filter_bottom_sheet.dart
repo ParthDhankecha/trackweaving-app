@@ -31,72 +31,111 @@ class FilterBottomSheet extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16.0),
+
+            Divider(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TextButton(
-                  onPressed: () {
+                GestureDetector(
+                  onTap: () {
                     maintenanceCategoryController.clearSelection();
                     Get.back();
                   },
-                  child: Text(
-                    'clear_selection'.tr,
-                    style: TextStyle(color: AppColors.errorColor),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        value: maintenanceCategoryController.selectedAll.value,
+                        onChanged: (value) {
+                          maintenanceCategoryController
+                              .selectAllMaintenanceEntry();
+                        },
+                      ),
+                      Text(
+                        maintenanceCategoryController.selectedAll.value
+                            ? 'Deselect All'.tr
+                            : 'Select All'.tr,
+                        style: TextStyle(color: AppColors.mainColor),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            ...maintenanceCategoryController.maintenanceEntryList.map((model) {
-              MaintenanceEntryModel maintenanceEntryModel = model;
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  ...maintenanceCategoryController.maintenanceEntryList.map((
+                    model,
+                  ) {
+                    MaintenanceEntryModel maintenanceEntryModel = model;
 
-              return InkWell(
-                onTap: () {
-                  maintenanceCategoryController.selectMaintenanceEntry(
-                    maintenanceEntryModel,
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        maintenanceEntryModel.machineCode,
-                        style: TextStyle(fontSize: 16),
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                        bottom: 4,
+                        top: 4,
                       ),
-                      maintenanceCategoryController.selectedMaintenanceEntry
-                              .contains(maintenanceEntryModel.machineId)
-                          ? Icon(
-                              Icons.check_circle,
-                              color: Theme.of(context).primaryColor,
-                            )
-                          : SizedBox.shrink(),
-                    ],
-                  ),
-                ),
-              );
-              // return ListTile(
-              //   title: Text(maintenanceEntryModel.machineCode),
-              //   trailing:
-              //       maintenanceCategoryController.selectedMaintenanceEntry
-              //           .contains(maintenanceEntryModel.machineId)
-              //       ? Icon(
-              //           Icons.check_circle,
-              //           color: Theme.of(context).primaryColor,
-              //         )
-              //       : null,
-              //   onTap: () {
-              //     maintenanceCategoryController.selectMaintenanceEntry(
-              //       maintenanceEntryModel,
-              //     );
-              //   },
-              // );
-            }),
+                      child: InkWell(
+                        onTap: () {
+                          maintenanceCategoryController.selectMaintenanceEntry(
+                            maintenanceEntryModel,
+                          );
+                        },
+                        child: Container(
+                          height: 46,
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8.0,
+                            bottom: 4,
+                            top: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color:
+                                maintenanceCategoryController
+                                    .selectedMaintenanceEntry
+                                    .contains(maintenanceEntryModel.machineId)
+                                ? AppColors.mainColor.withOpacity(0.1)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                value: maintenanceCategoryController
+                                    .selectedMaintenanceEntry
+                                    .contains(maintenanceEntryModel.machineId),
+                                onChanged: (value) {
+                                  maintenanceCategoryController
+                                      .selectMaintenanceEntry(
+                                        maintenanceEntryModel,
+                                      );
+                                },
+                              ),
+
+                              Text(
+                                maintenanceEntryModel.machineCode,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+
             const SizedBox(height: 16.0),
             SizedBox(
-              height: 34,
+              height: 46,
 
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -108,7 +147,10 @@ class FilterBottomSheet extends StatelessWidget {
                       .filterListByMachineCode(); //selectedMachineCode
                   Get.back();
                 },
-                child: Text('save'.tr, style: TextStyle(fontSize: 16)),
+                child: Text(
+                  'save'.tr,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
             const SizedBox(height: 16.0),

@@ -14,7 +14,7 @@ class DashboardRepo {
   Sharedprefs sp = Get.find<Sharedprefs>();
 
   Future<GetMachineLogModel> getMachineLogs({String status = 'all'}) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machineLogs);
+    String endPoint = AppConst.getUrl( AppConst.machineLogs);
 
     var data = await apiClient.request(
       endPoint,
@@ -29,7 +29,7 @@ class DashboardRepo {
 
   //settings api
   Future<dynamic> getConfiguration() async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.configuration);
+    String endPoint = AppConst.getUrl( AppConst.configuration);
 
     var data = await apiClient.request(
       endPoint,

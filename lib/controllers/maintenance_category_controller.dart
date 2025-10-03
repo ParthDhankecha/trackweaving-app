@@ -33,9 +33,27 @@ class MaintenanceCategoryController extends GetxController
   TextEditingController remarkCont = TextEditingController();
 
   RxList<String> selectedMaintenanceEntry = RxList(); // save only ids
+  RxBool selectedAll = false.obs;
 
   //filtered list to show users
   RxList<MaintenanceEntryModel> filteredMaintenanceEntryList = RxList();
+
+  selectAllMaintenanceEntry() {
+    if (selectedAll.value) {
+      selectedMaintenanceEntry.clear();
+      selectedMaintenanceEntry.refresh();
+      selectedAll.value = false;
+      filterListByMachineCode();
+      return;
+    }
+    selectedMaintenanceEntry.clear();
+    for (var element in maintenanceEntryList) {
+      selectedMaintenanceEntry.add(element.machineId);
+    }
+    selectedMaintenanceEntry.refresh();
+    selectedAll.value = true;
+    filterListByMachineCode();
+  }
 
   selectMaintenanceEntry(MaintenanceEntryModel model) {
     if (selectedMaintenanceEntry.contains(model.machineId)) {
@@ -45,11 +63,17 @@ class MaintenanceCategoryController extends GetxController
     }
     selectedMaintenanceEntry.add(model.machineId);
     selectedMaintenanceEntry.refresh();
+    if (selectedMaintenanceEntry.length == maintenanceEntryList.length) {
+      selectedAll.value = true;
+    } else {
+      selectedAll.value = false;
+    }
   }
 
   clearSelection() {
     selectedMaintenanceEntry.clear();
     selectedMaintenanceEntry.refresh();
+    selectedAll.value = false;
     filterListByMachineCode();
   }
 
