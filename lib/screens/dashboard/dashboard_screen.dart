@@ -73,10 +73,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Column(
             children: [
-              Column(children: [TopRowWidget(), SizedBox(height: 8)]),
+              TopRowWidget(),
+              SizedBox(height: 8),
 
-              Column(children: [TopRowWidget()]),
-              SizedBox(height: 6),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () {

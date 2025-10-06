@@ -40,8 +40,7 @@ class StopDataTable2 extends StatelessWidget {
           horizontal: cellPaddingW,
           vertical: cellPaddingH,
         ),
-        // Ensure text is truncated if it exceeds bounds, though FlexColumnWidth
-        // should minimize this need.
+
         child: Text(
           text,
           textAlign: align,
@@ -50,7 +49,7 @@ class StopDataTable2 extends StatelessWidget {
           style: TextStyle(
             color: textColor,
             fontWeight: fontWeight,
-            fontSize: 12,
+            fontSize: 10,
           ),
         ),
       );
