@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/models/status_enum.dart';
 import 'package:trackweaving/repository/api_exception.dart';
@@ -74,7 +73,6 @@ class DashBoardController extends GetxController implements GetxService {
   Future<void> getData() async {
     try {
       isLoading.value = true;
-      print('Getting Data...');
       var data = await dashboardRepo.getMachineLogs(status: showStatus.value);
 
       AggregateReport aggregateReport = data.data.aggregateReport;

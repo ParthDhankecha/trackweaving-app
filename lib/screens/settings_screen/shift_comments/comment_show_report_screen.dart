@@ -4,7 +4,6 @@ import 'package:trackweaving/controllers/shift_comment_controller.dart';
 import 'package:trackweaving/models/shift_comment_model.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_comment_list_item.dart';
 import 'package:trackweaving/utils/app_colors.dart';
-import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:get/get.dart';
 
 class CommentShowReportScreen extends StatefulWidget {
@@ -50,9 +49,6 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                           comment.machineId,
                           comment.shiftTime,
                           'night',
-                        );
-                        print(
-                          'Comment Day: $commentDay, Comment Night: $commentNight',
                         );
                         // Initialize controllers if they don't exist
                         if (!_dayCommentControllers.containsKey(comment.id)) {
@@ -112,9 +108,6 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                           _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}']
                               ?.text;
 
-                      print(
-                        'dayComment: $dayComment, nightComment: $nightComment',
-                      );
                       // Conditionally build the list based on shift type
                       if (comment.shiftType == 'all' ||
                           comment.shiftType == 'day') {
@@ -143,7 +136,6 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
 
                     // Now you can send `commentsList` to your backend API
                     var payload = {"list": commentsList};
-                    print(payload);
 
                     await shiftCommentController.updateShiftComment(payload);
                     await shiftCommentController.getComments().then((value) {

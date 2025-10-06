@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/dashboard_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
 import 'package:trackweaving/screens/home/home_screen.dart';
@@ -47,7 +46,7 @@ class SplashController extends GetxController implements GetxService {
   // }
 
   checkUser() async {
-    print(sp.userToken);
+    //print(sp.userToken);
 
     //await getSettings();
     Future.delayed(Duration(seconds: 2), () {

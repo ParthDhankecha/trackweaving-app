@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/screens/dashboard/widgets/dashboard_card.dart';
@@ -21,7 +20,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
 
-    print('Init state called');
     dashBoardController.getSettings().then((value) {
       dashBoardController.getData();
       dashBoardController.startTimer();
@@ -31,7 +29,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void dispose() {
     super.dispose();
-    print('Dispose called');
     dashBoardController.stopTimer();
   }
 
@@ -64,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Column(
             children: [
               Column(children: [TopRowWidget(), SizedBox(height: 8)]),
-              SizedBox(height: 10),
+
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () {

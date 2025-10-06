@@ -41,9 +41,7 @@ class DashboardCard extends StatelessWidget {
             padding: const EdgeInsets.all(6.0),
             child: Column(
               children: [
-                SizedBox(height: 6),
                 _currentStopRow(),
-                SizedBox(height: 6),
 
                 Row(
                   children: [
@@ -95,9 +93,9 @@ class DashboardCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+
                 _progressBar(),
-                SizedBox(height: 10),
+                SizedBox(height: 4),
                 StopDataTable(stopsData: machineLog.stopsData),
               ],
             ),
@@ -138,7 +136,7 @@ class DashboardCard extends StatelessWidget {
 
   Widget _machineTitleRow() {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: machineLog.currentStop == 0
             ? AppColors.successColor
@@ -187,7 +185,7 @@ class DashboardCard extends StatelessWidget {
                 duration: Duration(seconds: 1),
 
                 child: Container(
-                  padding: EdgeInsets.all(6),
+                  padding: EdgeInsets.symmetric(horizontal: 6),
 
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
@@ -202,7 +200,8 @@ class DashboardCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(6),
+                padding: EdgeInsets.symmetric(horizontal: 6),
+
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColors.blackColor, width: 0),
@@ -218,7 +217,7 @@ class DashboardCard extends StatelessWidget {
                       machineLog.stopReason,
                       style: bodyStyle1.copyWith(
                         color: AppColors.blackColor,
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -256,7 +255,7 @@ class DashboardCard extends StatelessWidget {
   }) {
     return Container(
       margin: EdgeInsets.only(top: 4),
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.blackColor, width: 0.75),
@@ -265,8 +264,8 @@ class DashboardCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 24,
-            width: 24,
+            height: 16,
+            width: 16,
             child: isRotated
                 ? RotatedBox(
                     quarterTurns: 1,
@@ -289,7 +288,7 @@ class DashboardCard extends StatelessWidget {
               value,
               textAlign: TextAlign.end,
               style: bodyStyle1.copyWith(
-                fontSize: 14,
+                fontSize: 12,
                 color: AppColors.mainColor,
                 fontWeight: FontWeight.bold,
               ),

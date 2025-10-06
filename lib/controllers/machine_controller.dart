@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';

@@ -9,6 +9,7 @@ class AppTranslations extends Translations {
       'hindi': 'Hindi',
       'gujarati': 'Gujarati',
       'efficiency': 'Efficiency',
+      'eff': 'Eff.',
       'picks': 'Picks',
       'avg_picks': 'A. Picks',
       'avg_speed': 'A. Speed',
@@ -78,6 +79,8 @@ class AppTranslations extends Translations {
       'cancel': 'Cancel',
       'filter': 'Filter',
       'clear_selection': 'Clear Selection',
+      'select_all': 'Select',
+      'deselect_all': 'Deselect All',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -85,6 +88,7 @@ class AppTranslations extends Translations {
       'hindi': 'हिंदी',
       'gujarati': 'गुजराती',
       'efficiency': 'दक्षता',
+      'eff': 'दक्षता',
       'picks': 'पिक्स',
       'avg_picks': 'औसत पिक्स',
       'avg_speed': 'औसत गति',
@@ -156,6 +160,8 @@ class AppTranslations extends Translations {
       'cancel': 'रद्द करें',
       'filter': 'फ़िल्टर',
       'clear_selection': 'चयन साफ़ करें',
+      'select_all': 'सभी चुनें',
+      'deselect_all': 'सभी चयन रद्द करें',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -163,6 +169,7 @@ class AppTranslations extends Translations {
       'hindi': 'હિન્દી',
       'gujarati': 'ગુજરાતી',
       'efficiency': 'કાર્યક્ષમતા',
+      'eff': 'કાર્યક્ષમતા',
       'picks': 'પિક્સ',
       'avg_picks': 'સરેરાશ પિક્સ',
       'avg_speed': 'સરેરાશ સ્પીડ',
@@ -231,6 +238,8 @@ class AppTranslations extends Translations {
       'cancel': 'રદ્દ કરો',
       'filter': 'ફિલ્ટર',
       'clear_selection': 'ચયન સાફ કરો',
+      'select_all': 'બધા પસંદ કરો',
+      'deselect_all': 'બધા પસંદગી રદ કરો',
     },
   };
 }

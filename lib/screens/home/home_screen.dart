@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/screens/dashboard/dashboard_screen.dart';
 import 'package:trackweaving/screens/report_screen/report_screen.dart';
-import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
 import 'package:trackweaving/screens/settings_screen/settings_screen.dart';
 import 'package:trackweaving/utils/app_colors.dart';

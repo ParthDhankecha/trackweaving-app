@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/status_enum.dart';
 import 'package:trackweaving/utils/app_colors.dart';
@@ -21,27 +20,27 @@ class TopRowWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildRowItemBox(
-                title: 'efficiency'.tr,
+                title: 'eff'.tr,
                 value: '${controller.eff.value}%',
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
               _buildRowItemBox(
                 title: "picks".tr,
                 value: controller.picks.value,
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'avg_picks'.tr,
                 value: controller.avgPick.value,
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'avg_speed'.tr,
                 value: controller.avgSpeed.value,
               ),
-              SizedBox(width: 4),
+
               Container(height: 30, width: 1.8, color: Colors.grey),
               SizedBox(width: 4),
 
@@ -78,6 +77,7 @@ class TopRowWidget extends StatelessWidget {
                 isActive: controller.currentStatus.value == MachineStatus.all,
                 onTap: () => controller.changeStatus(MachineStatus.all),
               ),
+              SizedBox(width: 6),
             ],
           ),
         ),
@@ -103,7 +103,7 @@ class TopRowWidget extends StatelessWidget {
             Text(
               value,
               style: GoogleFonts.poppins(
-                fontSize: isActive ? 14 : 12,
+                fontSize: isActive ? 12 : 10,
                 color: color ?? AppColors.mainColor,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
               ),

@@ -54,7 +54,7 @@ class ReportTableWidget2 extends StatelessWidget {
           // 2. Horizontal Scroll View (applies to the fixed header and the body)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Container(
+            child: SizedBox(
               // The total width of the table is fixed based on column widths
               width: _calculateTotalTableWidth(),
 
@@ -431,7 +431,7 @@ class ReportTableWidget2 extends StatelessWidget {
     final String dateText = reportDate != null ? reportDate.ddmmyyFormat : '';
 
     // Span Run Time and Beam Left columns for the Avg Picks text
-    final double avgPicksWidth = _runTimeWidth + _beamLeftWidth;
+    //final double avgPicksWidth = _runTimeWidth + _beamLeftWidth;
 
     return Row(
       children: [
@@ -848,7 +848,7 @@ class ReportTableWidget2 extends StatelessWidget {
     // Top Row: Main headers (span 2 rows), Stop types (span 1 row/2 columns)
     final List<dynamic> topHeader = [
       ...mainHeaders,
-      ...stopTypes.expand((type) => [type, type]).toList(),
+      ...stopTypes.expand((type) => [type, type]),
       'Total Stops', 'Total Stops', // Total Stops spans 2 columns
     ];
     exportData.add(topHeader);
@@ -859,10 +859,7 @@ class ReportTableWidget2 extends StatelessWidget {
       ...List.generate(mainHeaders.length, (_) => ''),
 
       // Stop Metrics (Count/Duration repeated 6 times)
-      ...List.generate(
-        6,
-        (_) => ['Count', 'Duration'],
-      ).expand((e) => e).toList(),
+      ...List.generate(6, (_) => ['Count', 'Duration']).expand((e) => e),
     ];
     exportData.add(bottomHeader);
 

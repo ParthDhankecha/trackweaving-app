@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/common_widgets/password_input.dart';
 import 'package:trackweaving/controllers/login_controllers.dart';
-import 'package:trackweaving/screens/auth_screens/widgets/host_url.dialog.dart';
-import 'package:trackweaving/screens/auth_screens/widgets/privacy_bar.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/app_images.dart';
 import 'package:trackweaving/utils/app_strings.dart';

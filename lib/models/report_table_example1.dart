@@ -259,7 +259,7 @@ class ReportTableWidget extends StatelessWidget {
             // Table Body
             ...reportResponse.data.list.map((reportByDate) {
               return _buildReportGroup(reportByDate);
-            }).toList(),
+            }),
 
             // Table Total Row
             _buildTotalRow(reportResponse.data),
@@ -289,10 +289,10 @@ class ReportTableWidget extends StatelessWidget {
     ];
 
     // Headers for the stops (count and duration)
-    final List<Widget> stopHeaders = [
-      _headerCell('Count', stopTypeWidth),
-      _headerCell('Duration', stopTypeWidth),
-    ];
+    // final List<Widget> stopHeaders = [
+    //   _headerCell('Count', stopTypeWidth),
+    //   _headerCell('Duration', stopTypeWidth),
+    // ];
 
     return IntrinsicHeight(
       child: Row(
@@ -596,7 +596,7 @@ class ReportTableWidget extends StatelessWidget {
   Widget _buildTotalRow(ReportDataModel totals) {
     const double dateWidth = 100.0;
     const double shiftWidth = 100.0;
-    const double stopTypeWidth = 60.0;
+    //const double stopTypeWidth = 60.0;
 
     // Combine the first two columns and Machine Code column for the 'Total' label
     final double totalLabelWidth = dateWidth + shiftWidth + 80.0;

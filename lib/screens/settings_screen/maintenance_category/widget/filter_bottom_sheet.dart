@@ -38,8 +38,7 @@ class FilterBottomSheet extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    maintenanceCategoryController.clearSelection();
-                    Get.back();
+                    maintenanceCategoryController.selectAllMaintenanceEntry();
                   },
                   child: Row(
                     children: [
@@ -55,8 +54,8 @@ class FilterBottomSheet extends StatelessWidget {
                       ),
                       Text(
                         maintenanceCategoryController.selectedAll.value
-                            ? 'Deselect All'.tr
-                            : 'Select All'.tr,
+                            ? 'deselect_all'.tr
+                            : 'select_all'.tr,
                         style: TextStyle(color: AppColors.mainColor),
                       ),
                     ],
@@ -98,7 +97,8 @@ class FilterBottomSheet extends StatelessWidget {
                                 maintenanceCategoryController
                                     .selectedMaintenanceEntry
                                     .contains(maintenanceEntryModel.machineId)
-                                ? AppColors.mainColor.withOpacity(0.1)
+                                //  ? AppColors.mainColor.withOpacity(0.1)
+                                ? AppColors.mainColor.withAlpha(25)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(8.0),
                           ),
