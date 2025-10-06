@@ -128,18 +128,23 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
     bool value,
     ValueChanged<bool?> onChanged,
   ) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return GestureDetector(
+      onTap: () {
+        onChanged(!value);
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
 
-      children: [
-        Checkbox(
-          value: value,
-          onChanged: onChanged,
+        children: [
+          Checkbox(
+            value: value,
+            onChanged: onChanged,
 
-          activeColor: AppColors.mainColor,
-        ),
-        Text(title),
-      ],
+            activeColor: AppColors.mainColor,
+          ),
+          Text(title),
+        ],
+      ),
     );
   }
 
