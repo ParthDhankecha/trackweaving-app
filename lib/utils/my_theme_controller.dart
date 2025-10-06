@@ -45,46 +45,7 @@ class ThemeController extends GetxController {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
     ),
-    datePickerTheme: DatePickerThemeData(
-      backgroundColor: Colors.white,
-      dayForegroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-        if (states.contains(WidgetState.selected)) {
-          return Colors.white; // white text when selected
-        }
-        return AppColors.mainColor; // default text color
-      }),
 
-      // Day background color (changes when selected)
-      dayBackgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColors.mainColor; // red background for selected day
-        }
-        if (states.contains(WidgetState.pressed) ||
-            states.contains(WidgetState.hovered)) {
-          return AppColors.mainColor;
-        }
-
-        if (states.contains(WidgetState.any)) {
-          return AppColors.mainColor;
-        }
-
-        return Colors.transparent; // default
-      }),
-
-      todayForegroundColor: WidgetStatePropertyAll(AppColors.whiteColor),
-      todayBackgroundColor: WidgetStatePropertyAll(AppColors.mainColor),
-      // Outline border for today
-      dayOverlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.pressed) ||
-            states.contains(WidgetState.hovered) ||
-            states.contains(WidgetState.selected)) {
-          return AppColors.mainColor; // light tint for today
-        }
-        return null;
-      }),
-
-      // other properties as needed
-    ),
     textTheme: GoogleFonts.poppinsTextTheme(),
     scaffoldBackgroundColor: AppColors.appBg,
     appBarTheme: AppBarTheme(
