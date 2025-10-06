@@ -17,7 +17,7 @@ class MachineRepository {
 
   //list of machine groups
   Future<List<MachineGroup>> getMachineGroupList() async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machineGrp);
+    String endPoint = AppConst.getUrl(AppConst.machineGrp);
     var data = await apiClient.request(
       endPoint,
       headers: {'authorization': sp.userToken},
@@ -33,7 +33,7 @@ class MachineRepository {
     String id = '',
     bool isUpdate = false,
   }) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machineGrp);
+    String endPoint = AppConst.getUrl(AppConst.machineGrp);
 
     var reqBody = isUpdate
         ? {'groupName': name, 'id': id}
@@ -61,7 +61,7 @@ class MachineRepository {
   }
 
   Future<List<Machine>> getMachineList() async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
+    String endPoint = AppConst.getUrl(AppConst.machines);
     var data = await apiClient.request(
       endPoint,
       headers: {'authorization': sp.userToken},
@@ -78,7 +78,7 @@ class MachineRepository {
     required String machineGroupId,
     required bool isAlertActive,
   }) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
+    String endPoint = AppConst.getUrl(AppConst.machines);
     var reqBody = {
       'machineCode': machineCode,
       'machineName': machineName,
@@ -101,7 +101,7 @@ class MachineRepository {
 
     required bool isAlertActive,
   }) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.machines);
+    String endPoint = AppConst.getUrl(AppConst.machines);
     var reqBody = {'isAlertActive': '$isAlertActive'};
 
     var data = await apiClient.request(

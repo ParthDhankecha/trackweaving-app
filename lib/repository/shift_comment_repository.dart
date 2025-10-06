@@ -17,8 +17,7 @@ class ShiftCommentRepository {
     String? machineId,
     String? shift,
   }) async {
-    String endPoint =
-        '${AppConst.getUrl(sp.hostUrl, AppConst.shiftWiseComment)}/list';
+    String endPoint = '${AppConst.getUrl(AppConst.shiftWiseComment)}/list';
 
     AppConst.showLog(logText: 'url - $endPoint', tag: 'getComments');
     var reqBody = {
@@ -42,7 +41,7 @@ class ShiftCommentRepository {
   }
 
   Future updateComments(Map<String, List<Map<String, dynamic>>> payload) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.shiftWiseComment);
+    String endPoint = AppConst.getUrl(AppConst.shiftWiseComment);
 
     var data = await apiClient.request(
       endPoint,

@@ -4,7 +4,7 @@ class AppConst {
   static String host = '192.168.29.74:3000';
   static String defHost = '192.168.29.74:3000';
   //base url
-  static String baseUrl = 'http://$host/api/v1/';
+  static String baseUrl = 'https://$host/api/v1/';
 
   //apis
   static String loginWithEmail = 'device/auth/sign-in';
@@ -31,7 +31,8 @@ class AppConst {
   //reports
   static String reports = 'device/reports';
 
-  static String getUrl(String host, String api) => 'http://$host/api/v1/$api';
+  static String getUrl(String api, {String host = 'trackweaving.com'}) =>
+      'https://$host/api/v1/$api';
 
   //API LOG
   static void showLog({String tag = 'TAG', required String logText}) =>

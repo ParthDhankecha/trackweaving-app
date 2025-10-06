@@ -12,10 +12,7 @@ class MaintenanceRepo {
   MaintenanceRepo(this.apiClient, {required this.sp});
 
   Future<List<MaintenanceCategory>> getMaintenanceCategoryList() async {
-    String endPoint = AppConst.getUrl(
-      sp.hostUrl,
-      AppConst.maintenanceCategories,
-    );
+    String endPoint = AppConst.getUrl(AppConst.maintenanceCategories);
     var data = await apiClient.request(
       endPoint,
       headers: {'authorization': sp.userToken},
@@ -27,7 +24,7 @@ class MaintenanceRepo {
 
   //get all maintenance alert list for maintenance entry
   Future<List<MaintenanceEntryModel>> getMaintenanceAlert() async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.maintenanceAlert);
+    String endPoint = AppConst.getUrl(AppConst.maintenanceAlert);
     var data = await apiClient.request(
       endPoint,
       headers: {
@@ -50,7 +47,7 @@ class MaintenanceRepo {
     String? completedBy,
     String? completedByMobile,
   }) async {
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.maintenanceAlert);
+    String endPoint = AppConst.getUrl(AppConst.maintenanceAlert);
 
     var reqBody = {
       if (maintenanceCategoryId != null)
@@ -84,10 +81,7 @@ class MaintenanceRepo {
     required String id,
     required bool status,
   }) async {
-    String endPoint = AppConst.getUrl(
-      sp.hostUrl,
-      AppConst.maintenanceCategories,
-    );
+    String endPoint = AppConst.getUrl(AppConst.maintenanceCategories);
     var data = await apiClient.request(
       '$endPoint/$id',
       headers: {'authorization': sp.userToken},

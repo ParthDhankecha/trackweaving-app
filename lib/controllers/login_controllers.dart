@@ -28,11 +28,11 @@ class LoginControllers extends GetxController implements GetxService {
     isLoading.value = load;
   }
 
-  void saveHostUrl(String hostName) {
-    sp.hostUrl = hostName;
-  }
+  // void saveHostUrl(String hostName) {
+  //   sp.hostUrl = hostName;
+  // }
 
-  String get hostUrl => sp.hostUrl;
+  // String get hostUrl => sp.hostUrl;
 
   loginWithEmailPassword() async {
     try {

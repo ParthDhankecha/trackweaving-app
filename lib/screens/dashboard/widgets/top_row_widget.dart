@@ -21,29 +21,29 @@ class TopRowWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildRowItemBox(
-                title: 'efficiency'.tr,
+                title: 'Eff.'.tr,
                 value: '${controller.eff.value}%',
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
               _buildRowItemBox(
                 title: "picks".tr,
                 value: controller.picks.value,
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'avg_picks'.tr,
                 value: controller.avgPick.value,
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'avg_speed'.tr,
                 value: controller.avgSpeed.value,
               ),
-              SizedBox(width: 4),
+              SizedBox(width: 2),
               Container(height: 30, width: 1.8, color: Colors.grey),
-              SizedBox(width: 4),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'running'.tr,
@@ -78,6 +78,7 @@ class TopRowWidget extends StatelessWidget {
                 isActive: controller.currentStatus.value == MachineStatus.all,
                 onTap: () => controller.changeStatus(MachineStatus.all),
               ),
+              SizedBox(width: 6),
             ],
           ),
         ),

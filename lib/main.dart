@@ -7,7 +7,7 @@ import 'package:trackweaving/utils/my_theme_controller.dart';
 import 'package:get/get.dart';
 import 'utils/get_di.dart' as getit;
 
-void main() async {
+void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
 
   await getit.init();

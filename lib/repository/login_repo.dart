@@ -17,7 +17,7 @@ class LoginRepo {
     required String password,
   }) async {
     final reqBody = {'userName': email, 'password': password};
-    String endPoint = AppConst.getUrl(sp.hostUrl, AppConst.loginWithEmail);
+    String endPoint = AppConst.getUrl(AppConst.loginWithEmail);
 
     var data = await apiClient.request(
       endPoint,

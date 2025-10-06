@@ -33,20 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Get.dialog(const HostUrlDialog());
-                  },
-                  child: Text(
-                    'Change Base Url',
-                    style: bodyStyle1.copyWith(color: AppColors.errorColor),
-                  ),
-                ),
-              ],
-            ),
-            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(AppImages.splashLogo, height: 120, width: 120),

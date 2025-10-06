@@ -18,7 +18,7 @@ class _HostUrlDialogState extends State<HostUrlDialog> {
   @override
   void initState() {
     super.initState();
-    _urlController.value = TextEditingValue(text: loginControllers.hostUrl);
+    //  _urlController.value = TextEditingValue(text: loginControllers.hostUrl);
   }
 
   @override
@@ -44,7 +44,7 @@ class _HostUrlDialogState extends State<HostUrlDialog> {
           onPressed: () {
             // Here you would save the URL, e.g., to SharedPreferences or a controller
             final hostUrl = _urlController.text;
-            loginControllers.saveHostUrl(hostUrl);
+            // loginControllers.saveHostUrl(hostUrl);
             log('Saved Host URL: $hostUrl');
             Get.back(); // Close the dialog
           },
