@@ -44,9 +44,6 @@ class Sharedprefs {
   set currentLanguage(String value) => _saveData('USER_LAN', value);
   String get currentLanguage => _getData('USER_LAN') ?? 'en';
 
-  // set hostUrl(String value) => _saveData('HOST', value);
-  // String get hostUrl => _getData('HOST') ?? AppConst.defHost;
-
   //settings configurations
   set refreshInterval(int value) => _saveData('REFRESH_INTERVAL', value);
   int get refreshInterval => _getData('REFRESH_INTERVAL') ?? 12;

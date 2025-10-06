@@ -45,23 +45,18 @@ class ReportTableWidget2 extends StatelessWidget {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.all(8.0),
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Column(
-        // Use Column to constrain the vertical size of the table content
-        // This is crucial for ListView/Stack to work inside a larger scrollable area (like a Scaffold body)
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 2. Horizontal Scroll View (applies to the fixed header and the body)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              // The total width of the table is fixed based on column widths
               width: _calculateTotalTableWidth(),
 
-              // 3. Stack for Sticky Header
               child: Stack(
                 children: [
-                  // --- Scrollable Body (Data Rows + Total Row) ---
                   Padding(
                     padding: const EdgeInsets.only(top: _headerHeight),
                     child: ConstrainedBox(
@@ -71,12 +66,12 @@ class ReportTableWidget2 extends StatelessWidget {
                         // Adjust as needed, e.g., 60% of screen height
                       ),
                       child: ListView.builder(
+                        padding: EdgeInsets.all(0),
                         itemCount: allRows.length,
                         itemBuilder: (context, index) {
                           return allRows[index];
                         },
-                        // Important: Prevent the inner ListView from trying to scroll infinitely
-                        // if placed inside another scroll view without height constraints.
+
                         shrinkWrap: true,
                       ),
                     ),
@@ -88,14 +83,6 @@ class ReportTableWidget2 extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: _buildHeaderRow(),
-                  ),
-
-                  //sicky footer
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: _buildTotalRow(reportResponse.data),
                   ),
                 ],
               ),
@@ -193,11 +180,12 @@ class ReportTableWidget2 extends StatelessWidget {
           ),
         );
       }
-      rows.add(const SizedBox(height: 8.0)); // Space between different dates
+
+      //  rows.add(const SizedBox(height: 8.0)); // Space between different dates
     }
 
     // 5. Global Total Row (at the end of the scrollable content)
-    //rows.add(_buildTotalRow(data));
+    rows.add(_buildTotalRow(data));
 
     return rows;
   }
@@ -268,7 +256,7 @@ class ReportTableWidget2 extends StatelessWidget {
         decoration: BoxDecoration(
           color:
               _subHeaderBgColor, // Use the slightly darker color for distinction
-          border: Border.all(color: Colors.white, width: 0.5),
+          // border: Border.all(color: Colors.white, width: 0.1),
         ),
         alignment: Alignment.center,
         child: Text(
@@ -288,24 +276,32 @@ class ReportTableWidget2 extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         color: _headerBgColor,
-        border: Border.all(color: Colors.white, width: 0.5),
+        border: Border.symmetric(
+          vertical: BorderSide(color: Colors.white, width: 0.5),
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 6.0),
             child: Text(
               title,
               style: _headerTextStyle.copyWith(fontSize: 11),
               textAlign: TextAlign.center,
             ),
           ),
+          Divider(color: Colors.white, height: 1, thickness: 1),
           // Sub-header for Count and Duration
           IntrinsicHeight(
             child: Row(
               children: [
                 _buildExpandedSubHeaderCell('Count'),
+                VerticalDivider(
+                  color: Colors.white,
+                  width: 0.5,
+                  thickness: 0.5,
+                ),
                 _buildExpandedSubHeaderCell('Duration'),
               ],
             ),

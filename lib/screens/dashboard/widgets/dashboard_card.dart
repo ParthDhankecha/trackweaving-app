@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
-import 'package:trackweaving/screens/dashboard/widgets/stop_table.dart';
+import 'package:trackweaving/screens/dashboard/widgets/stop_table2.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/app_images.dart';
 import 'package:get/get.dart';
@@ -38,10 +38,12 @@ class DashboardCard extends StatelessWidget {
           _machineTitleRow(),
 
           Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.only(left: 8, right: 8),
             child: Column(
               children: [
+                SizedBox(height: 4),
                 _currentStopRow(),
+                SizedBox(height: 2),
 
                 Row(
                   children: [
@@ -66,37 +68,36 @@ class DashboardCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(width: 8),
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            _picksRow(
-                              AppImages.imgStopNtn,
-                              'stops',
-                              '${machineLog.stops}',
-                            ),
-                            _picksRow(
-                              AppImages.imgYarn,
-                              'beam_left',
-                              '${machineLog.beamLeft}',
-                              isRotated: true,
-                            ),
-                            _picksRow(
-                              AppImages.imgFabric1,
-                              'set_picks',
-                              '${machineLog.setPicks}',
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        children: [
+                          _picksRow(
+                            AppImages.imgStopNtn,
+                            'stops',
+                            '${machineLog.stops}',
+                          ),
+                          _picksRow(
+                            AppImages.imgYarn,
+                            'beam_left',
+                            '${machineLog.beamLeft}',
+                            isRotated: true,
+                          ),
+                          _picksRow(
+                            AppImages.imgFabric1,
+                            'set_picks',
+                            '${machineLog.setPicks}',
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-
+                SizedBox(height: 6),
                 _progressBar(),
-                SizedBox(height: 4),
-                StopDataTable(stopsData: machineLog.stopsData),
+                SizedBox(height: 2),
+                StopDataTable2(stopsData: machineLog.stopsData),
+                SizedBox(height: 6),
               ],
             ),
           ),
@@ -110,7 +111,7 @@ class DashboardCard extends StatelessWidget {
 
     if (machineLog.efficiency >= controller.efficiencyGoodPer) {
       progressColor = Colors.green;
-    } else if (machineLog.efficiency > controller.efficiencyGoodPer) {
+    } else if (machineLog.efficiency > controller.efficiencyAveragePer) {
       progressColor = AppColors.secondColor;
     } else {
       progressColor = AppColors.errorColor;
@@ -120,6 +121,7 @@ class DashboardCard extends StatelessWidget {
       children: [
         Expanded(
           child: LinearPercentIndicator(
+            padding: EdgeInsets.symmetric(horizontal: 8),
             percent: machineLog.efficiency / 100,
             progressColor: progressColor,
             lineHeight: 20,
@@ -136,7 +138,7 @@ class DashboardCard extends StatelessWidget {
 
   Widget _machineTitleRow() {
     return Container(
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.only(top: 2, bottom: 2, left: 8, right: 8),
       decoration: BoxDecoration(
         color: machineLog.currentStop == 0
             ? AppColors.successColor
@@ -160,7 +162,7 @@ class DashboardCard extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            machineLog.machineName,
+            machineLog.machineName.capitalizeFirst!,
             style: bodyStyle1.copyWith(color: AppColors.whiteColor),
           ),
           Spacer(),
@@ -185,8 +187,7 @@ class DashboardCard extends StatelessWidget {
                 duration: Duration(seconds: 1),
 
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6),
-
+                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: AppColors.blackColor),
@@ -200,8 +201,7 @@ class DashboardCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 6),
-
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColors.blackColor, width: 0),
@@ -226,7 +226,7 @@ class DashboardCard extends StatelessWidget {
             ],
           )
         : Container(
-            padding: EdgeInsets.all(6),
+            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.blackColor, width: 0.75),
@@ -239,7 +239,7 @@ class DashboardCard extends StatelessWidget {
                   machineLog.stopReason,
                   style: bodyStyle1.copyWith(
                     color: AppColors.errorColor,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -264,8 +264,8 @@ class DashboardCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 16,
-            width: 16,
+            height: 14,
+            width: 14,
             child: isRotated
                 ? RotatedBox(
                     quarterTurns: 1,

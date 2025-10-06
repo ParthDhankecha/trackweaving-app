@@ -6,6 +6,7 @@ import 'package:trackweaving/models/status_enum.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/dashboard_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,9 @@ class DashBoardController extends GetxController implements GetxService {
   RxString all = ''.obs;
 
   RxList<MachineLog> machineLogList = RxList<MachineLog>();
+
+  Rx<DateTime> currentTime = Rx(DateTime.now());
+  RxString currentTimeString = ''.obs;
 
   late Timer timer;
 
@@ -63,6 +67,7 @@ class DashBoardController extends GetxController implements GetxService {
       sp.refreshInterval = data['refreshInterval'];
       efficiencyAveragePer = data['efficiencyAveragePer'];
       efficiencyGoodPer = data['efficiencyGoodPer'];
+      log('getSettings : success : $data');
     } on ApiException catch (e) {
       log('getSettings : error : $e');
     } finally {
@@ -85,6 +90,8 @@ class DashBoardController extends GetxController implements GetxService {
       all.value = '${aggregateReport.all}';
 
       machineLogList.value = data.data.machineLogs;
+      currentTime.value = DateTime.now();
+      currentTimeString.value = currentTime.value.ddmmyyhhmmssFormat;
     } on ApiException catch (e) {
       machineLogList.value = [];
       switch (e.statusCode) {

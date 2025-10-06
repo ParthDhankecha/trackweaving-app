@@ -20,7 +20,7 @@ class TopRowWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildRowItemBox(
-                title: 'eff'.tr,
+                title: 'Eff.'.tr,
                 value: '${controller.eff.value}%',
               ),
               SizedBox(width: 2),
@@ -40,9 +40,9 @@ class TopRowWidget extends StatelessWidget {
                 title: 'avg_speed'.tr,
                 value: controller.avgSpeed.value,
               ),
-
+              SizedBox(width: 2),
               Container(height: 30, width: 1.8, color: Colors.grey),
-              SizedBox(width: 4),
+              SizedBox(width: 2),
 
               _buildRowItemBox(
                 title: 'running'.tr,

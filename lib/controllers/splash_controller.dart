@@ -46,8 +46,6 @@ class SplashController extends GetxController implements GetxService {
   // }
 
   checkUser() async {
-    //print(sp.userToken);
-
     //await getSettings();
     Future.delayed(Duration(seconds: 2), () {
       if (sp.userToken.isNotEmpty) {

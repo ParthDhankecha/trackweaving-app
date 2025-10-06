@@ -115,6 +115,7 @@ class MachineLog {
   int setPicks;
   StopsData stopsData;
   String totalDuration;
+  DateTime logTime;
 
   MachineLog({
     required this.machineCode,
@@ -130,6 +131,7 @@ class MachineLog {
     required this.setPicks,
     required this.stopsData,
     required this.totalDuration,
+    required this.logTime,
   });
 
   factory MachineLog.fromMap(Map<String, dynamic> json) => MachineLog(
@@ -146,6 +148,9 @@ class MachineLog {
     setPicks: json["setPicks"],
     stopsData: StopsData.fromMap(json["stopsData"]),
     totalDuration: json["totalDuration"],
+    logTime: json["logTime"] == null
+        ? DateTime.now()
+        : DateTime.parse(json["logTime"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -162,6 +167,7 @@ class MachineLog {
     "setPicks": setPicks,
     "stopsData": stopsData.toMap(),
     "totalDuration": totalDuration,
+    "logTime": logTime,
   };
 }
 

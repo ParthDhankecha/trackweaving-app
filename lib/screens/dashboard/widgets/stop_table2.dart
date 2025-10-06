@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/utils/app_colors.dart';
-import 'package:get/get.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
-class StopDataTable extends StatelessWidget {
+class StopDataTable2 extends StatelessWidget {
   final StopsData stopsData;
-  const StopDataTable({super.key, required this.stopsData});
+  const StopDataTable2({super.key, required this.stopsData});
 
   @override
   Widget build(BuildContext context) {
-    // Sample data to populate the table
-    const data = {
-      'Warp': {'count': 0, 'time': '00:00'},
-      'Weft': {'count': 10, 'time': '00:10'},
-      'Feeder': {'count': 2, 'time': '00:02'},
-      'Manual': {'count': 1, 'time': '00:04'},
-      'Other': {'count': 0, 'time': '00:00'},
-      'Total': {'count': 13, 'time': '00:17'},
-    };
+    // Defines the 6 categories for the data columns
+    const List<String> categories = [
+      'Warp',
+      'Weft',
+      'Feeder',
+      'Manual',
+      'Other',
+      'Total',
+    ];
 
+    // Constant styling parameters
     const double cellPaddingW = 5;
     const double cellPaddingH = 2;
 
@@ -41,9 +40,13 @@ class StopDataTable extends StatelessWidget {
           horizontal: cellPaddingW,
           vertical: cellPaddingH,
         ),
+        // Ensure text is truncated if it exceeds bounds, though FlexColumnWidth
+        // should minimize this need.
         child: Text(
           text,
           textAlign: align,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: TextStyle(
             color: textColor,
             fontWeight: fontWeight,
@@ -53,22 +56,35 @@ class StopDataTable extends StatelessWidget {
       );
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(10),
-      child: SingleChildScrollView(
-        // scrollDirection: Axis.horizontal,
-        physics: const NeverScrollableScrollPhysics(),
+    // Wrapping the entire widget in the requested 8.0 padding
+    return Padding(
+      padding: const EdgeInsets.only(top: 6.0, bottom: 6.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        // Removed SingleChildScrollView and NeverScrollableScrollPhysics
         child: Table(
           border: TableBorder.all(
             color: Colors.grey,
             width: 0.5,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
-          defaultColumnWidth: const IntrinsicColumnWidth(),
+          // *** Key for responsiveness: Use columnWidths with FlexColumnWidth ***
+          columnWidths: const {
+            // Column 0 (Label: 'stops', 'Count', 'Time') gets slightly more width
+            0: FlexColumnWidth(0.8),
+            // Columns 1-6 (Data categories) are equally distributed
+            1: FlexColumnWidth(0.8),
+            2: FlexColumnWidth(0.8),
+            3: FlexColumnWidth(1.0), // Feeder
+            4: FlexColumnWidth(1.10), // Manual
+            5: FlexColumnWidth(0.85), // Other
+            6: FlexColumnWidth(0.85), // Total
+          },
           children: [
             // Header Row
             TableRow(
               children: [
+                // Column 0: Header label ('stops')
                 buildTableCell(
                   text: 'stops'.tr,
                   backgroundColor: const Color(0xFF424242),
@@ -76,7 +92,8 @@ class StopDataTable extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
                 ),
-                for (var category in data.keys)
+                // Columns 1-6: Category names
+                for (var category in categories)
                   buildTableCell(
                     text: category.tr,
                     backgroundColor: const Color(0xFF424242),
@@ -88,19 +105,19 @@ class StopDataTable extends StatelessWidget {
             // Count Row
             TableRow(
               children: [
+                // Column 0: Row label ('Count')
                 buildTableCell(
                   text: 'Count'.tr,
                   backgroundColor: const Color(0xFFE0E0E0),
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
                 ),
-
+                // Columns 1-6: Count values
                 buildTableCell(
                   text: stopsData.warp.count.toString(),
                   textColor: AppColors.mainColor,
                   fontWeight: FontWeight.bold,
                 ),
-
                 buildTableCell(
                   text: stopsData.weft.count.toString(),
                   textColor: AppColors.mainColor,
@@ -121,7 +138,6 @@ class StopDataTable extends StatelessWidget {
                   textColor: AppColors.mainColor,
                   fontWeight: FontWeight.bold,
                 ),
-
                 buildTableCell(
                   text: stopsData.total.count.toString(),
                   textColor: AppColors.mainColor,
@@ -132,14 +148,14 @@ class StopDataTable extends StatelessWidget {
             // Time Row
             TableRow(
               children: [
+                // Column 0: Row label ('Time')
                 buildTableCell(
                   text: 'Time'.tr,
                   backgroundColor: const Color(0xFFE0E0E0),
                   fontWeight: FontWeight.bold,
                   align: TextAlign.left,
                 ),
-                // for (var category in data.keys)
-                //   buildTableCell(text: data[category]!['time'].toString()),
+                // Columns 1-6: Duration values
                 buildTableCell(text: stopsData.warp.duration),
                 buildTableCell(text: stopsData.weft.duration),
                 buildTableCell(text: stopsData.feeder.duration),

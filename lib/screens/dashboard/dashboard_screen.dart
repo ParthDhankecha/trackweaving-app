@@ -37,8 +37,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('live_tracking'.tr),
-        scrolledUnderElevation: 1,
+        title: SizedBox(
+          height: 56,
+          child: Row(
+            children: [
+              Text('live_tracking'.tr),
+              Spacer(),
+              Obx(
+                () => Text(
+                  dashBoardController.currentTimeString.value,
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ],
+          ),
+        ),
 
         actions: [
           Obx(
@@ -62,6 +75,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               Column(children: [TopRowWidget(), SizedBox(height: 8)]),
 
+              Column(children: [TopRowWidget()]),
+              SizedBox(height: 6),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () {
@@ -76,24 +91,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             dashBoardController.machineLogList[index];
                         return DashboardCard(machineLog: machineLog);
                       },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 16),
+                      separatorBuilder: (context, index) => SizedBox(height: 4),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-
-          // Positioned(
-          //   bottom: 8,
-          //   left: 0,
-          //   right: 0,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [TabWidget()],
-          //   ),
-          // ),
         ],
       ),
     );
