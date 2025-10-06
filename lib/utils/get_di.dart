@@ -3,6 +3,7 @@ import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/controllers/localization_controller.dart';
 import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
+import 'package:trackweaving/controllers/machine_parts_controller.dart';
 import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/controllers/report_controller.dart';
 import 'package:trackweaving/controllers/shift_comment_controller.dart';
@@ -10,6 +11,7 @@ import 'package:trackweaving/controllers/splash_controller.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/repository/dashboard_repo.dart';
 import 'package:trackweaving/repository/login_repo.dart';
+import 'package:trackweaving/repository/machine_parts_repo.dart';
 import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/repository/maintenance_repo.dart';
 import 'package:trackweaving/repository/report_repository.dart';
@@ -36,6 +38,7 @@ Future<void> init() async {
 
   Get.lazyPut(() => apiClient);
   Get.lazyPut(() => ReportRepository());
+  Get.lazyPut(() => MachinePartsRepo());
 
   //controllers
   Get.lazyPut(() => LocalizationController(sp: Get.find()));
@@ -61,4 +64,5 @@ Future<void> init() async {
 
   Get.lazyPut(() => ShiftCommentController(repository: Get.find()));
   Get.lazyPut(() => ReportController());
+  Get.lazyPut(() => MachinePartsController());
 }

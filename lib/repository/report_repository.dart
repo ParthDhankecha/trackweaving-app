@@ -32,12 +32,7 @@ class ReportRepository {
       body: body,
       headers: {'Authorization': sp.userToken},
     );
-    print('------ Request URL ------');
-    print(endpoint);
-    print('------ Request Body ------');
-    print(body);
-    print('------ Response Data ------');
-    print(data);
+
     return reportsResponseFromMap(data);
   }
 }

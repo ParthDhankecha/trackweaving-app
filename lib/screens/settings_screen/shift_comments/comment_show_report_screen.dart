@@ -139,7 +139,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
 
                     await shiftCommentController.updateShiftComment(payload);
                     await shiftCommentController.getComments().then((value) {
-                      FocusScope.of(context).unfocus(
+                      FocusScope.of(Get.context!).unfocus(
                         disposition: UnfocusDisposition.previouslyFocusedChild,
                       );
                     });

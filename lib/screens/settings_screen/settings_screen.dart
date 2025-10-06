@@ -3,6 +3,7 @@ import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/machine_group_screen.dart';
+import 'package:trackweaving/screens/settings_screen/machine_parts/machine_parts_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/shift_comments.dart';
@@ -61,6 +62,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: 'shift_wise_comment_update',
               icon: Icons.list,
               onTap: () => Get.to(() => ShiftComments()),
+            ),
+
+            Divider(),
+
+            _settingsRow(
+              title: 'machine_parts',
+              icon: Icons.construction_outlined,
+              onTap: () => Get.to(() => MachinePartsScreen()),
             ),
             Divider(),
             _settingsRow(

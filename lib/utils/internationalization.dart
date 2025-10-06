@@ -81,6 +81,17 @@ class AppTranslations extends Translations {
       'clear_selection': 'Clear Selection',
       'select_all': 'Select',
       'deselect_all': 'Deselect All',
+
+      //machine parts
+      'machine_parts': 'Machine Parts',
+      'select_part': 'Select Part',
+      'add_new_part': 'Add New Part',
+      'part_name': 'Part Name',
+      'change_date': 'Change Date',
+      'change_by_name': 'Change By Name',
+      'change_by_phone': 'Change By Phone',
+      'notes': 'Notes',
+      'update_machine_part': 'Update Machine Part',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -162,6 +173,17 @@ class AppTranslations extends Translations {
       'clear_selection': 'चयन साफ़ करें',
       'select_all': 'सभी चुनें',
       'deselect_all': 'सभी चयन रद्द करें',
+
+      //machine parts
+      'machine_parts': 'मशीन पार्ट्स',
+      'select_part': 'पार्ट चुनें',
+      'add_new_part': 'नया पार्ट जोड़ें',
+      'part_name': 'पार्ट का नाम',
+      'change_date': 'बदलने की तारीख',
+      'change_by_name': 'नाम द्वारा बदलें',
+      'change_by_phone': 'फोन द्वारा बदलें',
+      'notes': 'नोट्स',
+      'update_machine_part': 'मशीन पार्ट अपडेट करें',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -240,6 +262,17 @@ class AppTranslations extends Translations {
       'clear_selection': 'ચયન સાફ કરો',
       'select_all': 'બધા પસંદ કરો',
       'deselect_all': 'બધા પસંદગી રદ કરો',
+
+      //machine parts
+      'machine_parts': 'મશીન પાર્ટ્સ',
+      'select_part': 'પાર્ટ પસંદ કરો',
+      'add_new_part': 'નવો પાર્ટ ઉમેરો',
+      'part_name': 'પાર્ટનું નામ',
+      'change_date': 'બદલવાની તારીખ',
+      'change_by_name': 'નામ દ્વારા બદલો',
+      'change_by_phone': 'ફોન દ્વારા બદલો',
+      'notes': 'નોંધો',
+      'update_machine_part': 'મશીન પાર્ટ અપડેટ કરો',
     },
   };
 }

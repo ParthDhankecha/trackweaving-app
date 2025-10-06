@@ -64,12 +64,6 @@ class ShiftCommentController extends GetxController implements GetxService {
   String getComment(String machineId, String date, String type) {
     String commentFound = '';
 
-    for (var element in availableComments) {
-      print(
-        '${element.machineId} - ${element.date.ddmmyyFormat} - ${element.shift} - ${element.comment}',
-      );
-    }
-
     ShiftComment? comment = availableComments.firstWhereOrNull(
       (element) =>
           element.date.ddmmyyFormat == date &&

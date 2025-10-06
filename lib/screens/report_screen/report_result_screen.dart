@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -71,7 +72,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
         .request();
 
     if (!permissionGranted.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text('Storage permission denied. Cannot save file.'),
         ),
@@ -83,7 +84,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
       Directory? directory = await getDownloadsDirectory();
       if (directory == null) {
         // Fallback or error if Downloads directory is unavailable (rare, but possible)
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
           const SnackBar(
             content: Text('Could not access the public Downloads directory.'),
           ),
@@ -97,23 +98,19 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
 
       log('Using directory path: ${directory.path}');
       final filePath = '${directory.path}/$fileName';
-      log('Using directory path: ${filePath}');
+      log('Using directory path: $filePath');
 
       final file = File(filePath);
       await file.writeAsBytes(bytes);
-
-      await OpenFile.open(filePath);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Exported $fileName successfully to: $filePath'),
-        ),
+      OpenFile.open(filePath).then(
+        (value) => log('File opened successfully: $filePath'),
+        onError: (e) {
+          log('Error opening file: $e');
+        },
       );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error saving file: $e')));
-      print('Mobile/Desktop File Save Error: $e');
+      log('Mobile/Desktop File Save Error: $e');
+      // print('Mobile/Desktop File Save Error: $e');
     }
   }
 
@@ -122,7 +119,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
     final exportData = ReportTableWidget2.getExportData(report.data);
     final csvString = const ListToCsvConverter().convert(exportData);
     final bytes = utf8.encode(csvString);
-    print('CSV Data:\n$csvString');
+    log('CSV Data:\n$csvString');
     _openFile(bytes, 'production_report.csv', 'text/csv');
     _saveFile(bytes, 'production_report.csv', 'text/csv');
   }
@@ -135,12 +132,12 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
       await file.writeAsBytes(bytes);
       var result = await OpenFile.open(filePath);
       if (result.type != ResultType.done) {
-        print('Error opening file: ${result.message}');
+        log('Error opening file: ${result.message}');
       } else {
-        print('File opened successfully: $filePath');
+        log('File opened successfully: $filePath');
       }
     } catch (e) {
-      print('Error opening file: $e');
+      log('Error opening file: $e');
     }
   }
 

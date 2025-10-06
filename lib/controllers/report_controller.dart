@@ -129,6 +129,7 @@ class ReportController extends GetxController implements GetxService {
       return data;
     } on ApiException catch (e) {
       log('Error in getReportData: $e');
+      return null;
     } finally {
       isLoading.value = false;
     }

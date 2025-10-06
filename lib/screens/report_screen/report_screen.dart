@@ -218,10 +218,6 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
 
                                         reportController.endDate.value =
                                             newDate;
-
-                                        print(
-                                          'end date :${reportController.endDate}',
-                                        );
                                       },
                                     ),
                                   ),
@@ -235,9 +231,6 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                       (newDate) {
                                         reportController.endDate.value =
                                             newDate;
-                                        print(
-                                          'end date :${reportController.endDate}',
-                                        );
                                       },
                                     ),
                                   ),
