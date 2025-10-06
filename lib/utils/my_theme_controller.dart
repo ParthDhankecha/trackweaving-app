@@ -50,7 +50,11 @@ class ThemeController extends GetxController {
     scaffoldBackgroundColor: AppColors.appBg,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.appBg,
-      surfaceTintColor: AppColors.appBg,
+      surfaceTintColor: Colors.transparent,
+
+      elevation: 6.0, // Fixed elevation
+      scrolledUnderElevation: 0.0, // Prevents elevation/color change on scroll
+      shadowColor: Colors.black,
     ),
     cardColor: Colors.white,
 

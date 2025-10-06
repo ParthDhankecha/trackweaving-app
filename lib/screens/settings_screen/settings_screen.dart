@@ -34,6 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 20),
             _settingsRow(
               title: 'machine_group',
               image: AppImages.imgSettings,

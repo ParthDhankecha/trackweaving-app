@@ -18,11 +18,11 @@ class ApiClient extends GetxService {
     final url = Uri.parse(endPoint);
     http.Response response;
 
-    // print('------ API Request ------');
-    // print('URL: $url');
-    // print('Method: $method');
-    // print('Headers: $headers');
-    // print('Body: $body');
+    print('------ API Request ------');
+    print('URL: $url');
+    print('Method: $method');
+    print('Headers: ${{...headers!, 'Content-Type': 'application/json'}}');
+    print('Body: $body');
 
     try {
       switch (method) {

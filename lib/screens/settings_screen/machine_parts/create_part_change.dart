@@ -3,12 +3,16 @@ import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/controllers/machine_parts_controller.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/models/part_changelog_list_response.dart';
+import 'package:trackweaving/screens/settings_screen/machine_parts/widgets/machine_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/machine_parts/widgets/parts_search_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class MachinePartsUpdate extends StatefulWidget {
-  const MachinePartsUpdate({super.key});
+  final PartChangeLog? partChangeLog;
+  final int index;
+  const MachinePartsUpdate({super.key, this.partChangeLog, this.index = -1});
 
   @override
   State<MachinePartsUpdate> createState() => _MachinePartsUpdateState();
@@ -26,6 +30,16 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.partChangeLog != null) {
+      controller.selectedPart.value = widget.partChangeLog!.partName;
+      controller.selecteMachine.value = widget.partChangeLog!.machineId.id;
+      controller.selectedCompleteDate.value = widget.partChangeLog!.changeDate;
+      changeByNameController.text = widget.partChangeLog!.changedBy;
+      changeByPhoneController.text =
+          widget.partChangeLog!.changedByContact ?? '';
+      notesController.text = widget.partChangeLog!.notes ?? '';
+    }
   }
 
   @override
@@ -33,7 +47,13 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
     return Scaffold(
       backgroundColor: AppColors.appBg,
 
-      appBar: AppBar(title: Text('update_machine_part'.tr)),
+      appBar: AppBar(
+        title: Text(
+          widget.partChangeLog != null
+              ? 'update_machine_part_change'.tr
+              : 'create_machine_part_change'.tr,
+        ),
+      ),
       body: Form(
         key: formKey,
         child: Padding(
@@ -45,19 +65,38 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: PartsSearchDropdown(
-                        title: '${'select_part'.tr} *',
-                        selectedValue: controller.selectedPart.value,
-                        items: controller.availableParts.map((e) => e).toList(),
-                        onChanged: (value) {
-                          controller.selectedPart.value = value!;
-                        },
-                        onNewPartAdded: (newPart) {
-                          controller.addNewPart(newPart);
-                        },
+                      child: Obx(
+                        () => PartsSearchDropdown(
+                          title: '${'select_part'.tr} *',
+                          selectedValue: controller.selectedPart.value,
+                          items: controller.availableParts
+                              .map((e) => e)
+                              .toList(),
+                          onChanged: (value) {
+                            controller.selectedPart.value = value!;
+                          },
+                          onNewPartAdded: (newPart) {
+                            controller.addNewPart(newPart);
+                          },
+                        ),
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: 10),
+
+                MachineDropdown(
+                  title: '${'select_machine'.tr} *',
+                  selectedValue: controller.selecteMachine.value.isEmpty
+                      ? null
+                      : controller.availableMachines.firstWhere(
+                          (machine) =>
+                              machine.id == controller.selecteMachine.value,
+                        ),
+                  items: controller.availableMachines,
+                  onChanged: (value) {
+                    controller.selectMachine(value?.id);
+                  },
                 ),
                 SizedBox(height: 10),
 
@@ -85,17 +124,16 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                 ),
                 SizedBox(height: 10),
                 _buildPhoneField(
-                  title: '${'change_by_phone'.tr} *',
+                  title: 'change_by_phone'.tr,
                   hintText: 'Phone',
                   controller: changeByPhoneController,
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Phone Field can not Empty';
+                    if (value!.isNotEmpty) {
+                      if (value!.length != 10) {
+                        return 'Phone must be 10 Digit Number';
+                      }
                     }
 
-                    if (value.length != 10) {
-                      return 'Phone must be 10 Digit Number';
-                    }
                     return null;
                   },
                 ),
@@ -116,12 +154,16 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                       () => controller.isLoading.value
                           ? CustomProgressBtn()
                           : MainBtn(
-                              label: 'update'.tr,
+                              label: widget.partChangeLog == null
+                                  ? 'create'.tr
+                                  : 'update'.tr,
                               onTap: () {
                                 if (formKey.currentState!.validate()) {
-                                  // controller.updateMaintenanceEntry(
-                                  //   id: widget.alert.id,
-                                  // );
+                                  controller.createChangeLog(
+                                    name: changeByNameController.text,
+                                    phone: changeByPhoneController.text,
+                                    notes: notesController.text,
+                                  );
                                 }
                               },
                             ),
