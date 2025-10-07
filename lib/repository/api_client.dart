@@ -30,7 +30,7 @@ class ApiClient extends GetxService {
           response = await http.post(
             url,
             body: json.encode(body),
-            headers: {...headers!, 'Content-Type': 'application/json'},
+            headers: {...headers, 'Content-Type': 'application/json'},
           );
           break;
 
@@ -38,7 +38,7 @@ class ApiClient extends GetxService {
           response = await http.put(
             url,
             body: json.encode(body),
-            headers: {...headers!, 'Content-Type': 'application/json'},
+            headers: {...headers, 'Content-Type': 'application/json'},
           );
           break;
 

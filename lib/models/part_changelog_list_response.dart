@@ -65,7 +65,7 @@ class PartChangeLogList {
 class PartChangeLog {
   String id;
   MachineId machineId;
-  String workspaceId;
+  //String workspaceId;
   String partName;
   DateTime changeDate;
   String changedBy;
@@ -75,7 +75,7 @@ class PartChangeLog {
   PartChangeLog({
     required this.id,
     required this.machineId,
-    required this.workspaceId,
+    //required this.workspaceId,
     required this.partName,
     required this.changeDate,
     required this.changedBy,
@@ -86,7 +86,7 @@ class PartChangeLog {
   factory PartChangeLog.fromMap(Map<String, dynamic> json) => PartChangeLog(
     id: json["_id"],
     machineId: MachineId.fromMap(json["machineId"]),
-    workspaceId: json["workspaceId"],
+    //workspaceId: json["workspaceId"],
     partName: json["partName"],
     changeDate: DateTime.parse(json["changeDate"]),
     changedBy: json["changedBy"],
@@ -97,7 +97,7 @@ class PartChangeLog {
   Map<String, dynamic> toMap() => {
     "_id": id,
     "machineId": machineId.toMap(),
-    "workspaceId": workspaceId,
+    //"workspaceId": workspaceId,
     "partName": partName,
     "changeDate": changeDate.toIso8601String(),
     "changedBy": changedBy,

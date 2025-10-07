@@ -46,12 +46,12 @@ class MaintenanceCategory {
   String categoryType;
   int scheduleDays;
   int alertDays;
-  String workspaceId;
+  //String workspaceId;
   String alertMessage;
   bool isActive;
-  bool isDeleted;
-  DateTime createdAt;
-  DateTime updatedAt;
+  //bool isDeleted;
+  //DateTime createdAt;
+  //DateTime updatedAt;
 
   MaintenanceCategory({
     required this.id,
@@ -59,12 +59,12 @@ class MaintenanceCategory {
     required this.categoryType,
     required this.scheduleDays,
     required this.alertDays,
-    required this.workspaceId,
+    //required this.workspaceId,
     required this.alertMessage,
     required this.isActive,
-    required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
+    //required this.isDeleted,
+    //required this.createdAt,
+    //required this.updatedAt,
   });
 
   factory MaintenanceCategory.fromMap(Map<String, dynamic> json) =>
@@ -74,12 +74,12 @@ class MaintenanceCategory {
         categoryType: json["categoryType"],
         scheduleDays: json["scheduleDays"],
         alertDays: json["alertDays"],
-        workspaceId: json["workspaceId"],
+        //workspaceId: json["workspaceId"],
         alertMessage: json["alertMessage"],
         isActive: json["isActive"],
-        isDeleted: json["isDeleted"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        //isDeleted: json["isDeleted"],
+        //createdAt: DateTime.parse(json["createdAt"]),
+        // updatedAt: DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -88,11 +88,11 @@ class MaintenanceCategory {
     "categoryType": categoryType,
     "scheduleDays": scheduleDays,
     "alertDays": alertDays,
-    "workspaceId": workspaceId,
+    //"workspaceId": workspaceId,
     "alertMessage": alertMessage,
     "isActive": isActive,
-    "isDeleted": isDeleted,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
+    // "isDeleted": isDeleted,
+    //"createdAt": createdAt.toIso8601String(),
+    //"updatedAt": updatedAt.toIso8601String(),
   };
 }

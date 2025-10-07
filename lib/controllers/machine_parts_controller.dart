@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/models/part_changelog_list_response.dart';
@@ -9,7 +8,6 @@ import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/machine_parts_repo.dart';
 import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
-import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class MachinePartsController extends GetxController implements GetxService {
   MachinePartsRepo repo = Get.find<MachinePartsRepo>();

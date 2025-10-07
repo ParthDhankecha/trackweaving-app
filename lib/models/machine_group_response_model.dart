@@ -40,39 +40,39 @@ class MachineGroupResponseModel {
 class MachineGroup {
   String id;
   String groupName;
-  String workspaceId;
-  String createdBy;
-  bool isDeleted;
-  DateTime createdAt;
-  DateTime updatedAt;
+  // String workspaceId;
+  // String createdBy;
+  // bool isDeleted;
+  // DateTime createdAt;
+  // DateTime updatedAt;
 
   MachineGroup({
     required this.id,
     required this.groupName,
-    required this.workspaceId,
-    required this.createdBy,
-    required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.workspaceId,
+    // required this.createdBy,
+    // required this.isDeleted,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
   factory MachineGroup.fromMap(Map<String, dynamic> json) => MachineGroup(
     id: json["_id"],
     groupName: json["groupName"],
-    workspaceId: json["workspaceId"],
-    createdBy: json["createdBy"],
-    isDeleted: json["isDeleted"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
+    // workspaceId: json["workspaceId"],
+    // createdBy: json["createdBy"],
+    // isDeleted: json["isDeleted"],
+    // createdAt: DateTime.parse(json["createdAt"]),
+    // updatedAt: DateTime.parse(json["updatedAt"]),
   );
 
   Map<String, dynamic> toMap() => {
     "_id": id,
     "groupName": groupName,
-    "workspaceId": workspaceId,
-    "createdBy": createdBy,
-    "isDeleted": isDeleted,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
+    // "workspaceId": workspaceId,
+    // "createdBy": createdBy,
+    // "isDeleted": isDeleted,
+    // "createdAt": createdAt.toIso8601String(),
+    // "updatedAt": updatedAt.toIso8601String(),
   };
 }

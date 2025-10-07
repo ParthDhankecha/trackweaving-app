@@ -19,11 +19,11 @@ class MachineGroupDropdown extends StatelessWidget {
     MachineGroup machine = MachineGroup(
       id: 'all',
       groupName: 'Select',
-      workspaceId: '',
-      createdBy: '',
-      isDeleted: false,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
+      // workspaceId: '',
+      // createdBy: '',
+      // isDeleted: false,
+      // createdAt: DateTime.now(),
+      // updatedAt: DateTime.now(),
     );
     var dropdownItems = [machine, ...items];
 
