@@ -4,7 +4,7 @@ import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 
-class ReportRepository {
+class ReportRepository extends GetxService {
   // Define your methods and properties here
 
   ApiClient apiClient = Get.find<ApiClient>();

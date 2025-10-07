@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 
 class MachineSearchDropdown extends StatefulWidget {
@@ -249,7 +250,7 @@ class _MultiSelectSheetState extends State<_MultiSelectSheet> {
                   );
 
                   return CheckboxListTile(
-                    title: Text(machine.machineName),
+                    title: Text(machine.machineName.capitalizeFirst!),
                     subtitle: Text(machine.machineCode),
                     value: isSelected,
                     onChanged: (bool? value) => _onToggleItem(machine, value!),

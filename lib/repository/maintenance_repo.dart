@@ -1,12 +1,13 @@
 import 'dart:developer';
 
+import 'package:get/get.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/models/maintenance_category_list_model.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 
-class MaintenanceRepo {
+class MaintenanceRepo extends GetxService {
   final Sharedprefs sp;
   final ApiClient apiClient;
   MaintenanceRepo(this.apiClient, {required this.sp});

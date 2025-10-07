@@ -6,7 +6,7 @@ import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
-class DashboardRepo {
+class DashboardRepo extends GetxService {
   final ApiClient apiClient;
 
   DashboardRepo({required this.apiClient});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/screens/dashboard/dashboard_screen.dart';
+import 'package:trackweaving/screens/notifications/notifications_list_screen.dart';
 import 'package:trackweaving/screens/report_screen/report_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
 import 'package:trackweaving/screens/settings_screen/settings_screen.dart';
@@ -21,12 +22,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeController.showToken();
+    _handleInitialNotificationNavigation();
+  }
+
+  void _handleInitialNotificationNavigation() {
+    if (Get.arguments != null &&
+        Get.arguments is Map<String, dynamic> &&
+        Get.arguments['navigateToNotifications'] == true) {
+      homeController.changeNavIndex(2); // Navigate to Notifications tab
+    }
   }
 
   List<Widget> widgetsList = [
     DashboardScreen(),
     ProductionReportPage(),
-    MaintenanceEntryScreen(),
+    NotificationsListScreen(),
     SettingsScreen(),
   ];
 

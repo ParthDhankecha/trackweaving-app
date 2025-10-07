@@ -8,7 +8,7 @@ import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
-class MachineRepository {
+class MachineRepository extends GetxService {
   final ApiClient apiClient;
 
   MachineRepository({required this.apiClient});

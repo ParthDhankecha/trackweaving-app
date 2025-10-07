@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trackweaving/controllers/notifications_controller.dart';
 import 'package:trackweaving/controllers/splash_controller.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/app_images.dart';
@@ -15,11 +16,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   SplashController splashController = Get.find();
+  final NotificationController controller = Get.find<NotificationController>();
 
   @override
   void initState() {
     super.initState();
     splashController.checkUser();
+    controller.initializeNotifications();
   }
 
   @override
@@ -35,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset(AppImages.splashLogo, height: 140, width: 140),
             ],
           ),
-    
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -49,14 +52,14 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ],
           ),
-    
+
           Text(
             AppStrings.appTagLine,
             textAlign: TextAlign.center,
             style: GoogleFonts.montserrat(
               fontSize: 16,
               color: AppColors.mainColor,
-    
+
               fontWeight: FontWeight.w700,
             ),
           ),

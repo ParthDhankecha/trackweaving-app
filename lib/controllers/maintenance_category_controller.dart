@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
+import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/models/maintenance_category_list_model.dart';
 import 'package:trackweaving/repository/api_exception.dart';
+import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/repository/maintenance_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
@@ -17,6 +19,8 @@ class MaintenanceCategoryController extends GetxController
   final MaintenanceRepo repo;
 
   MaintenanceCategoryController({required this.sp, required this.repo});
+
+  MachineRepository machineRepository = Get.find<MachineRepository>();
 
   RxList<MaintenanceCategory> maintenanceList = RxList();
   RxBool isLoading = false.obs;
@@ -36,6 +40,40 @@ class MaintenanceCategoryController extends GetxController
 
   //filtered list to show users
   RxList<MaintenanceEntryModel> filteredMaintenanceEntryList = RxList();
+
+  RxList<Machine> availableMachines = <Machine>[].obs;
+
+  RxList<Machine> selectedMachines = <Machine>[].obs;
+
+  Future<void> getMachineList() async {
+    try {
+      isLoading.value = true;
+
+      var machineList = await machineRepository.getMachineList();
+      availableMachines.value = machineList;
+    } on ApiException catch (e) {
+      log('error : $e');
+      //showErrorSnackbar('Error - Machine List Load');
+      switch (e.statusCode) {
+        case 401:
+          Get.offAll(() => LoginScreen());
+          break;
+        default:
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void updateSelectedMachines(List<Machine> machines) {
+    selectedMaintenanceEntry.clear();
+    selectedMachines.value = machines;
+
+    for (var element in machines) {
+      selectedMaintenanceEntry.add(element.id);
+    }
+    filterListByMachineCode();
+  }
 
   selectAllMaintenanceEntry() {
     if (selectedAll.value) {
@@ -70,6 +108,7 @@ class MaintenanceCategoryController extends GetxController
   }
 
   clearSelection() {
+    selectedMachines.value = [];
     selectedMaintenanceEntry.clear();
     selectedMaintenanceEntry.refresh();
     selectedAll.value = false;

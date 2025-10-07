@@ -35,6 +35,13 @@ class AppConst {
   static String parts = 'device/part-change-logs';
   static String partsList = 'device/part-change-logs/parts-list';
 
+  //save fcm token
+  static String saveFcmToken = 'device/user/fcm-token'; //
+
+  //users
+  static String users = 'device/user/list';
+  static String addUser = 'device/user';
+
   static String getUrl(String api, {String host = 'trackweaving.com'}) =>
       'https://$host/api/v1/$api';
 

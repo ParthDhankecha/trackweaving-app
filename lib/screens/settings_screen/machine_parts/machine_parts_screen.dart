@@ -4,7 +4,7 @@ import 'package:trackweaving/controllers/machine_parts_controller.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/screens/settings_screen/machine_parts/create_part_change.dart';
 import 'package:trackweaving/screens/settings_screen/machine_parts/widgets/machine_parts_list_item.dart';
-import 'package:trackweaving/screens/settings_screen/machine_parts/widgets/machine_search_dropdown.dart';
+import 'package:trackweaving/common_widgets/machine_search_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class MachinePartsScreen extends StatefulWidget {
@@ -93,7 +93,7 @@ class _MachinePartsScreenState extends State<MachinePartsScreen> {
                   // the main body Obx handles the initial loading screen.
                   Expanded(
                     child: MachineSearchDropdown(
-                      title: 'select_machines'.tr,
+                      title: 'select_machine'.tr,
                       selectedValues: controller.selectedMachines,
                       items: controller.availableMachines,
                       onChanged: (value) {

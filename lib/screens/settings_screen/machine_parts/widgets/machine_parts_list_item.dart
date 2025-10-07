@@ -29,42 +29,38 @@ class MachinePartsListItem extends StatelessWidget {
                 value: partChangeLog.partName,
                 icon: Icons.construction_outlined,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 4),
               buildRow(
                 label: 'machine'.tr,
                 value:
                     "${partChangeLog.machineId.machineName.capitalizeFirst} (${partChangeLog.machineId.machineCode})",
                 icon: Icons.precision_manufacturing,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 4),
               buildRow(
                 label: 'changed_on'.tr,
                 value: partChangeLog.changeDate.ddmmyyFormat,
                 icon: Icons.date_range,
               ),
-              SizedBox(height: 10),
-              buildChangeRow(
-                label: 'changed_by'.tr,
+              SizedBox(height: 4),
+              buildRow(
+                label: 'change_name'.tr,
                 value: partChangeLog.changedBy,
-                changePhone:
-                    partChangeLog.changedByContact != null &&
-                        partChangeLog.changedByContact!.isNotEmpty
-                    ? partChangeLog.changedByContact
-                    : null,
+
                 icon: Icons.person,
               ),
-              // if (partChangeLog.changedByContact != null &&
-              //     partChangeLog.changedByContact!.isNotEmpty)
-              //   SizedBox(height: 10),
-              // if (partChangeLog.changedByContact != null)
-              //   buildRow(
-              //     label: 'change_phone'.tr,
-              //     value: partChangeLog.changedByContact ?? '',
-              //     icon: Icons.phone_android_outlined,
-              //   ),
+              if (partChangeLog.changedByContact != null &&
+                  partChangeLog.changedByContact!.isNotEmpty)
+                SizedBox(height: 4),
+              if (partChangeLog.changedByContact != null)
+                buildRow(
+                  label: 'change_phone'.tr,
+                  value: partChangeLog.changedByContact ?? '',
+                  icon: Icons.phone_android_outlined,
+                ),
               if (partChangeLog.notes != null &&
                   partChangeLog.notes!.isNotEmpty)
-                SizedBox(height: 10),
+                SizedBox(height: 4),
               if (partChangeLog.notes != null &&
                   partChangeLog.notes!.isNotEmpty)
                 buildRow(
@@ -85,65 +81,11 @@ class MachinePartsListItem extends StatelessWidget {
         if (icon != null) Icon(icon, color: AppColors.mainColor),
 
         const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (label != null)
-                Text(
-                  label,
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                ),
-              if (label != null) const SizedBox(height: 4),
-              if (value != null)
-                Text(
-                  value,
-                  style: TextStyle(fontSize: 12, color: Colors.black),
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row buildChangeRow({
-    String? label,
-    String? value,
-    String? changePhone,
-    IconData? icon,
-  }) {
-    return Row(
-      children: [
-        if (icon != null) Icon(icon, color: AppColors.mainColor),
-
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (label != null)
-                Text(
-                  label,
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                ),
-              if (label != null) const SizedBox(height: 4),
-              if (value != null)
-                Text(
-                  value,
-                  style: TextStyle(fontSize: 12, color: Colors.black),
-                ),
-
-              if (changePhone != null)
-                Text(
-                  changePhone,
-                  style: TextStyle(fontSize: 12, color: Colors.black),
-                ),
-            ],
-          ),
-        ),
+        if (label != null)
+          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+        if (label != null) Spacer(),
+        if (value != null)
+          Text(value, style: TextStyle(fontSize: 14, color: Colors.black)),
       ],
     );
   }

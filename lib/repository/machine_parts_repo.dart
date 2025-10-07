@@ -8,7 +8,7 @@ import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 
-class MachinePartsRepo {
+class MachinePartsRepo extends GetxService {
   // Define your repository methods and properties here
 
   ApiClient apiClient = Get.find<ApiClient>();

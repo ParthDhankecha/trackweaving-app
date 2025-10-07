@@ -37,7 +37,7 @@ class MaintenanceEntryCard extends StatelessWidget {
                   ),
 
                   Text(
-                    model.machineName,
+                    model.machineName.capitalizeFirst!,
                     style: titleStyle.copyWith(color: Colors.white),
                   ),
                 ],

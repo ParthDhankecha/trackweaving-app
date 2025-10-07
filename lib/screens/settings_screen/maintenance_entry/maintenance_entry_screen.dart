@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackweaving/common_widgets/machine_search_dropdown.dart';
 import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_category/widget/filter_bottom_sheet.dart';
@@ -21,7 +22,9 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
   @override
   void initState() {
     super.initState();
+    controller.clearSelection();
     controller.getMaintenanceEntryList();
+    controller.getMachineList();
   }
 
   @override
@@ -29,40 +32,32 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBg,
 
-      appBar: AppBar(
-        title: Text('alert'.tr),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.bottomSheet(FilterBottomSheet(), isScrollControlled: true);
-            },
-            child: Row(
-              children: [
-                Text(
-                  'filter'.tr,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.mainColor,
-                  ),
-                ),
-                SizedBox(width: 5),
-                Image.asset(
-                  AppImages.imgFilterIcon,
-                  width: 20,
-                  height: 20,
-                  color: AppColors.mainColor,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text('alert'.tr)),
       body: Obx(
         () => controller.isLoading.value
             ? Column(children: [Center(child: CircularProgressIndicator())])
             : Column(
                 children: [
+                  const SizedBox(height: 12),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: MachineSearchDropdown(
+                            title: 'select_machine'.tr,
+                            selectedValues: controller.selectedMachines,
+                            items: controller.availableMachines,
+                            onChanged: (value) {
+                              controller.updateSelectedMachines(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredMaintenanceEntryList.length,

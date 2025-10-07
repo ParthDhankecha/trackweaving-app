@@ -99,6 +99,18 @@ class AppTranslations extends Translations {
       'change_phone': 'Phone',
       'update_part_change_log': 'Update Part Change Log',
       'create_part_change_log': 'Create Part Change Log',
+
+      //users
+      'user_list': 'User List',
+      'create_user': 'Create User',
+
+      'edit_user': 'Edit User',
+      'user_full_name': 'Full Name',
+      'user_name': 'User Name',
+      'password': 'Password',
+      'email': 'Email',
+      'mobile': 'Mobile',
+      'is_active': 'Is Active',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -198,6 +210,17 @@ class AppTranslations extends Translations {
       'change_phone': 'फोन',
       'update_part_change_log': 'पार्ट चेंज लॉग अपडेट करें',
       'create_part_change_log': 'पार्ट चेंज लॉग बनाएं',
+
+      //usrers
+      'user_list': 'उपयोगकर्ता सूची',
+      'create_user': 'उपयोगकर्ता बनाएँ',
+      'edit_user': 'उपयोगकर्ता संपादित करें',
+      'user_full_name': 'पूरा नाम',
+      'user_name': 'उपयोगकर्ता नाम',
+      'password': 'पासवर्ड',
+      'email': 'ईमेल',
+      'mobile': 'मोबाइल',
+      'is_active': 'सक्रिय है',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -297,6 +320,17 @@ class AppTranslations extends Translations {
       'create_part': 'પાર્ટ બનાવો',
       'update_part_change_log': 'પાર્ટ ચેન્જ લોગ અપડેટ કરો',
       'create_part_change_log': 'પાર્ટ ચેન્જ લોગ બનાવો',
+
+      //users
+      'user_list': 'વપરાશકર્તા યાદી',
+      'create_user': 'વપરાશકર્તા બનાવો',
+      'edit_user': 'વપરાશકર્તા સંપાદિત કરો',
+      'user_full_name': 'પૂર્ણ નામ',
+      'user_name': 'વપરાશકર્તા નામ',
+      'password': 'પાસવર્ડ',
+      'email': 'ઇમેઇલ',
+      'mobile': 'મોબાઇલ',
+      'is_active': 'સક્રિય છે',
     },
   };
 }

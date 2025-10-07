@@ -7,6 +7,7 @@ import 'package:trackweaving/screens/settings_screen/machine_parts/machine_parts
 import 'package:trackweaving/screens/settings_screen/maintenance_category/maintenance_category_screen.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_screen.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/shift_comments.dart';
+import 'package:trackweaving/screens/settings_screen/users/user_list_screen.dart';
 import 'package:trackweaving/screens/settings_screen/widgets/language_bottom_sheet.dart';
 import 'package:trackweaving/screens/settings_screen/widgets/logout_dialog.dart';
 import 'package:trackweaving/utils/app_colors.dart';
@@ -73,6 +74,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => Get.to(() => MachinePartsScreen()),
             ),
             Divider(),
+            _settingsRow(
+              title: 'users',
+              icon: Icons.people_alt_outlined,
+              onTap: () => Get.to(() => UserListScreen()),
+            ),
+            Divider(),
+
             _settingsRow(
               title: 'language_change',
               onTap: () {
