@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "798455213821",
+    "project_id": "trackweaving-b0390",
+    "storage_bucket": "trackweaving-b0390.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798455213821:android:abcc07cfd14c9a4679d894",
+        "android_client_info": {
+          "package_name": "com.app.trackweaving"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsjG-uMNp0q-e-TqJFMPE9oKo0wcieeds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
