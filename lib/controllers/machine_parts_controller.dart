@@ -28,7 +28,9 @@ class MachinePartsController extends GetxController implements GetxService {
 
   final RxList<String> availableParts = <String>[].obs;
 
-  final RxString selectedPart = RxString(''); // Holds the single selected part
+  final RxString selectedPart = RxString(
+    'Select Part',
+  ); // Holds the single selected part
   final RxString selecteMachine = RxString(''); // Holds the selected machine
 
   Rx<DateTime> selectedCompleteDate = Rx<DateTime>(DateTime.now());

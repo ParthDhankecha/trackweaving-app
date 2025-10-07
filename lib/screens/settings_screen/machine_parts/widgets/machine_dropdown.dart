@@ -20,8 +20,8 @@ class MachineDropdown extends StatelessWidget {
       machineGroupId: null,
       id: 'all',
       serialNumber: 'all',
-      machineCode: 'Select All',
-      machineName: 'Select All',
+      machineCode: 'Select',
+      machineName: 'Select',
       ip: '',
       isAlertActive: true,
     );

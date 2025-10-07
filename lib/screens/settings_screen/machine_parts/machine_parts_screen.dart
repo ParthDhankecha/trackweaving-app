@@ -140,6 +140,7 @@ class _MachinePartsScreenState extends State<MachinePartsScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.mainColor,
         onPressed: () {
+          controller.clearSelections();
           Get.to(() => MachinePartsUpdate());
         },
         child: const Icon(Icons.add, color: Colors.white),
@@ -167,7 +168,7 @@ class _MachinePartsScreenState extends State<MachinePartsScreen> {
                   // the main body Obx handles the initial loading screen.
                   Expanded(
                     child: MachineSearchDropdown(
-                      title: 'Select Machines',
+                      title: 'select_machines'.tr,
                       selectedValues: controller.selectedMachines,
                       items: controller.availableMachines,
                       onChanged: (value) {

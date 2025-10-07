@@ -92,6 +92,13 @@ class AppTranslations extends Translations {
       'change_by_phone': 'Change By Phone',
       'notes': 'Notes',
       'update_machine_part': 'Update Machine Part',
+      'select_machine': 'Select Machine',
+
+      'changed_on': 'Changed On',
+      'change_name': 'Name',
+      'change_phone': 'Phone',
+      'update_part_change_log': 'Update Part Change Log',
+      'create_part_change_log': 'Create Part Change Log',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -184,6 +191,13 @@ class AppTranslations extends Translations {
       'change_by_phone': 'फोन द्वारा बदलें',
       'notes': 'नोट्स',
       'update_machine_part': 'मशीन पार्ट अपडेट करें',
+      'select_machine': 'मशीन चुनें',
+
+      'changed_on': 'पर बदला गया',
+      'change_name': 'नाम',
+      'change_phone': 'फोन',
+      'update_part_change_log': 'पार्ट चेंज लॉग अपडेट करें',
+      'create_part_change_log': 'पार्ट चेंज लॉग बनाएं',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -273,6 +287,16 @@ class AppTranslations extends Translations {
       'change_by_phone': 'ફોન દ્વારા બદલો',
       'notes': 'નોંધો',
       'update_machine_part': 'મશીન પાર્ટ અપડેટ કરો',
+      'select_machine': 'મશીન પસંદ કરો',
+
+      'changed_on': 'બદલેલ તારીખ',
+      'change_name': 'નામ',
+      'change_phone': 'ફોન',
+
+      'update_part': 'પાર્ટ અપડેટ કરો',
+      'create_part': 'પાર્ટ બનાવો',
+      'update_part_change_log': 'પાર્ટ ચેન્જ લોગ અપડેટ કરો',
+      'create_part_change_log': 'પાર્ટ ચેન્જ લોગ બનાવો',
     },
   };
 }

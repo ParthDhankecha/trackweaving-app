@@ -51,6 +51,16 @@ class ReportController extends GetxController implements GetxService {
     checkboxMachineList.value = machines;
   }
 
+  clearSelection() {
+    selectedMachineList.clear();
+    selectAllMachines.value = false;
+    checkboxMachineList.clear();
+    isGroupVisible.value = false;
+    startDate.value = DateTime.now();
+    endDate.value = DateTime.now();
+    selectedShift.value = shiftTypeList.first;
+  }
+
   filerMachineByGroup(String groupId) {
     checkboxMachineList.value = [];
     List<Machine> filterList = [];

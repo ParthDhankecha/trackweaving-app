@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
 import 'package:trackweaving/controllers/report_controller.dart';
 import 'package:trackweaving/screens/report_screen/report_result_screen.dart';
+import 'package:trackweaving/screens/report_screen/widgets/build_checkbox_row.dart';
+import 'package:trackweaving/screens/report_screen/widgets/build_datefield.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
@@ -23,131 +25,6 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
   ReportController reportController = Get.find<ReportController>();
   RxBool isLoading = false.obs;
 
-  // Reusable widget for a title with a dropdown
-  Widget _buildDropdownField(
-    String title,
-    String selectedValue,
-    List<String> items,
-    ValueChanged<String?> onChanged,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-          child: Text(
-            '$title:',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ),
-        DropdownButtonFormField<String>(
-          initialValue: selectedValue,
-          dropdownColor: Colors.white,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          ),
-          items: items.map((String value) {
-            return DropdownMenuItem<String>(value: value, child: Text(value));
-          }).toList(),
-          onChanged: onChanged,
-        ),
-      ],
-    );
-  }
-
-  // Reusable widget for a date picker field
-  Widget _buildDateField(
-    String title,
-    DateTime selectedDate,
-    ValueChanged<DateTime> onDateSelected,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-          child: Text(
-            '$title:',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-        ),
-        TextFormField(
-          readOnly: true,
-          onTap: () async {
-            final DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: selectedDate,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
-            );
-            if (pickedDate != null && pickedDate != selectedDate) {
-              onDateSelected(pickedDate);
-            }
-          },
-          controller: TextEditingController(text: selectedDate.ddmmyyFormat2),
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 7,
-              vertical: 8,
-            ),
-            suffixIcon: IconButton(
-              icon: const Icon(
-                Icons.calendar_today,
-                color: Colors.grey,
-                size: 16,
-              ),
-              onPressed: () async {
-                final DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                );
-                if (pickedDate != null && pickedDate != selectedDate) {
-                  onDateSelected(pickedDate);
-                }
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Reusable widget for a checkbox and text in a row
-  Widget _buildCheckboxRow(
-    String title,
-    bool value,
-    ValueChanged<bool?> onChanged,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        onChanged(!value);
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-
-        children: [
-          Checkbox(
-            value: value,
-            onChanged: onChanged,
-
-            activeColor: AppColors.mainColor,
-          ),
-          Text(title),
-        ],
-      ),
-    );
-  }
-
   loadAllData() async {
     isLoading.value = true;
     await machineController.getMachineList();
@@ -163,6 +40,7 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
   @override
   void initState() {
     super.initState();
+    reportController.clearSelection();
     loadAllData();
   }
 
@@ -194,11 +72,11 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            _buildDropdownField(
-                              'report_type'.tr,
-                              _selectedReportType,
-                              ['Production Shiftwise Report'],
-                              (newValue) {
+                            BuildDropdownField(
+                              title: 'report_type'.tr,
+                              selectedValue: _selectedReportType,
+                              items: ['Production Shiftwise Report'],
+                              onChanged: (newValue) {
                                 setState(() {
                                   _selectedReportType = newValue!;
                                 });
@@ -209,10 +87,12 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                               children: [
                                 Obx(
                                   () => Expanded(
-                                    child: _buildDateField(
-                                      'from_date'.tr,
-                                      reportController.startDate.value,
-                                      (newDate) {
+                                    child: BuildDatefield(
+                                      context: context,
+                                      title: 'from_date'.tr,
+                                      selectedDate:
+                                          reportController.startDate.value,
+                                      onDateSelected: (newDate) {
                                         reportController.startDate.value =
                                             newDate;
 
@@ -225,10 +105,12 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                 SizedBox(width: 8),
                                 Obx(
                                   () => Expanded(
-                                    child: _buildDateField(
-                                      'end_date'.tr,
-                                      reportController.endDate.value,
-                                      (newDate) {
+                                    child: BuildDatefield(
+                                      context: context,
+                                      title: 'end_date'.tr,
+                                      selectedDate:
+                                          reportController.endDate.value,
+                                      onDateSelected: (newDate) {
                                         reportController.endDate.value =
                                             newDate;
                                       },
@@ -265,10 +147,11 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                   ),
                                 ),
                                 Obx(
-                                  () => _buildCheckboxRow(
-                                    'group_wise_machine'.tr,
-                                    reportController.isGroupVisible.value,
-                                    (value) {
+                                  () => BuildCheckboxRow(
+                                    title: 'group_wise_machine'.tr,
+                                    value:
+                                        reportController.isGroupVisible.value,
+                                    onChanged: (value) {
                                       reportController.changeGroupVisible();
                                       reportController.filerMachineByGroup(
                                         'select',
@@ -300,10 +183,10 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                             ),
 
                             Obx(
-                              () => _buildCheckboxRow(
-                                'Select All',
-                                reportController.selectAllMachines.value,
-                                reportController.onSelectAllChanged,
+                              () => BuildCheckboxRow(
+                                title: 'Select All',
+                                value: reportController.selectAllMachines.value,
+                                onChanged: reportController.onSelectAllChanged,
                               ),
                             ),
 
@@ -312,11 +195,12 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                 direction: Axis.horizontal,
                                 children: reportController.checkboxMachineList
                                     .map((machine) {
-                                      return _buildCheckboxRow(
-                                        machine.machineCode,
-                                        reportController.selectedMachineList
+                                      return BuildCheckboxRow(
+                                        title: machine.machineCode,
+                                        value: reportController
+                                            .selectedMachineList
                                             .contains(machine),
-                                        (value) {
+                                        onChanged: (value) {
                                           reportController.onMachineSelect(
                                             machine,
                                             value,
@@ -378,6 +262,52 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BuildDropdownField extends StatelessWidget {
+  const BuildDropdownField({
+    super.key,
+    required this.title,
+    required this.selectedValue,
+    required this.items,
+    required this.onChanged,
+  });
+
+  final String title;
+  final String selectedValue;
+  final List<String> items;
+  final ValueChanged<String?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
+          child: Text(
+            '$title:',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+        DropdownButtonFormField<String>(
+          initialValue: selectedValue,
+          dropdownColor: Colors.white,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          ),
+          items: items.map((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

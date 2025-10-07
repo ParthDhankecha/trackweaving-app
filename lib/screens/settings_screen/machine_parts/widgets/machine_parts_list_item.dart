@@ -25,25 +25,25 @@ class MachinePartsListItem extends StatelessWidget {
           child: Column(
             children: [
               buildRow(
-                label: 'Part',
+                label: 'part_name'.tr,
                 value: partChangeLog.partName,
                 icon: Icons.construction_outlined,
               ),
               SizedBox(height: 10),
               buildRow(
-                label: 'Machine',
+                label: 'machine'.tr,
                 value: partChangeLog.machineId.machineName,
                 icon: Icons.precision_manufacturing,
               ),
               SizedBox(height: 10),
               buildRow(
-                label: 'Changed On',
+                label: 'changed_on'.tr,
                 value: partChangeLog.changeDate.ddmmyyFormat,
                 icon: Icons.date_range,
               ),
               SizedBox(height: 10),
               buildRow(
-                label: 'Changed By',
+                label: 'changed_by'.tr,
                 value: partChangeLog.changedBy,
                 icon: Icons.person,
               ),
@@ -52,7 +52,7 @@ class MachinePartsListItem extends StatelessWidget {
                 SizedBox(height: 10),
               if (partChangeLog.changedByContact != null)
                 buildRow(
-                  label: 'Next Change',
+                  label: 'change_phone'.tr,
                   value: partChangeLog.changedByContact ?? '',
                   icon: Icons.phone_android_outlined,
                 ),
@@ -62,7 +62,7 @@ class MachinePartsListItem extends StatelessWidget {
               if (partChangeLog.notes != null &&
                   partChangeLog.notes!.isNotEmpty)
                 buildRow(
-                  label: 'Notes',
+                  label: 'notes'.tr,
                   value: partChangeLog.notes,
                   icon: Icons.note,
                 ),

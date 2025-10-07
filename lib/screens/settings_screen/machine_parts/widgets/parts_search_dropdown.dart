@@ -25,7 +25,7 @@ class PartsSearchDropdown extends StatefulWidget {
 class _PartsSearchDropdownState extends State<PartsSearchDropdown> {
   // Utility method to display the selected part nicely
   String _getDisplayString(String? selected) {
-    return selected ?? 'Select a Part';
+    return selected == null || selected.isEmpty ? 'Select a Part' : selected;
   }
 
   @override

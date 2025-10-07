@@ -50,8 +50,8 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
       appBar: AppBar(
         title: Text(
           widget.partChangeLog != null
-              ? 'update_machine_part_change'.tr
-              : 'create_machine_part_change'.tr,
+              ? 'update_part_change_log'.tr
+              : 'create_part_change_log'.tr,
         ),
       ),
       body: Form(
@@ -95,6 +95,10 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                         ),
                   items: controller.availableMachines,
                   onChanged: (value) {
+                    if (value?.machineCode == 'Select') {
+                      controller.selecteMachine.value = '';
+                      return;
+                    }
                     controller.selectMachine(value?.id);
                   },
                 ),
@@ -155,9 +159,29 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                           ? CustomProgressBtn()
                           : MainBtn(
                               label: widget.partChangeLog == null
-                                  ? 'create'.tr
+                                  ? 'save'.tr
                                   : 'update'.tr,
                               onTap: () {
+                                if (controller.selectedPart.value == null ||
+                                    controller.selectedPart.value.isEmpty) {
+                                  Get.snackbar(
+                                    'Part Required *',
+                                    'Please select a part',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                  );
+                                  return;
+                                }
+
+                                if (controller.selecteMachine.value.isEmpty) {
+                                  Get.snackbar(
+                                    'Machine Required *',
+                                    'Please select a machine',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                  );
+                                  return;
+                                }
                                 if (formKey.currentState!.validate()) {
                                   controller.createChangeLog(
                                     name: changeByNameController.text,
