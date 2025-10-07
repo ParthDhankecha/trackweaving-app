@@ -18,11 +18,11 @@ class ApiClient extends GetxService {
     final url = Uri.parse(endPoint);
     http.Response response;
 
-    print('------ API Request ------');
-    print('URL: $url');
-    print('Method: $method');
-    print('Headers: ${{...headers!, 'Content-Type': 'application/json'}}');
-    print('Body: $body');
+    // print('------ API Request ------');
+    // print('URL: $url');
+    // print('Method: $method');
+    // print('Headers: ${{...headers!, 'Content-Type': 'application/json'}}');
+    // print('Body: $body');
 
     try {
       switch (method) {
@@ -30,7 +30,7 @@ class ApiClient extends GetxService {
           response = await http.post(
             url,
             body: json.encode(body),
-            headers: {...headers, 'Content-Type': 'application/json'},
+            headers: {...headers!, 'Content-Type': 'application/json'},
           );
           break;
 
@@ -38,7 +38,7 @@ class ApiClient extends GetxService {
           response = await http.put(
             url,
             body: json.encode(body),
-            headers: {...headers, 'Content-Type': 'application/json'},
+            headers: {...headers!, 'Content-Type': 'application/json'},
           );
           break;
 

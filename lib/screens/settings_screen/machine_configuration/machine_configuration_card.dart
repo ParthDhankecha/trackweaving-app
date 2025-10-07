@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/export.dart';
 import 'package:trackweaving/common_widgets/animated_alert_switch.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/my_text_widget.dart';
@@ -60,7 +61,7 @@ class MachineConfigurationCard extends StatelessWidget {
               const SizedBox(height: 12),
               _buildInfoRow('machine_code', machineCode),
               const SizedBox(height: 8),
-              _buildInfoRow('machine_name', machineName),
+              _buildInfoRow('machine_name', machineName.capitalizeFirst!),
               const SizedBox(height: 8),
               _buildInfoRow('machine_group', machineGroup),
               const SizedBox(height: 8),

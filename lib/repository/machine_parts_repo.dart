@@ -38,7 +38,6 @@ class MachinePartsRepo {
     );
 
     var partChangeLogListResponse = partChangeLogListResponseFromMap(response);
-    print('partChangeLogListResponse: $partChangeLogListResponse');
     return partChangeLogListResponse.data.partChangeLogs;
   }
 
@@ -65,7 +64,6 @@ class MachinePartsRepo {
       body: body,
       headers: {'authorization': sharedprefs.userToken},
     );
-    print('response: $response');
     bool success = response != null;
     return success;
   }
@@ -94,7 +92,6 @@ class MachinePartsRepo {
       body: body,
       headers: {'authorization': sharedprefs.userToken},
     );
-    print('response: $response');
     PartChangeLog part = ApiResponse.fromJson(
       jsonDecode(response),
       PartChangeLog.fromMap,

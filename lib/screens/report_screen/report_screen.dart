@@ -8,7 +8,6 @@ import 'package:trackweaving/screens/settings_screen/machine_configuration/widge
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:get/get.dart';
-import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class ProductionReportPage extends StatefulWidget {
   const ProductionReportPage({super.key});

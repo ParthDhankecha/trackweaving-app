@@ -27,7 +27,7 @@ class ApiResponse<T> {
         dataValue = dataConverter(json['data'] as Map<String, dynamic>);
       } catch (e) {
         // Handle potential parsing errors in the data field
-        print('Error parsing generic data field: $e');
+        //print('Error parsing generic data field: $e');
         // You might throw an error or set dataValue to null based on your error strategy
       }
     }

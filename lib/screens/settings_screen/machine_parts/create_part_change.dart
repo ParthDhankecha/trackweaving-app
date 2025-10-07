@@ -133,7 +133,7 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                   controller: changeByPhoneController,
                   validator: (String? value) {
                     if (value!.isNotEmpty) {
-                      if (value!.length != 10) {
+                      if (value.length != 10) {
                         return 'Phone must be 10 Digit Number';
                       }
                     }
@@ -162,8 +162,7 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                                   ? 'save'.tr
                                   : 'update'.tr,
                               onTap: () {
-                                if (controller.selectedPart.value == null ||
-                                    controller.selectedPart.value.isEmpty) {
+                                if (controller.selectedPart.value.isEmpty) {
                                   Get.snackbar(
                                     'Part Required *',
                                     'Please select a part',

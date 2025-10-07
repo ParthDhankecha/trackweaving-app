@@ -51,7 +51,7 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
                     Text('machine_name'.tr),
 
                     Text(
-                      widget.maintenanceEntryModel.machineName,
+                      widget.maintenanceEntryModel.machineName.capitalizeFirst!,
                       style: bodyStyle,
                     ),
                   ],

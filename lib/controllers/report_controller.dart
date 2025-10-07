@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/models/report_response.dart';
@@ -118,6 +119,7 @@ class ReportController extends GetxController implements GetxService {
     //validation
     if (machineIds.isEmpty) {
       log('Please select at least one machine');
+      showErrorSnackbar('Please Select Machine *');
       return null;
     }
 
