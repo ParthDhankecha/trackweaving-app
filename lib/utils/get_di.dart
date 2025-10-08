@@ -59,7 +59,7 @@ Future<void> init() async {
       repo: Get.find<LoginRepo>(),
     ),
   );
-  Get.lazyPut(() => HomeController(sp: Get.find()));
+  Get.lazyPut(() => HomeController());
 
   Get.lazyPut(
     () => DashBoardController(sp: Get.find(), dashboardRepo: Get.find()),

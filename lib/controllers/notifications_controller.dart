@@ -96,21 +96,21 @@ class NotificationController extends GetxController implements GetxService {
           sound: true,
         );
 
-    print('User granted permission: ${settings.authorizationStatus}');
+    log('User granted permission: ${settings.authorizationStatus}');
   }
 
   Future<void> getFCMToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
     if (token != null) {
       fcmToken.value = token;
-      print("FCM Token: $token");
+      log("FCM Token: $token");
       loginRepo.saveFcmToken(token); // Save token using LoginRepo
     }
 
     // Listen for token changes
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
       fcmToken.value = newToken;
-      print("FCM Token Refreshed: $newToken");
+      log("FCM Token Refreshed: $newToken");
       loginRepo.saveFcmToken(newToken);
     });
   }
@@ -125,16 +125,19 @@ class NotificationController extends GetxController implements GetxService {
 
       lastNotificationAction.value =
           'Tapped on notification with payload: $payload';
-      Get.snackbar(
-        "Notification Tapped!",
-        "Handling action for payload: $payload",
-        snackPosition: SnackPosition.BOTTOM,
-      );
 
       Get.to(() => HomeScreen(), arguments: {'navigateToNotifications': true});
-      Get.find<HomeController>().changeNavIndex(
-        2,
-      ); // Navigate to Notifications tab
+      if (Get.isRegistered<HomeController>()) {
+        Get.find<HomeController>().changeNavIndex(
+          2,
+        ); // Navigate to Notifications tab
+      } else {
+        log(
+          'HomeController not registered. Cannot navigate to Notifications tab.',
+        );
+        Get.put(HomeController()).changeNavIndex(2);
+      }
+      // Navigate to Notifications tab
     }
   }
 
@@ -233,9 +236,9 @@ class NotificationController extends GetxController implements GetxService {
         markAsRead();
       });
 
-      // print('Fetched notifications: $data');
+      // log('Fetched notifications: $data');
     } on ApiException catch (e) {
-      print('Error fetching notifications: $e');
+      log('Error fetching notifications: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -258,9 +261,9 @@ class NotificationController extends GetxController implements GetxService {
         notificationIds.add(element.id);
       }
     }
-    print('Marking notifications as read: $notificationIds');
+    log('Marking notifications as read: $notificationIds');
     for (var element in notificationIds) {
-      print('Marking notification as read: $element');
+      log('Marking notification as read: $element');
     }
     if (notificationIds.isEmpty) {
       //when list is empty then no need to call api
@@ -282,7 +285,7 @@ class NotificationController extends GetxController implements GetxService {
         // notificationsList.refresh();
       }
     } on ApiException catch (e) {
-      print('Error marking notifications as read: $e');
+      log('Error marking notifications as read: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:get/get.dart';
@@ -18,11 +19,11 @@ class ApiClient extends GetxService {
     final url = Uri.parse(endPoint);
     http.Response response;
 
-    print('------ API Request ------');
-    print('URL: $url');
-    print('Method: $method');
-    print('Headers: ${{...headers!, 'Content-Type': 'application/json'}}');
-    print('Body: $body');
+    log('------ API Request ------');
+    log('URL: $url');
+    log('Method: $method');
+    log('Headers: ${{...headers!, 'Content-Type': 'application/json'}}');
+    log('Body: $body');
 
     try {
       switch (method) {

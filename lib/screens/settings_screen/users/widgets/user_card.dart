@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:trackweaving/common_widgets/animated_alert_switch.dart';
 import 'package:trackweaving/models/users_list_response.dart';
-import 'package:trackweaving/screens/settings_screen/users/widgets/user_active_switch.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class UserCard extends StatelessWidget {

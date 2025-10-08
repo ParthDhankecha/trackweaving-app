@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
@@ -119,31 +117,31 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
   }
 
   // Generate CSV data and trigger download
-  Future<void> _generateCsv(ReportsResponse report) async {
-    final exportData = ReportTableWidget2.getExportData(report.data);
-    final csvString = const ListToCsvConverter().convert(exportData);
-    final bytes = utf8.encode(csvString);
-    log('CSV Data:\n$csvString');
-    _openFile(bytes, 'production_report.csv', 'text/csv');
-    // _saveFile(bytes, 'production_report.csv', 'text/csv');
-  }
+  // Future<void> _generateCsv(ReportsResponse report) async {
+  //   final exportData = ReportTableWidget2.getExportData(report.data);
+  //   final csvString = const ListToCsvConverter().convert(exportData);
+  //   final bytes = utf8.encode(csvString);
+  //   log('CSV Data:\n$csvString');
+  //   _openFile(bytes, 'production_report.csv', 'text/csv');
+  //   _saveFile(bytes, 'production_report.csv', 'text/csv');
+  // }
 
-  _openFile(List<int> bytes, String fileName, String mimeType) async {
-    try {
-      final tempDir = await getTemporaryDirectory();
-      final filePath = '${tempDir.path}/$fileName';
-      final file = File(filePath);
-      await file.writeAsBytes(bytes);
-      var result = await OpenFile.open(filePath);
-      if (result.type != ResultType.done) {
-        log('Error opening file: ${result.message}');
-      } else {
-        log('File opened successfully: $filePath');
-      }
-    } catch (e) {
-      log('Error opening file: $e');
-    }
-  }
+  // _openFile(List<int> bytes, String fileName, String mimeType) async {
+  //   try {
+  //     final tempDir = await getTemporaryDirectory();
+  //     final filePath = '${tempDir.path}/$fileName';
+  //     final file = File(filePath);
+  //     await file.writeAsBytes(bytes);
+  //     var result = await OpenFile.open(filePath);
+  //     if (result.type != ResultType.done) {
+  //       log('Error opening file: ${result.message}');
+  //     } else {
+  //       log('File opened successfully: $filePath');
+  //     }
+  //   } catch (e) {
+  //     log('Error opening file: $e');
+  //   }
+  // }
 
   // Generate PDF document and trigger download
   Future<void> _generatePdf(ReportsResponse report) async {

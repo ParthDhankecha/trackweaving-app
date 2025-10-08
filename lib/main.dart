@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 
   // You can perform heavy data fetching or local processing here.
-  print("Handling a background message: ${message.messageId}");
-  print("Notification Title: ${message.notification?.title}");
+  log("Handling a background message: ${message.messageId}");
+  log("Notification Title: ${message.notification?.title}");
 }
 
 void main() async {
@@ -34,7 +36,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();

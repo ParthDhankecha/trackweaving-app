@@ -1,13 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
-import 'package:trackweaving/controllers/machine_parts_controller.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/controllers/users_controller.dart';
 import 'package:trackweaving/models/users_list_response.dart';
 import 'package:trackweaving/screens/settings_screen/users/widgets/user_active_switch.dart';
 import 'package:trackweaving/utils/app_colors.dart';
-import 'package:trackweaving/utils/date_formate_extension.dart';
 
 class AddUpdateUsersScreen extends StatefulWidget {
   final UserModel? userModel;
@@ -176,7 +176,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
             isActive: isActive.value,
           )
           .then((success) {
-            print('User creation success: $success');
+            log('User creation success: $success');
             if (success) {
               Get.back();
               clearData();
@@ -194,7 +194,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
             isActive: isActive.value,
           )
           .then((success) {
-            print('User update success: $success');
+            log('User update success: $success');
             if (success) {
               Get.back();
               clearData();
@@ -210,52 +210,6 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
     userEmailController.clear();
     userMobileController.clear();
     isActive.value = false;
-  }
-
-  Widget _buildDateField(
-    String title,
-    DateTime selectedDate,
-    ValueChanged<DateTime> onDateSelected,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-          child: Text(
-            '$title:',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-        ),
-        TextFormField(
-          readOnly: true,
-          onTap: () async {
-            final DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: selectedDate,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
-            );
-            if (pickedDate != null && pickedDate != selectedDate) {
-              onDateSelected(pickedDate);
-            }
-          },
-          controller: TextEditingController(text: selectedDate.ddmmyyFormat2),
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            suffixIcon: const Icon(Icons.calendar_month, color: Colors.grey),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildInputField({

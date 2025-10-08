@@ -4,9 +4,7 @@ import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController implements GetxService {
-  final Sharedprefs sp;
-
-  HomeController({required this.sp});
+  HomeController();
 
   RxInt selectedNavIndex = 0.obs;
   final unreadNotificationCount = 0.obs;

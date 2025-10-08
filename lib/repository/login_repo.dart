@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:trackweaving/models/login_auth_model.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
@@ -32,7 +34,7 @@ class LoginRepo extends GetxService {
 
   saveFcmToken(String token) async {
     sp.fcmToken = token;
-    print("FCM Token saved: $token");
+    log("FCM Token saved: $token");
     var endPoint = AppConst.getUrl(AppConst.saveFcmToken);
     Map<String, String> body = {'fcmToken': token};
     var response = await apiClient.request(
@@ -42,12 +44,12 @@ class LoginRepo extends GetxService {
       body: body,
     );
 
-    print("FCM Token response: $response");
+    log("FCM Token response: $response");
   }
 
   deleFcmToken() async {
     sp.fcmToken = '';
-    print("FCM Token deleted");
+    log("FCM Token deleted");
     var endPoint = AppConst.getUrl(AppConst.saveFcmToken);
 
     var response = await apiClient.request(
@@ -56,6 +58,6 @@ class LoginRepo extends GetxService {
       headers: {'Authorization': sp.userToken},
     );
 
-    print("FCM Token delete response: $response");
+    log("FCM Token delete response: $response");
   }
 }

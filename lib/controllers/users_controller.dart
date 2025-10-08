@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:trackweaving/models/users_list_response.dart';
 import 'package:trackweaving/repository/api_exception.dart';
@@ -17,9 +19,7 @@ class UsersController extends GetxController implements GetxService {
       isLoading.value = true;
       var data = await repository.getUsers();
       usersList.value = data;
-      print('Fetched users: $data');
     } on ApiException catch (e) {
-      print('Error fetching users: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -54,7 +54,6 @@ class UsersController extends GetxController implements GetxService {
         getUsersList(); // Refresh the list after creation
       }
     } on ApiException catch (e) {
-      print('Error creating user: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -92,7 +91,6 @@ class UsersController extends GetxController implements GetxService {
         getUsersList(); // Refresh the list after creation
       }
     } on ApiException catch (e) {
-      print('Error updating user: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());
@@ -121,7 +119,7 @@ class UsersController extends GetxController implements GetxService {
       );
       if (isUpdated) {}
     } on ApiException catch (e) {
-      print('Error updating user active status: $e');
+      log('Error updating user active status: $e');
       switch (e.statusCode) {
         case 401:
           Get.offAll(() => LoginScreen());

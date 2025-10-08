@@ -191,6 +191,7 @@ class StopsData {
   Feeder feeder;
   Feeder manual;
   Feeder other;
+  Feeder total;
 
   StopsData({
     required this.warp,
@@ -198,6 +199,7 @@ class StopsData {
     required this.feeder,
     required this.manual,
     required this.other,
+    required this.total,
   });
 
   factory StopsData.fromMap(Map<String, dynamic> json) => StopsData(
@@ -206,6 +208,7 @@ class StopsData {
     feeder: Feeder.fromMap(json["feeder"]),
     manual: Feeder.fromMap(json["manual"]),
     other: Feeder.fromMap(json["other"]),
+    total: Feeder.fromMap(json["total"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -223,40 +226,40 @@ class Feeder {
   Feeder({required this.count, required this.duration});
 
   factory Feeder.fromMap(Map<String, dynamic> json) =>
-      Feeder(count: json["count"], duration: json["totalDuration"]);
+      Feeder(count: json["count"], duration: json["duration"]);
 
-  Map<String, dynamic> toMap() => {"count": count, "totalDuration": duration};
+  Map<String, dynamic> toMap() => {"count": count, "duration": duration};
 }
 
 // Extension updated to use the new class name StopsData
-extension StopsDataExtensions on StopsData {
-  int get totalCount =>
-      warp.count + weft.count + feeder.count + manual.count + other.count;
+// extension StopsDataExtensions on StopsData {
+//   int get totalCount =>
+//       warp.count + weft.count + feeder.count + manual.count + other.count;
 
-  String get totalDuration {
-    // Helper to convert "HH:MM" string to total minutes (assuming HH:MM or MM:SS)
-    int durationToMinutes(String duration) {
-      final parts = duration.split(':');
-      if (parts.length == 2) {
-        final h = int.tryParse(parts[0]) ?? 0;
-        final m = int.tryParse(parts[1]) ?? 0;
-        // Treating as H:M for production run time data
-        return (h * 60) + m;
-      }
-      return 0;
-    }
+//   String get totalDuration {
+//     // Helper to convert "HH:MM" string to total minutes (assuming HH:MM or MM:SS)
+//     int durationToMinutes(String duration) {
+//       final parts = duration.split(':');
+//       if (parts.length == 2) {
+//         final h = int.tryParse(parts[0]) ?? 0;
+//         final m = int.tryParse(parts[1]) ?? 0;
+//         // Treating as H:M for production run time data
+//         return (h * 60) + m;
+//       }
+//       return 0;
+//     }
 
-    int totalMinutes =
-        durationToMinutes(warp.duration) +
-        durationToMinutes(weft.duration) +
-        durationToMinutes(feeder.duration) +
-        durationToMinutes(manual.duration) +
-        durationToMinutes(other.duration);
+//     int totalMinutes =
+//         durationToMinutes(warp.duration) +
+//         durationToMinutes(weft.duration) +
+//         durationToMinutes(feeder.duration) +
+//         durationToMinutes(manual.duration) +
+//         durationToMinutes(other.duration);
 
-    // Convert total minutes back to "HH:MM" format for display
-    final hours = (totalMinutes ~/ 60).toString().padLeft(2, '0');
-    final minutes = (totalMinutes % 60).toString().padLeft(2, '0');
+//     // Convert total minutes back to "HH:MM" format for display
+//     final hours = (totalMinutes ~/ 60).toString().padLeft(2, '0');
+//     final minutes = (totalMinutes % 60).toString().padLeft(2, '0');
 
-    return "$hours:$minutes";
-  }
-}
+//     return "$hours:$minutes";
+//   }
+//}

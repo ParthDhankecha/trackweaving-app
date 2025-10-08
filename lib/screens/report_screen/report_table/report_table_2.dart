@@ -418,8 +418,8 @@ class ReportTableWidget2 extends StatelessWidget {
 
     // Calculate total stops data
     final totalStops = detail.stopsData;
-    final int totalCount = totalStops.totalCount;
-    final String totalDuration = totalStops.totalDuration;
+    final int totalCount = totalStops.total.count;
+    final String totalDuration = totalStops.total.duration;
 
     final String shiftName = isDayShift ? 'Day Shift' : 'Night Shift';
 
@@ -774,7 +774,7 @@ class ReportTableWidget2 extends StatelessWidget {
             '${detail.stopsData.other.count}', detail.stopsData.other.duration,
 
             // Total Stops
-            '${totalStops.totalCount}', totalStops.totalDuration,
+            '${totalStops.total.count}', totalStops.total.duration,
           ];
           exportData.add(detailRow);
         }
@@ -885,7 +885,7 @@ class ReportTableWidget2 extends StatelessWidget {
             '${detail.stopsData.other.count}', detail.stopsData.other.duration,
 
             // Total Stops
-            '${totalStops.totalCount}', totalStops.totalDuration,
+            '${totalStops.total.count}', totalStops.total.duration,
           ];
           exportData.add(detailRow);
         }
