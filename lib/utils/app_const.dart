@@ -45,6 +45,11 @@ class AppConst {
   //notifications
   static String notifications = 'device/notifications';
 
+  static String privacyPolicyUrl = 'https://trackweaving.com/privacy-policy';
+
+  static String termsConditionsUrl =
+      'https://trackweaving.com/terms-and-condition';
+
   static String getUrl(String api, {String host = 'trackweaving.com'}) =>
       'https://$host/api/v1/$api';
 

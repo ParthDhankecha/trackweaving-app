@@ -12,6 +12,7 @@ import 'package:trackweaving/screens/settings_screen/users/user_list_screen.dart
 import 'package:trackweaving/screens/settings_screen/widgets/language_bottom_sheet.dart';
 import 'package:trackweaving/screens/settings_screen/widgets/logout_dialog.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/app_images.dart';
 import 'package:get/get.dart';
 
@@ -37,51 +38,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           children: [
             Divider(height: 1, thickness: 0.2),
-            SizedBox(height: 6),
+            SizedBox(height: 20),
             _settingsRow(
               title: 'machine_group',
               image: AppImages.imgSettings,
               onTap: () => Get.to(() => MachineGroupScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             _settingsRow(
               title: 'machine_configure',
               image: AppImages.imgSettings1,
               onTap: () => Get.to(() => MachineConfigurationScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             _settingsRow(
               title: 'maintenance_category',
               icon: Icons.list_alt_outlined,
               onTap: () => Get.to(() => MaintenanceCategoryScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             _settingsRow(
               title: 'maintenance_entry',
               icon: Icons.add,
               onTap: () => Get.to(() => MaintenanceEntryScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             _settingsRow(
               title: 'shift_wise_comment_update',
               icon: Icons.list,
               onTap: () => Get.to(() => ShiftComments()),
             ),
 
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
 
             _settingsRow(
               title: 'parts_change_entry',
               icon: Icons.construction_outlined,
               onTap: () => Get.to(() => MachinePartsScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             _settingsRow(
               title: 'users',
               icon: Icons.people_alt_outlined,
               onTap: () => Get.to(() => UserListScreen()),
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
 
             _settingsRow(
               title: 'language_change',
@@ -93,7 +94,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               icon: Icons.language_outlined,
             ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
+            _settingsRow(
+              title: 'privacy_policy',
+              icon: Icons.privacy_tip_outlined,
+              onTap: () {
+                openUrl(AppConst.privacyPolicyUrl);
+              },
+            ),
+            Divider(),
+            _settingsRow(
+              title: 'terms_conditions',
+              icon: Icons.article_outlined,
+              onTap: () {
+                openUrl(AppConst.termsConditionsUrl);
+              },
+            ),
+            Divider(),
             _settingsRow(
               icon: Icons.logout_outlined,
               iconColor: AppColors.errorColor,
@@ -101,23 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               showArrow: false,
               onTap: () => Get.dialog(LogoutDialog()),
             ),
-            Divider(height: 1, thickness: 0.4),
-            _settingsRow(
-              title: 'privacy_policy',
-              onTap: () {
-                openUrl('https://trackweaving.com/privacy-policy');
-              },
-              icon: Icons.privacy_tip_outlined,
-            ),
-            Divider(height: 1, thickness: 0.4),
-            _settingsRow(
-              title: 'terms_conditions',
-              onTap: () {
-                openUrl('https://trackweaving.com/terms-and-conditions');
-              },
-              icon: Icons.privacy_tip_outlined,
-            ),
-            Divider(height: 1, thickness: 0.4),
+            Divider(),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
