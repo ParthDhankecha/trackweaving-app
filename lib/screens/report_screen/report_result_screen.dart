@@ -39,13 +39,13 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                MainBtn(
-                  label: 'Export',
-                  onTap: () {
-                    _generateCsv(widget.reportResponse);
-                  },
-                ),
-                SizedBox(width: 12),
+                // MainBtn(
+                //   label: 'Export',
+                //   onTap: () {
+                //     _generateCsv(widget.reportResponse);
+                //   },
+                // ),
+                // SizedBox(width: 12),
                 MainBtn(
                   label: 'PDF',
                   onTap: () {
@@ -125,7 +125,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
     final bytes = utf8.encode(csvString);
     log('CSV Data:\n$csvString');
     _openFile(bytes, 'production_report.csv', 'text/csv');
-    _saveFile(bytes, 'production_report.csv', 'text/csv');
+    // _saveFile(bytes, 'production_report.csv', 'text/csv');
   }
 
   _openFile(List<int> bytes, String fileName, String mimeType) async {
@@ -184,17 +184,6 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
                 ),
               ),
               cellAlignment: pw.Alignment.center,
-              // Apply specific styling to total rows if possible (PDF package limitations apply)
-              // cellFormat: (index, data) {
-              //   if (data.row.contains('TOTAL')) {
-              //     return pw.DefaultTextStyle.fallback().copyWith(
-              //       fontWeight: pw.FontWeight.bold,
-              //       color: PdfColors.black,
-              //       fontSize: 8,
-              //     );
-              //   }
-              //   return null;
-              // },
             ),
           ];
         },

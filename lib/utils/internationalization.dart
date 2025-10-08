@@ -113,6 +113,9 @@ class AppTranslations extends Translations {
       'email': 'Email',
       'mobile': 'Mobile',
       'is_active': 'Is Active',
+
+      'privacy_policy': 'Privacy Policy',
+      'terms_conditions': 'Terms & Conditions',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -225,6 +228,9 @@ class AppTranslations extends Translations {
       'email': 'ईमेल',
       'mobile': 'मोबाइल',
       'is_active': 'सक्रिय है',
+
+      'privacy_policy': 'गोपनीयता नीति',
+      'terms_conditions': 'नियम और शर्तें',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -337,6 +343,8 @@ class AppTranslations extends Translations {
       'email': 'ઇમેઇલ',
       'mobile': 'મોબાઇલ',
       'is_active': 'સક્રિય છે',
+      'privacy_policy': 'ગોપનીયતા નીતિ',
+      'terms_conditions': 'નિયમો અને શરતો',
     },
   };
 }

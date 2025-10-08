@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
+import 'package:trackweaving/common_widgets/lunch_url.dart';
 import 'package:trackweaving/controllers/login_controllers.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_screen.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/machine_group_screen.dart';
@@ -36,51 +37,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           children: [
             Divider(height: 1, thickness: 0.2),
-            SizedBox(height: 20),
+            SizedBox(height: 6),
             _settingsRow(
               title: 'machine_group',
               image: AppImages.imgSettings,
               onTap: () => Get.to(() => MachineGroupScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               title: 'machine_configure',
               image: AppImages.imgSettings1,
               onTap: () => Get.to(() => MachineConfigurationScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               title: 'maintenance_category',
               icon: Icons.list_alt_outlined,
               onTap: () => Get.to(() => MaintenanceCategoryScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               title: 'maintenance_entry',
               icon: Icons.add,
               onTap: () => Get.to(() => MaintenanceEntryScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               title: 'shift_wise_comment_update',
               icon: Icons.list,
               onTap: () => Get.to(() => ShiftComments()),
             ),
 
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
 
             _settingsRow(
               title: 'parts_change_entry',
               icon: Icons.construction_outlined,
               onTap: () => Get.to(() => MachinePartsScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               title: 'users',
               icon: Icons.people_alt_outlined,
               onTap: () => Get.to(() => UserListScreen()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
 
             _settingsRow(
               title: 'language_change',
@@ -92,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               icon: Icons.language_outlined,
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
             _settingsRow(
               icon: Icons.logout_outlined,
               iconColor: AppColors.errorColor,
@@ -100,7 +101,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               showArrow: false,
               onTap: () => Get.dialog(LogoutDialog()),
             ),
-            Divider(),
+            Divider(height: 1, thickness: 0.4),
+            _settingsRow(
+              title: 'privacy_policy',
+              onTap: () {
+                openUrl('https://trackweaving.com/privacy-policy');
+              },
+              icon: Icons.privacy_tip_outlined,
+            ),
+            Divider(height: 1, thickness: 0.4),
+            _settingsRow(
+              title: 'terms_conditions',
+              onTap: () {
+                openUrl('https://trackweaving.com/terms-and-conditions');
+              },
+              icon: Icons.privacy_tip_outlined,
+            ),
+            Divider(height: 1, thickness: 0.4),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

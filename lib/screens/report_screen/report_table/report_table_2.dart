@@ -690,139 +690,121 @@ class ReportTableWidget2 extends StatelessWidget {
     );
   }
 
-  // static List<List<String>> getExportData(Data data) {
-  //   final List<List<String>> exportData = [];
-
-  //   // --- 1.1 Header Row ---
-  //   final List<String> mainHeaders = [
-  //     'Date',
-  //     'Shift',
-  //     'Machine',
-  //     'Prod. [Mtrs]',
-  //     'Picks',
-  //     'Eff. %',
-  //     'Run Time',
-  //     'Beam Left',
-  //   ];
-  //   final List<String> stopTypes = [
-  //     'Warp',
-  //     'Weft',
-  //     'Feeder',
-  //     'Manual',
-  //     'Other',
-  //   ];
-
-  //   // Add Stop Type headers (Warp Count, Warp Duration, Weft Count, ...)
-  //   final List<String> stopHeaders = stopTypes
-  //       .expand((type) => ['${type} Count', '${type} Duration'])
-  //       .toList();
-
-  //   // Add Total Stop headers
-  //   final List<String> totalStopHeaders = [
-  //     'Total Stops Count',
-  //     'Total Stops Duration',
-  //   ];
-
-  //   exportData.add([...mainHeaders, ...stopHeaders, ...totalStopHeaders]);
-
-  //   // --- 1.2 Data Rows (Grouped by Date and Shift) ---
-  //   for (var reportByDate in data.list) {
-  //     final String reportDateStr = reportByDate.reportDate.ddmmyyFormat;
-
-  //     // Helper function to process one shift
-  //     void processShift(Shift shift, String shiftName) {
-  //       // SUMMARY ROW (Date, Shift, Total Production, Total Efficiency, Avg Picks)
-  //       final List<String> summaryRow = [
-  //         reportDateStr,
-  //         shiftName,
-  //         '', // Machine Code (Empty)
-  //         shift.prodMeter.toStringAsFixed(2),
-  //         NumberFormat('#,###').format(shift.totalPicks),
-  //         '${shift.efficiency}',
-  //         'Avg: ${NumberFormat('#,###').format(shift.avgPicks)}', // Run Time column
-  //         '', // Beam Left column (empty in summary)
-  //         ...List.generate(12, (_) => ''), // Empty stop columns
-  //       ];
-  //       exportData.add(summaryRow);
-
-  //       // DETAIL ROWS (Machine Level)
-  //       for (var detail in shift.list) {
-  //         final totalStops = detail.stopsData;
-
-  //         final List<String> detailRow = [
-  //           '', // Date (Empty)
-  //           '', // Shift (Empty)
-  //           detail.machineCode,
-  //           detail.pieceLengthM.toStringAsFixed(2),
-  //           NumberFormat('#,###').format(detail.picksCurrentShift),
-  //           detail.efficiencyPercent.toStringAsFixed(1),
-  //           detail.runTime,
-  //           '${detail.beamLeft}',
-
-  //           // Stops Data (Warp Count, Warp Duration, ...)
-  //           '${detail.stopsData.warp.count}', detail.stopsData.warp.duration,
-  //           '${detail.stopsData.weft.count}', detail.stopsData.weft.duration,
-  //           '${detail.stopsData.feeder.count}',
-  //           detail.stopsData.feeder.duration,
-  //           '${detail.stopsData.manual.count}',
-  //           detail.stopsData.manual.duration,
-  //           '${detail.stopsData.other.count}', detail.stopsData.other.duration,
-
-  //           // Total Stops
-  //           '${totalStops.totalCount}', totalStops.totalDuration,
-  //         ];
-  //         exportData.add(detailRow);
-  //       }
-  //     }
-
-  //     processShift(reportByDate.reportData.dayShift, 'Day Shift');
-  //     processShift(reportByDate.reportData.nightShift, 'Night Shift');
-  //   }
-
-  //   // --- 1.3 Total Row ---
-  //   final double totalLabelWidth =
-  //       _dateWidth + _shiftWidth + _machineWidth; // Visual span for 'TOTAL'
-  //   final double avgPicksWidth =
-  //       _runTimeWidth + _beamLeftWidth; // Visual span for 'Total Avg'
-
-  //   final List<String> totalRow = [
-  //     'TOTAL',
-  //     '', // Shift (Empty)
-  //     '', // Machine (Empty)
-  //     data.avgProdMeter.toStringAsFixed(2),
-  //     NumberFormat('#,###').format(data.totalPicks),
-  //     '${data.totalEfficiency}',
-  //     'Total Avg: ${NumberFormat('#,###').format(data.avgPicks)}', // Run Time / Beam Left combined
-  //     '', // Empty
-  //     ...List.generate(12, (_) => ''), // Empty stop columns
-  //   ];
-  //   // IMPORTANT: Join the Total label cells for CSV/PDF clarity
-  //   totalRow[0] = 'TOTAL';
-  //   totalRow[1] =
-  //       'Total Prod Avg: ${data.avgProdMeter.toStringAsFixed(2)}'; // Use the 2nd cell for clearer grouping of total metrics
-  //   totalRow[2] =
-  //       'Total Picks: ${NumberFormat('#,###').format(data.totalPicks)}'; // Use 3rd cell
-
-  //   // Adjusting structure for a proper CSV/PDF format, combining 'TOTAL' span
-  //   final List<String> finalTotalRow = [
-  //     'TOTAL',
-  //     'Total Prod Avg: ${data.avgProdMeter.toStringAsFixed(2)}',
-  //     'Total Picks: ${NumberFormat('#,###').format(data.totalPicks)}',
-  //     'Total Eff: ${data.totalEfficiency}',
-  //     'Total Avg Picks: ${NumberFormat('#,###').format(data.avgPicks)}',
-  //     ...List.generate(15, (_) => ''), // Pad remaining columns
-  //   ];
-  //   exportData.add(finalTotalRow);
-
-  //   return exportData;
-  // }
-
-  // --- END DATA FLATTENING ---
-
   static List<List<dynamic>> getExportData(Data data) {
     final List<List<dynamic>> exportData = [];
 
     // --- 1.1 Top Header Row (Spanning Titles for PDF Grouping) ---
+    final List<String> mainHeaders = [
+      'Date',
+      'Shift',
+      'Machine',
+      'Prod. [Mtrs]',
+      'Picks',
+      'Eff. %',
+      'Run Time',
+      'Beam Left',
+    ];
+    final List<String> stopTypes = [
+      'Warp',
+      'Weft',
+      'Feeder',
+      'Manual',
+      'Other',
+    ];
+
+    // Top Row: Main headers (span 2 rows), Stop types (span 1 row/2 columns)
+    final List<dynamic> topHeader = [
+      ...mainHeaders,
+      ...stopTypes.expand((type) => [type, type]),
+      'Total Stops', 'Total Stops', // Total Stops spans 2 columns
+    ];
+    exportData.add(topHeader);
+
+    // --- 1.2 Bottom Header Row (Metrics) ---
+    final List<dynamic> bottomHeader = [
+      // Main headers are empty placeholders as they are spanned by the top row
+      ...List.generate(mainHeaders.length, (_) => ''),
+
+      // Stop Metrics (Count/Duration repeated 6 times)
+      ...List.generate(6, (_) => ['Count', 'Duration']).expand((e) => e),
+    ];
+    exportData.add(bottomHeader);
+
+    // --- 1.3 Data Rows (Grouped by Date and Shift) ---
+    // ... (Data rows construction remains the same)
+    for (var reportByDate in data.list) {
+      final String reportDateStr = reportByDate.reportDate.ddmmyyFormat;
+
+      void processShift(Shift shift, String shiftName) {
+        // SUMMARY ROW
+        final List<dynamic> summaryRow = [
+          reportDateStr,
+          shiftName,
+          '',
+          shift.prodMeter.toStringAsFixed(2),
+          NumberFormat('#,###').format(shift.totalPicks),
+          '${shift.efficiency}',
+          'Avg: ${NumberFormat('#,###').format(shift.avgPicks)}',
+          '',
+          ...List.generate(12, (_) => ''), // Empty stop columns
+        ];
+        exportData.add(summaryRow);
+
+        // DETAIL ROWS
+        for (var detail in shift.list) {
+          final totalStops = detail.stopsData;
+
+          final List<dynamic> detailRow = [
+            '', // Date (Empty)
+            '', // Shift (Empty)
+            detail.machineCode,
+            detail.pieceLengthM.toStringAsFixed(2),
+            NumberFormat('#,###').format(detail.picksCurrentShift),
+            detail.efficiencyPercent.toStringAsFixed(1),
+            detail.runTime,
+            '${detail.beamLeft}',
+
+            // Stops Data
+            '${detail.stopsData.warp.count}', detail.stopsData.warp.duration,
+            '${detail.stopsData.weft.count}', detail.stopsData.weft.duration,
+            '${detail.stopsData.feeder.count}',
+            detail.stopsData.feeder.duration,
+            '${detail.stopsData.manual.count}',
+            detail.stopsData.manual.duration,
+            '${detail.stopsData.other.count}', detail.stopsData.other.duration,
+
+            // Total Stops
+            '${totalStops.totalCount}', totalStops.totalDuration,
+          ];
+          exportData.add(detailRow);
+        }
+      }
+
+      reportByDate.reportData.dayShift != null
+          ? processShift(reportByDate.reportData.dayShift!, 'Day Shift')
+          : null;
+      reportByDate.reportData.nightShift != null
+          ? processShift(reportByDate.reportData.nightShift!, 'Night Shift')
+          : null;
+    }
+
+    // --- 1.4 Total Row ---
+    final List<dynamic> finalTotalRow = [
+      'TOTAL',
+      'Total Prod Avg: ${data.avgProdMeter.toStringAsFixed(2)}',
+      'Total Picks: ${NumberFormat('#,###').format(data.totalPicks)}',
+      'Total Eff: ${data.totalEfficiency}',
+      'Total Avg Picks: ${NumberFormat('#,###').format(data.avgPicks)}',
+      ...List.generate(15, (_) => ''), // Pad remaining columns
+    ];
+    exportData.add(finalTotalRow);
+
+    return exportData;
+  }
+
+  static List<List<dynamic>> getExportDataCSV(Data data) {
+    final List<List<dynamic>> exportData = [];
+
     final List<String> mainHeaders = [
       'Date',
       'Shift',

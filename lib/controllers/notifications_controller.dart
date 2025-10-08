@@ -207,7 +207,7 @@ class NotificationController extends GetxController implements GetxService {
     if (isRefresh) {
       isLoading.value = true; // Use primary loader for initial/refresh
       currentPage.value = 1;
-      notificationsList.clear();
+      notificationsList.value = [];
       hasNextPage.value = true;
     } else {
       isPaginating.value = true; // Use secondary loader for subsequent pages
