@@ -154,7 +154,7 @@ class ReportTableWidget2 extends StatelessWidget {
       if (reportByDate.reportData.nightShift != null) {
         // 3. NIGHT SHIFT Detail Rows
         for (var detail in reportByDate.reportData.nightShift!.list) {
-          var detailIndex = reportByDate.reportData.dayShift!.list.indexOf(
+          var detailIndex = reportByDate.reportData.nightShift!.list.indexOf(
             detail,
           );
           if (detailIndex == 0) {

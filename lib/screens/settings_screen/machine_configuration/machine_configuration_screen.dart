@@ -30,6 +30,7 @@ class _MachineConfigurationScreenState
       body: Column(
         children: [
           //machine configuration card
+          Divider(height: 1, thickness: 0.2),
           Expanded(
             child: Obx(
               () => ListView.builder(

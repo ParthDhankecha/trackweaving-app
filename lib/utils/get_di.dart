@@ -16,6 +16,7 @@ import 'package:trackweaving/repository/login_repo.dart';
 import 'package:trackweaving/repository/machine_parts_repo.dart';
 import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/repository/maintenance_repo.dart';
+import 'package:trackweaving/repository/notifications_repo.dart';
 import 'package:trackweaving/repository/report_repository.dart';
 import 'package:trackweaving/repository/shift_comment_repository.dart';
 import 'package:trackweaving/repository/users_repository.dart';
@@ -45,6 +46,7 @@ Future<void> init() async {
   Get.lazyPut(() => ReportRepository());
   Get.lazyPut(() => MachinePartsRepo());
   Get.lazyPut(() => UsersRepository());
+  Get.lazyPut(() => NotificationsRepo());
 
   //controllers
   Get.lazyPut(() => LocalizationController(sp: Get.find()));

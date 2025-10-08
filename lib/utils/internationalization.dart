@@ -83,6 +83,7 @@ class AppTranslations extends Translations {
       'deselect_all': 'Deselect All',
 
       //machine parts
+      'parts_change_entry': 'Parts Change Entry',
       'machine_parts': 'Machine Parts',
       'select_part': 'Select Part',
       'add_new_part': 'Add New Part',
@@ -101,6 +102,7 @@ class AppTranslations extends Translations {
       'create_part_change_log': 'Create Part Change Log',
 
       //users
+      'users': 'Users',
       'user_list': 'User List',
       'create_user': 'Create User',
 
@@ -194,6 +196,7 @@ class AppTranslations extends Translations {
       'deselect_all': 'सभी चयन रद्द करें',
 
       //machine parts
+      'parts_change_entry': 'पार्ट्स चेंज एंट्री',
       'machine_parts': 'मशीन पार्ट्स',
       'select_part': 'पार्ट चुनें',
       'add_new_part': 'नया पार्ट जोड़ें',
@@ -211,7 +214,8 @@ class AppTranslations extends Translations {
       'update_part_change_log': 'पार्ट चेंज लॉग अपडेट करें',
       'create_part_change_log': 'पार्ट चेंज लॉग बनाएं',
 
-      //usrers
+      //users
+      'user': 'उपयोगकर्ता',
       'user_list': 'उपयोगकर्ता सूची',
       'create_user': 'उपयोगकर्ता बनाएँ',
       'edit_user': 'उपयोगकर्ता संपादित करें',
@@ -301,6 +305,7 @@ class AppTranslations extends Translations {
       'deselect_all': 'બધા પસંદગી રદ કરો',
 
       //machine parts
+      'parts_change_entry': 'પાર્ટ્સ ચેન્જ એન્ટ્રી',
       'machine_parts': 'મશીન પાર્ટ્સ',
       'select_part': 'પાર્ટ પસંદ કરો',
       'add_new_part': 'નવો પાર્ટ ઉમેરો',
@@ -322,6 +327,7 @@ class AppTranslations extends Translations {
       'create_part_change_log': 'પાર્ટ ચેન્જ લોગ બનાવો',
 
       //users
+      'users': 'વપરાશકર્તાઓ',
       'user_list': 'વપરાશકર્તા યાદી',
       'create_user': 'વપરાશકર્તા બનાવો',
       'edit_user': 'વપરાશકર્તા સંપાદિત કરો',

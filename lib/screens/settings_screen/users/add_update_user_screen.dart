@@ -54,109 +54,110 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
       ),
       body: Form(
         key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-
-                SizedBox(height: 10),
-
-                _buildInputField(
-                  title: '${'user_full_name'.tr} *',
-                  hintText: 'user_full_name'.tr,
-                  controller: userFullNameController,
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Name Field can not Empty';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildPhoneField(
-                  title: 'user_name'.tr,
-                  hintText: 'user_name'.tr,
-                  controller: userNameController,
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'UserName Field can not Empty';
-                    }
-
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildPhoneField(
-                  title: 'password'.tr,
-                  hintText: 'password'.tr,
-                  controller: userPasswordController,
-                  validator: (String? value) {
-                    if (widget.userModel == null &&
-                        (value == null || value.isEmpty)) {
-                      return 'Password Field can not Empty';
-                    }
-
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildPhoneField(
-                  title: 'mobile'.tr,
-                  hintText: 'mobile'.tr,
-                  controller: userMobileController,
-                  validator: (String? value) {
-                    if (value!.isNotEmpty) {
-                      if (value.length != 10) {
-                        return 'Phone must be 10 Digit Number';
-                      }
-                    }
-
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildInputField(
-                  title: 'email'.tr,
-                  hintText: 'email'.tr,
-                  controller: userEmailController,
-                  inputType: TextInputType.emailAddress,
-                  validator: (String? value) {
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                Obx(
-                  () => UserActiveSwitch(
-                    isActive: isActive.value,
-                    onChanged: (value) {
-                      isActive.value = value;
-                    },
-                  ),
-                ),
-                SizedBox(height: 14),
-                Row(
+        child: Column(
+          children: [
+            Divider(height: 1, thickness: 0.2),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
+                    _buildInputField(
+                      title: '${'user_full_name'.tr} *',
+                      hintText: 'user_full_name'.tr,
+                      controller: userFullNameController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Name Field can not Empty';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildPhoneField(
+                      title: 'user_name'.tr,
+                      hintText: 'user_name'.tr,
+                      controller: userNameController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'UserName Field can not Empty';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildPhoneField(
+                      title: 'password'.tr,
+                      hintText: 'password'.tr,
+                      controller: userPasswordController,
+                      validator: (String? value) {
+                        if (widget.userModel == null &&
+                            (value == null || value.isEmpty)) {
+                          return 'Password Field can not Empty';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildPhoneField(
+                      title: 'mobile'.tr,
+                      hintText: 'mobile'.tr,
+                      controller: userMobileController,
+                      validator: (String? value) {
+                        if (value!.isNotEmpty) {
+                          if (value.length != 10) {
+                            return 'Phone must be 10 Digit Number';
+                          }
+                        }
+
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildInputField(
+                      title: 'email'.tr,
+                      hintText: 'email'.tr,
+                      controller: userEmailController,
+                      inputType: TextInputType.emailAddress,
+                      validator: (String? value) {
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
                     Obx(
-                      () => controller.isLoading.value
-                          ? CustomProgressBtn()
-                          : MainBtn(
-                              label: widget.userModel == null
-                                  ? 'save'.tr
-                                  : 'update'.tr,
-                              onTap: () {
-                                if (formKey.currentState!.validate()) {
-                                  onSaveOrUpdate();
-                                }
-                              },
-                            ),
+                      () => UserActiveSwitch(
+                        isActive: isActive.value,
+                        onChanged: (value) {
+                          isActive.value = value;
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Obx(
+                          () => controller.isLoading.value
+                              ? CustomProgressBtn()
+                              : MainBtn(
+                                  label: widget.userModel == null
+                                      ? 'save'.tr
+                                      : 'update'.tr,
+                                  onTap: () {
+                                    if (formKey.currentState!.validate()) {
+                                      onSaveOrUpdate();
+                                    }
+                                  },
+                                ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

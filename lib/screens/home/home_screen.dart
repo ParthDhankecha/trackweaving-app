@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeController.showToken();
+    homeController.fetchUnreadCount();
     _handleInitialNotificationNavigation();
   }
 
@@ -63,8 +64,39 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.bar_chart_outlined),
               label: 'reports'.tr,
             ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.notifications_outlined),
+            //   label: 'alert'.tr,
+            // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_outlined),
+              icon: Obx(
+                () => Badge(
+                  // Show the badge only if the count is greater than 0
+                  isLabelVisible:
+                      homeController.unreadNotificationCount.value > 0,
+
+                  // Label displays the count, limited to '99+' for large numbers
+                  label: Text(
+                    homeController.unreadNotificationCount.value > 99
+                        ? '99+'
+                        : homeController.unreadNotificationCount.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  // Badge styling
+                  backgroundColor: Colors.redAccent,
+                  offset: const Offset(
+                    8,
+                    -2,
+                  ), // Adjust position relative to the icon
+                  // The actual icon for the tab
+                  child: const Icon(Icons.notifications_outlined),
+                ),
+              ),
               label: 'alert'.tr,
             ),
             BottomNavigationBarItem(

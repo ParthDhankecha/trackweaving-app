@@ -27,13 +27,17 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Shiftwise Production Report')),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            ReportTableWidget2(reportResponse: widget.reportResponse),
-            Spacer(),
-            Row(
+      body: Column(
+        children: [
+          Divider(height: 1, thickness: 0.2),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ReportTableWidget2(reportResponse: widget.reportResponse),
+          ),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
                 MainBtn(
                   label: 'Export',
@@ -57,9 +61,9 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 12),
-          ],
-        ),
+          ),
+          SizedBox(height: 12),
+        ],
       ),
     );
   }

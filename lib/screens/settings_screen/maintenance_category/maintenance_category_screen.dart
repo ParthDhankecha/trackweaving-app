@@ -31,6 +31,7 @@ class _MaintenanceCategoryScreenState extends State<MaintenanceCategoryScreen> {
       appBar: AppBar(title: Text('maintenance_category'.tr)),
       body: Column(
         children: [
+          Divider(height: 1, thickness: 0.2),
           Obx(
             () => Expanded(
               child: ListView.builder(

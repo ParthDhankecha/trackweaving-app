@@ -29,6 +29,7 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
       appBar: AppBar(title: Text('Show Report')),
       body: Column(
         children: [
+          Divider(height: 1, thickness: 0.2),
           Obx(
             () => shiftCommentController.shiftCommentList.isEmpty
                 ? SizedBox()

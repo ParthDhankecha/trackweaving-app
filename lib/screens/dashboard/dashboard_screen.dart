@@ -38,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: SizedBox(
-          height: 56,
+          height: 52,
           child: Row(
             children: [
               Text('live_tracking'.tr),
@@ -73,6 +73,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Column(
             children: [
+              Divider(height: 1, thickness: 0.2),
+              SizedBox(height: 8),
               TopRowWidget(),
               SizedBox(height: 8),
 

@@ -42,6 +42,9 @@ class AppConst {
   static String users = 'device/user/list';
   static String addUser = 'device/user';
 
+  //notifications
+  static String notifications = 'device/notifications';
+
   static String getUrl(String api, {String host = 'trackweaving.com'}) =>
       'https://$host/api/v1/$api';
 

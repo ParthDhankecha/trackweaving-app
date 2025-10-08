@@ -71,86 +71,94 @@ class _MachinePartsScreenState extends State<MachinePartsScreen> {
         child: const Icon(Icons.add, color: Colors.white),
       ),
       // 4. Use a single main ListView for the entire body content
-      body: Obx(() {
-        // Show the main loading indicator while initial data is fetched
-        if (controller.isLoading.value && controller.partChangeLogs.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
-        }
+      body: Column(
+        children: [
+          Divider(height: 1, thickness: 0.2),
+          Expanded(
+            child: Obx(() {
+              // Show the main loading indicator while initial data is fetched
+              if (controller.isLoading.value &&
+                  controller.partChangeLogs.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-        return ListView(
-          controller: _scrollController, // Attach the scroll controller
-          padding: const EdgeInsets.only(
-            top: 12,
-            bottom: 80,
-          ), // Add padding for FAB
-          children: [
-            // Machine Group Card
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
+              return ListView(
+                controller: _scrollController, // Attach the scroll controller
+                padding: const EdgeInsets.only(
+                  top: 12,
+                  bottom: 80,
+                ), // Add padding for FAB
                 children: [
-                  // Note: Removed redundant Obx and Center here since
-                  // the main body Obx handles the initial loading screen.
-                  Expanded(
-                    child: MachineSearchDropdown(
-                      title: 'select_machine'.tr,
-                      selectedValues: controller.selectedMachines,
-                      items: controller.availableMachines,
-                      onChanged: (value) {
-                        controller.updateSelectedMachines(value);
-                      },
+                  // Machine Group Card
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      children: [
+                        // Note: Removed redundant Obx and Center here since
+                        // the main body Obx handles the initial loading screen.
+                        Expanded(
+                          child: MachineSearchDropdown(
+                            title: 'select_machine'.tr,
+                            selectedValues: controller.selectedMachines,
+                            items: controller.availableMachines,
+                            onChanged: (value) {
+                              controller.updateSelectedMachines(value);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
-            // List of machine parts
-            if (controller.partChangeLogs.isEmpty)
-              // Show 'No Data' message if list is empty after loading
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(24.0),
-                  child: Text('No Change Logs Found'),
-                ),
-              )
-            else
-              // Use Column or List.generate to build items inside the main ListView
-              ...List.generate(controller.partChangeLogs.length, (index) {
-                final partLog = controller.partChangeLogs[index];
-                return MachinePartsListItem(
-                  partChangeLog: partLog,
-                  onTap: () {
-                    Get.to(
-                      () => MachinePartsUpdate(
-                        partChangeLog: partLog,
-                        index: index,
+                  // List of machine parts
+                  if (controller.partChangeLogs.isEmpty)
+                    // Show 'No Data' message if list is empty after loading
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(24.0),
+                        child: Text('No Change Logs Found'),
                       ),
-                    );
-                  },
-                );
-              }),
+                    )
+                  else
+                    // Use Column or List.generate to build items inside the main ListView
+                    ...List.generate(controller.partChangeLogs.length, (index) {
+                      final partLog = controller.partChangeLogs[index];
+                      return MachinePartsListItem(
+                        partChangeLog: partLog,
+                        onTap: () {
+                          Get.to(
+                            () => MachinePartsUpdate(
+                              partChangeLog: partLog,
+                              index: index,
+                            ),
+                          );
+                        },
+                      );
+                    }),
 
-            // Pagination Loader (only visible when fetching next page)
-            if (controller.isPaginating.value)
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Center(child: CircularProgressIndicator()),
-              ),
+                  // Pagination Loader (only visible when fetching next page)
+                  if (controller.isPaginating.value)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
 
-            // End of list message
-            if (!controller.hasNextPage.value &&
-                controller.partChangeLogs.isNotEmpty)
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Center(
-                  child: Text('You have reached the end of the list.'),
-                ),
-              ),
-          ],
-        );
-      }),
+                  // End of list message
+                  if (!controller.hasNextPage.value &&
+                      controller.partChangeLogs.isNotEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text('You have reached the end of the list.'),
+                      ),
+                    ),
+                ],
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -36,34 +36,42 @@ class _UserListScreenState extends State<UserListScreen> {
         child: const Icon(Icons.add, color: Colors.white),
       ),
       // 4. Use a single main ListView for the entire body content
-      body: Obx(() {
-        // Show the main loading indicator while initial data is fetched
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        }
+      body: Column(
+        children: [
+          Divider(height: 1, thickness: 0.2),
+          Expanded(
+            child: Obx(() {
+              // Show the main loading indicator while initial data is fetched
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            final user = controller.usersList[index];
-            return UserCard(
-              user: user,
-              onTap: () {
-                Get.to(
-                  () => AddUpdateUsersScreen(userModel: user, index: index),
-                );
-              },
-              onActiveChanged: (bool isActive) {
-                controller.updateOnlyActive(
-                  user: user,
-                  isActive: isActive,
-                  index: index,
-                );
-              },
-            );
-          },
-          itemCount: controller.usersList.length,
-        );
-      }),
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final user = controller.usersList[index];
+                  return UserCard(
+                    user: user,
+                    onTap: () {
+                      Get.to(
+                        () =>
+                            AddUpdateUsersScreen(userModel: user, index: index),
+                      );
+                    },
+                    onActiveChanged: (bool isActive) {
+                      controller.updateOnlyActive(
+                        user: user,
+                        isActive: isActive,
+                        index: index,
+                      );
+                    },
+                  );
+                },
+                itemCount: controller.usersList.length,
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

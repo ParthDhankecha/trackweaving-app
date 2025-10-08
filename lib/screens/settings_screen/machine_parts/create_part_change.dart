@@ -56,146 +56,154 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
       ),
       body: Form(
         key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          children: [
+            Divider(height: 1, thickness: 0.2),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Obx(
-                        () => PartsSearchDropdown(
-                          title: '${'select_part'.tr} *',
-                          selectedValue: controller.selectedPart.value,
-                          items: controller.availableParts
-                              .map((e) => e)
-                              .toList(),
-                          onChanged: (value) {
-                            controller.selectedPart.value = value!;
-                          },
-                          onNewPartAdded: (newPart) {
-                            controller.addNewPart(newPart);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-
-                MachineDropdown(
-                  title: '${'select_machine'.tr} *',
-                  selectedValue: controller.selecteMachine.value.isEmpty
-                      ? null
-                      : controller.availableMachines.firstWhere(
-                          (machine) =>
-                              machine.id == controller.selecteMachine.value,
-                        ),
-                  items: controller.availableMachines,
-                  onChanged: (value) {
-                    if (value?.machineCode == 'Select') {
-                      controller.selecteMachine.value = '';
-                      return;
-                    }
-                    controller.selectMachine(value?.id);
-                  },
-                ),
-                SizedBox(height: 10),
-
-                Obx(
-                  () => _buildDateField(
-                    '${'change_date'.tr} *',
-                    controller.selectedCompleteDate.value,
-                    (value) {
-                      controller.changeCompleteDate(value);
-                    },
-                  ),
-                ),
-                SizedBox(height: 10),
-
-                _buildInputField(
-                  title: '${'change_by_name'.tr} *',
-                  hintText: 'Name',
-                  controller: changeByNameController,
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Name Field can not Empty';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildPhoneField(
-                  title: 'change_by_phone'.tr,
-                  hintText: 'Phone',
-                  controller: changeByPhoneController,
-                  validator: (String? value) {
-                    if (value!.isNotEmpty) {
-                      if (value.length != 10) {
-                        return 'Phone must be 10 Digit Number';
-                      }
-                    }
-
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                _buildInputField(
-                  title: 'notes'.tr,
-                  hintText: 'notes'.tr,
-                  controller: notesController,
-                  inputType: TextInputType.multiline,
-                  validator: (String? value) {
-                    return null;
-                  },
-                ),
-                SizedBox(height: 14),
-                Row(
-                  children: [
-                    Obx(
-                      () => controller.isLoading.value
-                          ? CustomProgressBtn()
-                          : MainBtn(
-                              label: widget.partChangeLog == null
-                                  ? 'save'.tr
-                                  : 'update'.tr,
-                              onTap: () {
-                                if (controller.selectedPart.value.isEmpty) {
-                                  Get.snackbar(
-                                    'Part Required *',
-                                    'Please select a part',
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                  );
-                                  return;
-                                }
-
-                                if (controller.selecteMachine.value.isEmpty) {
-                                  Get.snackbar(
-                                    'Machine Required *',
-                                    'Please select a machine',
-                                    backgroundColor: Colors.red,
-                                    colorText: Colors.white,
-                                  );
-                                  return;
-                                }
-                                if (formKey.currentState!.validate()) {
-                                  controller.createChangeLog(
-                                    name: changeByNameController.text,
-                                    phone: changeByPhoneController.text,
-                                    notes: notesController.text,
-                                  );
-                                }
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Obx(
+                            () => PartsSearchDropdown(
+                              title: '${'select_part'.tr} *',
+                              selectedValue: controller.selectedPart.value,
+                              items: controller.availableParts
+                                  .map((e) => e)
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.selectedPart.value = value!;
+                              },
+                              onNewPartAdded: (newPart) {
+                                controller.addNewPart(newPart);
                               },
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+
+                    MachineDropdown(
+                      title: '${'select_machine'.tr} *',
+                      selectedValue: controller.selecteMachine.value.isEmpty
+                          ? null
+                          : controller.availableMachines.firstWhere(
+                              (machine) =>
+                                  machine.id == controller.selecteMachine.value,
+                            ),
+                      items: controller.availableMachines,
+                      onChanged: (value) {
+                        if (value?.machineCode == 'Select') {
+                          controller.selecteMachine.value = '';
+                          return;
+                        }
+                        controller.selectMachine(value?.id);
+                      },
+                    ),
+                    SizedBox(height: 10),
+
+                    Obx(
+                      () => _buildDateField(
+                        '${'change_date'.tr} *',
+                        controller.selectedCompleteDate.value,
+                        (value) {
+                          controller.changeCompleteDate(value);
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 10),
+
+                    _buildInputField(
+                      title: '${'change_by_name'.tr} *',
+                      hintText: 'Name',
+                      controller: changeByNameController,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Name Field can not Empty';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildPhoneField(
+                      title: 'change_by_phone'.tr,
+                      hintText: 'Phone',
+                      controller: changeByPhoneController,
+                      validator: (String? value) {
+                        if (value!.isNotEmpty) {
+                          if (value.length != 10) {
+                            return 'Phone must be 10 Digit Number';
+                          }
+                        }
+
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    _buildInputField(
+                      title: 'notes'.tr,
+                      hintText: 'notes'.tr,
+                      controller: notesController,
+                      inputType: TextInputType.multiline,
+                      validator: (String? value) {
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Obx(
+                          () => controller.isLoading.value
+                              ? CustomProgressBtn()
+                              : MainBtn(
+                                  label: widget.partChangeLog == null
+                                      ? 'save'.tr
+                                      : 'update'.tr,
+                                  onTap: () {
+                                    if (controller.selectedPart.value.isEmpty) {
+                                      Get.snackbar(
+                                        'Part Required *',
+                                        'Please select a part',
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                      return;
+                                    }
+
+                                    if (controller
+                                        .selecteMachine
+                                        .value
+                                        .isEmpty) {
+                                      Get.snackbar(
+                                        'Machine Required *',
+                                        'Please select a machine',
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                      return;
+                                    }
+                                    if (formKey.currentState!.validate()) {
+                                      controller.createChangeLog(
+                                        name: changeByNameController.text,
+                                        phone: changeByPhoneController.text,
+                                        notes: notesController.text,
+                                      );
+                                    }
+                                  },
+                                ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

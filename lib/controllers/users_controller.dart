@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:trackweaving/models/users_list_response.dart';
-import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/users_repository.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';

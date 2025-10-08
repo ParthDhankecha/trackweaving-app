@@ -48,213 +48,219 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
     return Scaffold(
       appBar: AppBar(title: Text('reports'.tr)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            Card(
-              elevation: 2,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Obx(
-                  () => isLoading.value
-                      ? Center(
-                          child: SizedBox(
-                            height: 25,
-                            width: 25,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            BuildDropdownField(
-                              title: 'report_type'.tr,
-                              selectedValue: _selectedReportType,
-                              items: ['Production Shiftwise Report'],
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _selectedReportType = newValue!;
-                                });
-                              },
+            Divider(height: 1, thickness: 0.2),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 2,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Obx(
+                    () => isLoading.value
+                        ? Center(
+                            child: SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(),
                             ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Obx(
-                                  () => Expanded(
-                                    child: BuildDatefield(
-                                      context: context,
-                                      title: 'from_date'.tr,
-                                      selectedDate:
-                                          reportController.startDate.value,
-                                      onDateSelected: (newDate) {
-                                        reportController.startDate.value =
-                                            newDate;
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              BuildDropdownField(
+                                title: 'report_type'.tr,
+                                selectedValue: _selectedReportType,
+                                items: ['Production Shiftwise Report'],
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedReportType = newValue!;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Expanded(
+                                      child: BuildDatefield(
+                                        context: context,
+                                        title: 'from_date'.tr,
+                                        selectedDate:
+                                            reportController.startDate.value,
+                                        onDateSelected: (newDate) {
+                                          reportController.startDate.value =
+                                              newDate;
 
-                                        reportController.endDate.value =
-                                            newDate;
+                                          reportController.endDate.value =
+                                              newDate;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Obx(
+                                    () => Expanded(
+                                      child: BuildDatefield(
+                                        context: context,
+                                        title: 'end_date'.tr,
+                                        selectedDate:
+                                            reportController.endDate.value,
+                                        onDateSelected: (newDate) {
+                                          reportController.endDate.value =
+                                              newDate;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 16),
+                              ShiftDropdown(
+                                title: 'shift'.tr,
+                                items: reportController.shiftTypeList,
+                                selectedValue:
+                                    reportController.selectedShift.value,
+                                onChanged: (value) {
+                                  reportController.changeShiftType(value);
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 8.0,
+                                      bottom: 4.0,
+                                    ),
+                                    child: Text(
+                                      '${'machine'.tr}: ',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => BuildCheckboxRow(
+                                      title: 'group_wise_machine'.tr,
+                                      value:
+                                          reportController.isGroupVisible.value,
+                                      onChanged: (value) {
+                                        reportController.changeGroupVisible();
+                                        reportController.filerMachineByGroup(
+                                          'select',
+                                        );
                                       },
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 8),
-                                Obx(
-                                  () => Expanded(
-                                    child: BuildDatefield(
-                                      context: context,
-                                      title: 'end_date'.tr,
-                                      selectedDate:
-                                          reportController.endDate.value,
-                                      onDateSelected: (newDate) {
-                                        reportController.endDate.value =
-                                            newDate;
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
 
-                            const SizedBox(height: 16),
-                            ShiftDropdown(
-                              title: 'shift'.tr,
-                              items: reportController.shiftTypeList,
-                              selectedValue:
-                                  reportController.selectedShift.value,
-                              onChanged: (value) {
-                                reportController.changeShiftType(value);
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    bottom: 4.0,
-                                  ),
-                                  child: Text(
-                                    '${'machine'.tr}: ',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => BuildCheckboxRow(
-                                    title: 'group_wise_machine'.tr,
-                                    value:
-                                        reportController.isGroupVisible.value,
-                                    onChanged: (value) {
-                                      reportController.changeGroupVisible();
+                              Visibility(
+                                visible: reportController.isGroupVisible.value,
+                                child: MachineGroupDropdown(
+                                  title: 'machine_group'.tr,
+                                  items: reportController
+                                      .availableMachineGroupList,
+                                  onChanged: (value) {
+                                    if (value?.id == 'all') {
                                       reportController.filerMachineByGroup(
                                         'select',
                                       );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Visibility(
-                              visible: reportController.isGroupVisible.value,
-                              child: MachineGroupDropdown(
-                                title: 'machine_group'.tr,
-                                items:
-                                    reportController.availableMachineGroupList,
-                                onChanged: (value) {
-                                  if (value?.id == 'all') {
-                                    reportController.filerMachineByGroup(
-                                      'select',
-                                    );
-                                  } else {
-                                    reportController.filerMachineByGroup(
-                                      value!.id,
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-
-                            Obx(
-                              () => BuildCheckboxRow(
-                                title: 'Select All',
-                                value: reportController.selectAllMachines.value,
-                                onChanged: reportController.onSelectAllChanged,
-                              ),
-                            ),
-
-                            Obx(
-                              () => Wrap(
-                                direction: Axis.horizontal,
-                                children: reportController.checkboxMachineList
-                                    .map((machine) {
-                                      return BuildCheckboxRow(
-                                        title: machine.machineCode,
-                                        value: reportController
-                                            .selectedMachineList
-                                            .contains(machine),
-                                        onChanged: (value) {
-                                          reportController.onMachineSelect(
-                                            machine,
-                                            value,
-                                          );
-                                        },
+                                    } else {
+                                      reportController.filerMachineByGroup(
+                                        value!.id,
                                       );
-                                    })
-                                    .toList(),
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
 
-                            Obx(
-                              () => reportController.isLoading.value
-                                  ? Center(
-                                      child: SizedBox(
-                                        height: 25,
-                                        width: 25,
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    )
-                                  : ElevatedButton(
-                                      onPressed: () async {
-                                        var reportData = await reportController
-                                            .getReportData();
-                                        if (reportData != null) {
-                                          Get.to(
-                                            () => ReportResultScreen(
-                                              reportResponse: reportData,
-                                            ),
-                                          );
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColors.mainColor,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 8,
+                              Obx(
+                                () => BuildCheckboxRow(
+                                  title: 'Select All',
+                                  value:
+                                      reportController.selectAllMachines.value,
+                                  onChanged:
+                                      reportController.onSelectAllChanged,
+                                ),
+                              ),
+
+                              Obx(
+                                () => Wrap(
+                                  direction: Axis.horizontal,
+                                  children: reportController.checkboxMachineList
+                                      .map((machine) {
+                                        return BuildCheckboxRow(
+                                          title: machine.machineCode,
+                                          value: reportController
+                                              .selectedMachineList
+                                              .contains(machine),
+                                          onChanged: (value) {
+                                            reportController.onMachineSelect(
+                                              machine,
+                                              value,
+                                            );
+                                          },
+                                        );
+                                      })
+                                      .toList(),
+                                ),
+                              ),
+
+                              Obx(
+                                () => reportController.isLoading.value
+                                    ? Center(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: CircularProgressIndicator(),
                                         ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
+                                      )
+                                    : ElevatedButton(
+                                        onPressed: () async {
+                                          var reportData =
+                                              await reportController
+                                                  .getReportData();
+                                          if (reportData != null) {
+                                            Get.to(
+                                              () => ReportResultScreen(
+                                                reportResponse: reportData,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.mainColor,
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'show_report'.tr,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
-                                      child: Text(
-                                        'show_report'.tr,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
             ),

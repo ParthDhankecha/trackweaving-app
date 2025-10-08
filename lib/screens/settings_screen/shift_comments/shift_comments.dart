@@ -36,6 +36,7 @@ class _ShiftCommentsState extends State<ShiftComments> {
             ? CircularProgressIndicator()
             : Column(
                 children: [
+                  Divider(height: 1, thickness: 0.2),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 10,

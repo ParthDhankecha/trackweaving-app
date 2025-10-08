@@ -38,6 +38,7 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
             ? Column(children: [Center(child: CircularProgressIndicator())])
             : Column(
                 children: [
+                  Divider(height: 1, thickness: 0.2),
                   const SizedBox(height: 12),
 
                   Padding(

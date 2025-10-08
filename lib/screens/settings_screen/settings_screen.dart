@@ -35,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Divider(height: 1, thickness: 0.2),
             SizedBox(height: 20),
             _settingsRow(
               title: 'machine_group',
@@ -69,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Divider(),
 
             _settingsRow(
-              title: 'machine_parts',
+              title: 'parts_change_entry',
               icon: Icons.construction_outlined,
               onTap: () => Get.to(() => MachinePartsScreen()),
             ),

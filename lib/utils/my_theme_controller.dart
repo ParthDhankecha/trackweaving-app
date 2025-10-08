@@ -52,9 +52,9 @@ class ThemeController extends GetxController {
       backgroundColor: AppColors.appBg,
       surfaceTintColor: Colors.transparent,
 
-      elevation: 6.0, // Fixed elevation
+      elevation: 1.0, // Fixed elevation
       scrolledUnderElevation: 0.0, // Prevents elevation/color change on scroll
-      shadowColor: Colors.black,
+      shadowColor: Colors.black12,
     ),
     cardColor: Colors.white,
 
