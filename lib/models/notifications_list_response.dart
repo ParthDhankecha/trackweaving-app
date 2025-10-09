@@ -69,8 +69,8 @@ class NotificationModel {
         isRead: json["isRead"] ?? false,
         description: json["description"] ?? '',
         isDeleted: json["isDeleted"] ?? false,
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: DateTime.parse(json["createdAt"]).toLocal(),
+        updatedAt: DateTime.parse(json["updatedAt"]).toLocal(),
       );
 
   Map<String, dynamic> toMap() => {
