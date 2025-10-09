@@ -49,6 +49,7 @@ class LoginControllers extends GetxController implements GetxService {
 
       log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
+        sp.currentLoginId = data.user.id;
         sp.userToken = data.token.accessToken;
         sp.userID = data.user.userId ?? '';
         Get.offAll(() => HomeScreen());

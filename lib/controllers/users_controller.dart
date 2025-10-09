@@ -5,15 +5,23 @@ import 'package:trackweaving/models/users_list_response.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/users_repository.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
+import 'package:trackweaving/utils/shared_pref.dart';
 
 class UsersController extends GetxController implements GetxService {
   UsersRepository repository = Get.find<UsersRepository>();
+  Sharedprefs sp = Get.find<Sharedprefs>();
   RxBool isLoading = false.obs;
 
   RxList<UserModel> usersList = RxList();
 
-  // Add methods to fetch, add, update, and delete users as needed.
+  RxString userId = ''.obs;
 
+  setUserId() {
+    userId.value = sp.currentLoginId;
+    log('Current User ID: ${userId.value}');
+  }
+
+  // Add methods to fetch, add, update, and delete users as needed.
   getUsersList() async {
     try {
       isLoading.value = true;

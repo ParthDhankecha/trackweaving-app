@@ -34,6 +34,10 @@ class Sharedprefs extends GetxService {
     }
   }
 
+  //current login id
+  set currentLoginId(String value) => _saveData('CURRENT_LOGIN_ID', value);
+  String get currentLoginId => _getData('CURRENT_LOGIN_ID') ?? '';
+
   //get and set user type
   set userToken(String value) => _saveData('USER_TOKEN', value);
   String get userToken => _getData('USER_TOKEN') ?? '';

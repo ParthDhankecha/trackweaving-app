@@ -127,12 +127,14 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
                     ),
                     SizedBox(height: 10),
                     Obx(
-                      () => UserActiveSwitch(
-                        isActive: isActive.value,
-                        onChanged: (value) {
-                          isActive.value = value;
-                        },
-                      ),
+                      () => controller.userId.value == widget.userModel?.id
+                          ? SizedBox.shrink()
+                          : UserActiveSwitch(
+                              isActive: isActive.value,
+                              onChanged: (value) {
+                                isActive.value = value;
+                              },
+                            ),
                     ),
                     SizedBox(height: 14),
                     Row(

@@ -20,6 +20,7 @@ class _UserListScreenState extends State<UserListScreen> {
   void initState() {
     super.initState();
     controller.getUsersList();
+    controller.setUserId();
   }
 
   @override
@@ -49,8 +50,10 @@ class _UserListScreenState extends State<UserListScreen> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final user = controller.usersList[index];
+                  print('user id: ${user.id}');
                   return UserCard(
                     user: user,
+                    isCurrentUser: controller.userId.value == user.id,
                     onTap: () {
                       Get.to(
                         () =>

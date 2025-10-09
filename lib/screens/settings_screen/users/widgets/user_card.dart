@@ -8,12 +8,14 @@ class UserCard extends StatelessWidget {
   final UserModel user;
   final Function()? onTap;
   final Function(bool) onActiveChanged;
+  final bool isCurrentUser;
 
   const UserCard({
     super.key,
     required this.user,
     this.onTap,
     required this.onActiveChanged,
+    this.isCurrentUser = false,
   });
 
   @override
@@ -30,21 +32,48 @@ class UserCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: 30,
-                    width: 140,
-                    child: AnimatedAlertSwitch(
-                      current: user.isActive,
-                      onChanged: onActiveChanged,
-                      onTitle: 'Active',
-                      offTitle: 'Inactive',
+              isCurrentUser
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.mainColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            'Current User',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              isCurrentUser
+                  ? const SizedBox.shrink()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: 140,
+                          child: AnimatedAlertSwitch(
+                            current: user.isActive,
+                            onChanged: onActiveChanged,
+                            onTitle: 'Active',
+                            offTitle: 'Inactive',
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
               SizedBox(height: 4),
 
               buildRow(
