@@ -188,6 +188,17 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
                                       return;
                                     }
                                     if (formKey.currentState!.validate()) {
+                                      if (widget.partChangeLog != null) {
+                                        controller.createChangeLog(
+                                          index: widget.index,
+                                          id: widget.partChangeLog!.id,
+                                          name: changeByNameController.text,
+                                          phone: changeByPhoneController.text,
+                                          notes: notesController.text,
+                                          isUpdate: true,
+                                        );
+                                        return;
+                                      }
                                       controller.createChangeLog(
                                         name: changeByNameController.text,
                                         phone: changeByPhoneController.text,

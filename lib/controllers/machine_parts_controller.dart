@@ -219,7 +219,7 @@ class MachinePartsController extends GetxController implements GetxService {
       isLoading.value = true;
 
       if (isUpdate) {
-        var partChangeLog = await repo.updatePartChangeLog(
+        await repo.updatePartChangeLog(
           id: id ?? '',
           machineId: selecteMachine.value,
           partName: selectedPart.value,
@@ -229,10 +229,11 @@ class MachinePartsController extends GetxController implements GetxService {
           phone: phone,
         );
 
-        partChangeLogs[index] = partChangeLog;
         Get.back();
         showSuccessSnackbar('Part Change Log Updated Successfully');
+
         clearSelections();
+        getChangeLogList(isRefresh: true);
       } else {
         var data = await repo.createPartChangeLog(
           machineId: selecteMachine.value,

@@ -30,6 +30,13 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
   @override
   void initState() {
     super.initState();
+    controller.selectedNextDate.value = DateTime.now().add(
+      Duration(days: widget.alert.scheduleDays ?? 0),
+    );
+
+    print('days : ${widget.alert.scheduleDays}');
+
+    print('${controller.selectedNextDate.value.ddmmyyhhmmssFormat}');
   }
 
   @override

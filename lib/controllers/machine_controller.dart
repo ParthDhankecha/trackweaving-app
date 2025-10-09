@@ -27,6 +27,7 @@ class MachineController extends GetxController implements GetxService {
   TextEditingController machineNameController = TextEditingController();
   TextEditingController machineCodeController = TextEditingController();
   TextEditingController groupController = TextEditingController();
+  TextEditingController maxLimitController = TextEditingController();
 
   RxBool machineAlert = false.obs;
   Rx<MachineGroup?> selectedMachineGrpId = Rx(null);
@@ -44,18 +45,25 @@ class MachineController extends GetxController implements GetxService {
     String code = '',
     bool alert = false,
     String? grpId,
+    int maxLimit = 0,
   }) {
     machineCodeController.text = code;
     machineNameController.text = name;
     machineAlert.value = alert;
+    maxLimitController.text = maxLimit == 0 ? '' : maxLimit.toString();
     if (grpId != null) {
       selectedMachineGrpId.value = getGroupFromID(grpId);
+    } else {
+      selectedMachineGrpId.value = machineGroupList.isNotEmpty
+          ? machineGroupList[0]
+          : null;
     }
   }
 
   disposeControllers() {
     machineCodeController.dispose();
     machineNameController.dispose();
+    maxLimitController.dispose();
   }
 
   setSelectedMachineId(String id) {
@@ -143,6 +151,7 @@ class MachineController extends GetxController implements GetxService {
       machineGroupList.value = dataGroupList;
 
       var data = await repository.getMachineList();
+
       machineList.value = data;
     } on ApiException catch (e) {
       log('error : $e');
@@ -167,11 +176,13 @@ class MachineController extends GetxController implements GetxService {
         id: id,
         machineCode: machineCodeController.text.trim(),
         machineName: machineNameController.text.trim(),
+        machineMaxLimit: maxLimitController.text.trim(),
         machineGroupId: selectedMachineGrpId.value?.id ?? '',
         isAlertActive: machineAlert.value,
       );
 
       log('onUpdateMAchinConfig ::: $data');
+      Get.back();
       getMachineList();
       showSuccessSnackbar('Machine Configuration Updated');
     } on ApiException catch (e) {

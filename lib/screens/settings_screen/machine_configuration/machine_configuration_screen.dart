@@ -37,6 +37,7 @@ class _MachineConfigurationScreenState
                 itemCount: controller.machineList.length,
                 itemBuilder: (context, index) {
                   Machine machine = controller.machineList[index];
+                  print('machine max limit: ${machine.maxSpeedLimit}');
                   return MachineConfigurationCard(
                     srNo: '#${machine.serialNumber}',
                     machineCode: machine.machineCode,
@@ -47,6 +48,7 @@ class _MachineConfigurationScreenState
                             ?.groupName ??
                         '',
                     udid: machine.ip,
+                    maxLimit: machine.maxSpeedLimit ?? 0,
                     alertEnabled: machine.isAlertActive,
                     onAlertChange: (isOn) {
                       //controller.changeMachineAlert();

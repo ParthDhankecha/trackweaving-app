@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
@@ -67,6 +68,7 @@ class MachineRepository extends GetxService {
       headers: {'authorization': sp.userToken},
     );
     List<Machine> list = [];
+    print('data machine list: $data');
     list = machineListResponseModelFromMap(data).data;
     return list;
   }
@@ -77,6 +79,7 @@ class MachineRepository extends GetxService {
     required String machineName,
     required String machineGroupId,
     required bool isAlertActive,
+    required String machineMaxLimit,
   }) async {
     String endPoint = AppConst.getUrl(AppConst.machines);
     var reqBody = {
@@ -84,6 +87,7 @@ class MachineRepository extends GetxService {
       'machineName': machineName,
       'machineGroupId': machineGroupId,
       'isAlertActive': '$isAlertActive',
+      'maxSpeedLimit': int.tryParse(machineMaxLimit) ?? 0,
     };
 
     var data = await apiClient.request(

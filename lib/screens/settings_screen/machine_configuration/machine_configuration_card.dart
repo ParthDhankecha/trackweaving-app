@@ -11,6 +11,7 @@ class MachineConfigurationCard extends StatelessWidget {
   final String machineGroup;
   final String udid;
   final bool alertEnabled;
+  final int maxLimit;
   final Function(bool isOn) onAlertChange;
   final Function()? onTap;
 
@@ -24,6 +25,7 @@ class MachineConfigurationCard extends StatelessWidget {
     required this.alertEnabled,
     required this.onAlertChange,
     this.onTap,
+    this.maxLimit = 0,
   });
 
   @override
@@ -66,6 +68,10 @@ class MachineConfigurationCard extends StatelessWidget {
               _buildInfoRow('machine_group', machineGroup),
               const SizedBox(height: 8),
               _buildInfoRow('IP', udid),
+              const SizedBox(height: 8),
+              maxLimit == 0
+                  ? SizedBox()
+                  : _buildInfoRow('max_limit', maxLimit.toString()),
             ],
           ),
         ),

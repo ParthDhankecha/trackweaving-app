@@ -26,6 +26,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
   TextEditingController userEmailController = TextEditingController();
   TextEditingController userMobileController = TextEditingController();
   RxBool isActive = false.obs;
+  RxBool ispassword = false.obs;
 
   GlobalKey<FormState> formKey = GlobalKey();
 
@@ -57,105 +58,115 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
         child: Column(
           children: [
             Divider(height: 1, thickness: 0.2),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _buildInputField(
-                      title: '${'user_full_name'.tr} *',
-                      hintText: 'user_full_name'.tr,
-                      controller: userFullNameController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Name Field can not Empty';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    _buildPhoneField(
-                      title: 'user_name'.tr,
-                      hintText: 'user_name'.tr,
-                      controller: userNameController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'UserName Field can not Empty';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    _buildPhoneField(
-                      title: 'password'.tr,
-                      hintText: 'password'.tr,
-                      controller: userPasswordController,
-                      validator: (String? value) {
-                        if (widget.userModel == null &&
-                            (value == null || value.isEmpty)) {
-                          return 'Password Field can not Empty';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    _buildPhoneField(
-                      title: 'mobile'.tr,
-                      hintText: 'mobile'.tr,
-                      controller: userMobileController,
-                      validator: (String? value) {
-                        if (value!.isNotEmpty) {
-                          if (value.length != 10) {
-                            return 'Phone must be 10 Digit Number';
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildInputField(
+                        title: '${'user_full_name'.tr} *',
+                        hintText: 'user_full_name'.tr,
+                        controller: userFullNameController,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Name Field can not Empty';
                           }
-                        }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      _buildPhoneField(
+                        title: 'user_name'.tr,
+                        hintText: 'user_name'.tr,
+                        controller: userNameController,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'UserName Field can not Empty';
+                          }
 
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    _buildInputField(
-                      title: 'email'.tr,
-                      hintText: 'email'.tr,
-                      controller: userEmailController,
-                      inputType: TextInputType.emailAddress,
-                      validator: (String? value) {
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    Obx(
-                      () => controller.userId.value == widget.userModel?.id
-                          ? SizedBox.shrink()
-                          : UserActiveSwitch(
-                              isActive: isActive.value,
-                              onChanged: (value) {
-                                isActive.value = value;
-                              },
-                            ),
-                    ),
-                    SizedBox(height: 14),
-                    Row(
-                      children: [
-                        Obx(
-                          () => controller.isLoading.value
-                              ? CustomProgressBtn()
-                              : MainBtn(
-                                  label: widget.userModel == null
-                                      ? 'save'.tr
-                                      : 'update'.tr,
-                                  onTap: () {
-                                    if (formKey.currentState!.validate()) {
-                                      onSaveOrUpdate();
-                                    }
-                                  },
-                                ),
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+
+                      Obx(
+                        () => _buildInputField(
+                          title: 'password'.tr,
+                          hintText: 'password'.tr,
+                          controller: userPasswordController,
+                          ispassword: true,
+                          showPassword: ispassword.value,
+                          onPasswordTap: () {
+                            ispassword.value = !ispassword.value;
+                          },
+                          validator: (String? value) {
+                            if (widget.userModel == null &&
+                                (value == null || value.isEmpty)) {
+                              return 'Password Field can not Empty';
+                            }
+
+                            return null;
+                          },
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 10),
+                      _buildPhoneField(
+                        title: 'mobile'.tr,
+                        hintText: 'mobile'.tr,
+                        controller: userMobileController,
+                        validator: (String? value) {
+                          if (value!.isNotEmpty) {
+                            if (value.length != 10) {
+                              return 'Phone must be 10 Digit Number';
+                            }
+                          }
+
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      _buildInputField(
+                        title: 'email'.tr,
+                        hintText: 'email'.tr,
+                        controller: userEmailController,
+                        inputType: TextInputType.emailAddress,
+                        validator: (String? value) {
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => controller.userId.value == widget.userModel?.id
+                            ? SizedBox.shrink()
+                            : UserActiveSwitch(
+                                isActive: isActive.value,
+                                onChanged: (value) {
+                                  isActive.value = value;
+                                },
+                              ),
+                      ),
+                      SizedBox(height: 14),
+                      Row(
+                        children: [
+                          Obx(
+                            () => controller.isLoading.value
+                                ? CustomProgressBtn()
+                                : MainBtn(
+                                    label: widget.userModel == null
+                                        ? 'save'.tr
+                                        : 'update'.tr,
+                                    onTap: () {
+                                      if (formKey.currentState!.validate()) {
+                                        onSaveOrUpdate();
+                                      }
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -219,7 +230,10 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
     required String hintText,
     required TextEditingController controller,
     required String? Function(String? value) validator,
+    Function()? onPasswordTap,
     TextInputType inputType = TextInputType.text,
+    bool ispassword = false,
+    bool showPassword = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,10 +250,23 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
           keyboardType: inputType,
           controller: controller,
           validator: validator,
+          obscureText: showPassword,
+
           decoration: InputDecoration(
             // labelText: title,
             hintText: hintText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            suffix: ispassword
+                ? GestureDetector(
+                    onTap: () {
+                      onPasswordTap?.call();
+                    },
+                    child: Icon(
+                      showPassword ? Icons.visibility_off : Icons.visibility,
+                      size: 20,
+                    ),
+                  )
+                : null,
           ),
         ),
       ],

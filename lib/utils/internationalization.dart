@@ -116,6 +116,9 @@ class AppTranslations extends Translations {
 
       'privacy_policy': 'Privacy Policy',
       'terms_conditions': 'Terms & Conditions',
+      'max_limit': 'Max Limit',
+      'machine_max_limit': 'Machine Max Limit',
+      'enter_machine_max_limit': 'Enter Machine Max Limit',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -231,6 +234,10 @@ class AppTranslations extends Translations {
 
       'privacy_policy': 'गोपनीयता नीति',
       'terms_conditions': 'नियम और शर्तें',
+
+      'max_limit': 'अधिकतम सीमा',
+      'machine_max_limit': 'मशीन अधिकतम सीमा',
+      'enter_machine_max_limit': 'मशीन अधिकतम सीमा दर्ज करें',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -345,6 +352,10 @@ class AppTranslations extends Translations {
       'is_active': 'સક્રિય છે',
       'privacy_policy': 'ગોપનીયતા નીતિ',
       'terms_conditions': 'નિયમો અને શરતો',
+
+      'max_limit': 'અધિકતમ મર્યાદા',
+      'machine_max_limit': 'મશીનની મહત્તમ મર્યાદા',
+      'enter_machine_max_limit': 'મશીનની મહત્તમ મર્યાદા દાખલ કરો',
     },
   };
 }

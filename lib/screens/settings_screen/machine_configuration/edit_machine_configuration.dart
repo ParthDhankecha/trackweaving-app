@@ -29,7 +29,8 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
       name: widget.machine.machineName,
       code: widget.machine.machineCode,
       alert: widget.machine.isAlertActive,
-      grpId: widget.machine.machineGroupId?.id ?? 'NA',
+      grpId: widget.machine.machineGroupId?.id,
+      maxLimit: widget.machine.maxSpeedLimit ?? 0,
     );
   }
 
@@ -42,101 +43,129 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Edit Machine Configuration')),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text('Sr. No:'),
-                    SizedBox(width: 10),
-                    Text(widget.machine.serialNumber, style: bodyStyle),
-                  ],
-                ),
-                SizedBox(height: 12),
-                //
-                _buildInputField(
-                  title: 'Machine Name',
-                  hintText: 'Enter Machine Name',
-                  controller: controller.machineNameController,
-                ),
-                SizedBox(height: 12),
+      body: Column(
+        children: [
+          Divider(height: 1, thickness: 0.2),
 
-                _buildInputField(
-                  title: 'Machine Code',
-                  hintText: 'Enter Machine Code',
-                  controller: controller.machineCodeController,
-                ),
-                SizedBox(height: 12),
-
-                MachineGroupDropdown(
-                  title: 'Machine Group Name',
-                  items: controller.machineGroupList,
-                  selectedValue: controller.selectedMachineGrpId.value,
-                  onChanged: (value) {
-                    if (value?.groupName == 'Select') {
-                      controller.selectedMachineGrpId.value = null;
-                    } else {
-                      controller.selectedMachineGrpId.value = value;
-                    }
-                  },
-                ),
-
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'Alert:  ',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Form(
+                key: formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('Sr. No:'),
+                          SizedBox(width: 10),
+                          Text(widget.machine.serialNumber, style: bodyStyle),
+                        ],
                       ),
-                    ),
-
-                    SizedBox(
-                      height: 46,
-                      child: Obx(
-                        () => AnimatedAlertSwitch(
-                          current: controller.machineAlert.value,
-                          onChanged: (value) {
-                            controller.changeMachineAlert();
-                          },
-                          onTitle: 'ON',
-                          offTitle: 'OFF',
-                        ),
+                      SizedBox(height: 12),
+                      //
+                      _buildInputField(
+                        title: 'Machine Name',
+                        hintText: 'Enter Machine Name',
+                        controller: controller.machineNameController,
+                        onValidation: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Machine Name Field can not be Empty';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Obx(
-                      () => controller.isLoading.value
-                          ? CustomProgressBtn()
-                          : MainBtn(
-                              label: 'Update',
-                              onTap: () {
-                                if (formKey.currentState!.validate()) {
-                                  controller.updateMachineConfig(
-                                    widget.machine.id,
-                                  );
-                                }
-                              },
+                      SizedBox(height: 12),
+
+                      _buildInputField(
+                        title: 'Machine Code',
+                        hintText: 'Enter Machine Code',
+                        controller: controller.machineCodeController,
+                        onValidation: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Machine Code Field can not be Empty';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 12),
+
+                      MachineGroupDropdown(
+                        title: 'Machine Group Name',
+                        items: controller.machineGroupList,
+                        selectedValue: controller.selectedMachineGrpId.value,
+                        onChanged: (value) {
+                          if (value?.groupName == 'Select') {
+                            controller.selectedMachineGrpId.value = null;
+                          } else {
+                            controller.selectedMachineGrpId.value = value;
+                          }
+                        },
+                      ),
+                      SizedBox(height: 12),
+
+                      _buildInputField(
+                        title: 'machine_max_limit'.tr,
+                        hintText: 'Enter Machine Max Limit',
+                        controller: controller.maxLimitController,
+                        inputType: TextInputType.number,
+                      ),
+
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              'Alert:  ',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
-                    ),
-                  ],
+                          ),
+
+                          SizedBox(
+                            height: 46,
+                            child: Obx(
+                              () => AnimatedAlertSwitch(
+                                current: controller.machineAlert.value,
+                                onChanged: (value) {
+                                  controller.changeMachineAlert();
+                                },
+                                onTitle: 'ON',
+                                offTitle: 'OFF',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Obx(
+                            () => controller.isLoading.value
+                                ? CustomProgressBtn()
+                                : MainBtn(
+                                    label: 'Update',
+                                    onTap: () {
+                                      if (formKey.currentState!.validate()) {
+                                        controller.updateMachineConfig(
+                                          widget.machine.id,
+                                        );
+                                      }
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -147,6 +176,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
     required TextEditingController controller,
 
     TextInputType inputType = TextInputType.text,
+    String? Function(String?)? onValidation,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,15 +191,10 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
         TextFormField(
           keyboardType: inputType,
           controller: controller,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return '$title Field can not Empty';
-            }
-            return null;
-          },
+          validator: onValidation,
           decoration: InputDecoration(
             // labelText: title,
-            //hintText: hintText,
+            hintText: hintText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),

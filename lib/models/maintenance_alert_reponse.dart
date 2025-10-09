@@ -72,6 +72,7 @@ class Alert {
   String machineId;
   DateTime nextMaintenanceDate;
   bool isDue;
+  int? scheduleDays;
   String categoryName;
 
   Alert({
@@ -81,6 +82,7 @@ class Alert {
     required this.nextMaintenanceDate,
     required this.isDue,
     required this.categoryName,
+    this.scheduleDays = 0,
   });
 
   factory Alert.fromMap(Map<String, dynamic> json) => Alert(
@@ -90,6 +92,7 @@ class Alert {
     nextMaintenanceDate: DateTime.parse(json["nextMaintenanceDate"]),
     isDue: json["isDue"],
     categoryName: json["categoryName"],
+    scheduleDays: json['scheduleDays'] ?? 0,
   );
 
   Map<String, dynamic> toMap() => {
@@ -99,5 +102,6 @@ class Alert {
     "nextMaintenanceDate": nextMaintenanceDate.toIso8601String(),
     "isDue": isDue,
     "categoryName": categoryName,
+    "scheduleDays": scheduleDays,
   };
 }

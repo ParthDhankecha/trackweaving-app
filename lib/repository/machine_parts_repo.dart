@@ -68,7 +68,7 @@ class MachinePartsRepo extends GetxService {
     return success;
   }
 
-  Future<PartChangeLog> updatePartChangeLog({
+  Future<bool> updatePartChangeLog({
     required String id,
     required String machineId,
     required String partName,
@@ -92,10 +92,8 @@ class MachinePartsRepo extends GetxService {
       body: body,
       headers: {'authorization': sharedprefs.userToken},
     );
-    PartChangeLog part = ApiResponse.fromJson(
-      jsonDecode(response),
-      PartChangeLog.fromMap,
-    ).data!;
-    return part;
+    print(response);
+    bool success = jsonDecode(response)['code'] == 'OK';
+    return success;
   }
 }
