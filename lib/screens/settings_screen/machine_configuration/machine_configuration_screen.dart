@@ -39,6 +39,7 @@ class _MachineConfigurationScreenState
                   Machine machine = controller.machineList[index];
                   print('machine max limit: ${machine.maxSpeedLimit}');
                   return MachineConfigurationCard(
+                    index: index,
                     srNo: '#${machine.serialNumber}',
                     machineCode: machine.machineCode,
                     machineName: machine.machineName,

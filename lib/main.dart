@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: AppStrings.appName,
+      debugShowCheckedModeBanner: false,
       themeMode: themeController.themeMode,
       theme: themeController.lightTheme,
       darkTheme: themeController.lightTheme,

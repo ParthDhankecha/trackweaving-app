@@ -5,6 +5,7 @@ import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/my_text_widget.dart';
 
 class MachineConfigurationCard extends StatelessWidget {
+  final int index;
   final String srNo;
   final String machineCode;
   final String machineName;
@@ -26,6 +27,7 @@ class MachineConfigurationCard extends StatelessWidget {
     required this.onAlertChange,
     this.onTap,
     this.maxLimit = 0,
+    required this.index,
   });
 
   @override
@@ -45,7 +47,7 @@ class MachineConfigurationCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildInfoRow('sr_no', srNo.toString()),
+                  _buildInfoRow('sr_no', '${index + 1}'),
                   Row(
                     children: [
                       AnimatedAlertSwitch(
