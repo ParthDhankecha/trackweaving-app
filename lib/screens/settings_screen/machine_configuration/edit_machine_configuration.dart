@@ -26,7 +26,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
   void initState() {
     super.initState();
     controller.setFields(
-      name: widget.machine.machineName,
+      name: widget.machine.machineName.capitalizeFirst!,
       code: widget.machine.machineCode,
       alert: widget.machine.isAlertActive,
       grpId: widget.machine.machineGroupId?.id,
@@ -65,14 +65,15 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                       SizedBox(height: 12),
                       //
                       _buildInputField(
-                        title: 'Machine Name',
-                        hintText: 'Enter Machine Name',
+                        title: 'machine_company_name'.tr,
+                        hintText: 'Enter Machine Company Name',
                         controller: controller.machineNameController,
+                        isEnabled: false,
                         onValidation: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Machine Name Field can not be Empty';
-                          }
-                          return null;
+                          // if (value == null || value.isEmpty) {
+                          //   return 'Machine Name Field can not be Empty';
+                          // }
+                          // return null;
                         },
                       ),
                       SizedBox(height: 12),
@@ -177,6 +178,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
 
     TextInputType inputType = TextInputType.text,
     String? Function(String?)? onValidation,
+    bool isEnabled = true,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,6 +191,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
           ),
         ),
         TextFormField(
+          enabled: isEnabled,
           keyboardType: inputType,
           controller: controller,
           validator: onValidation,
