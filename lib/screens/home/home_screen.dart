@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    homeController.selectedNavIndex.value = 0;
     homeController.showToken();
     homeController.fetchUnreadCount();
     _handleInitialNotificationNavigation();

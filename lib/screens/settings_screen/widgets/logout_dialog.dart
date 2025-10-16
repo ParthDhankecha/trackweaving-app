@@ -23,7 +23,7 @@ class LogoutDialog extends StatelessWidget {
           onPressed: () {
             Get.back();
             Get.find<LoginControllers>().logout();
-            Get.find<HomeController>().selectedNavIndex.value = 0;
+            //Get.find<HomeController>().selectedNavIndex.value = 0;
             // Dismiss the dialog
             // Then navigate to the login screen
           },

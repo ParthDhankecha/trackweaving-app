@@ -40,7 +40,7 @@ class _MachineConfigurationScreenState
                   print('machine max limit: ${machine.maxSpeedLimit}');
                   return MachineConfigurationCard(
                     index: index,
-                    srNo: '#${machine.serialNumber}',
+                    //srNo: '#${machine.serialNumber}',
                     machineCode: machine.machineCode,
                     machineName: machine.machineName,
                     machineGroup:
@@ -56,7 +56,10 @@ class _MachineConfigurationScreenState
                       controller.updateMachineConfigAlert(machine.id, isOn);
                     },
                     onTap: () => Get.to(
-                      () => EditMachineConfiguration(machine: machine),
+                      () => EditMachineConfiguration(
+                        machine: machine,
+                        index: index,
+                      ),
                     ),
                   );
                 },

@@ -10,7 +10,13 @@ import 'package:get/get.dart';
 
 class EditMachineConfiguration extends StatefulWidget {
   final Machine machine;
-  const EditMachineConfiguration({super.key, required this.machine});
+  final int index;
+
+  const EditMachineConfiguration({
+    super.key,
+    required this.machine,
+    required this.index,
+  });
 
   @override
   State<EditMachineConfiguration> createState() =>
@@ -59,7 +65,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                         children: [
                           Text('Sr. No:'),
                           SizedBox(width: 10),
-                          Text(widget.machine.serialNumber, style: bodyStyle),
+                          Text('${widget.index + 1}', style: bodyStyle),
                         ],
                       ),
                       SizedBox(height: 12),

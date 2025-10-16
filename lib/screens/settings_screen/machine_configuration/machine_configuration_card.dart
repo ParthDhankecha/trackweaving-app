@@ -6,7 +6,7 @@ import 'package:trackweaving/common_widgets/my_text_widget.dart';
 
 class MachineConfigurationCard extends StatelessWidget {
   final int index;
-  final String srNo;
+  //final String srNo;
   final String machineCode;
   final String machineName;
   final String machineGroup;
@@ -18,7 +18,7 @@ class MachineConfigurationCard extends StatelessWidget {
 
   const MachineConfigurationCard({
     super.key,
-    required this.srNo,
+    //required this.srNo,
     required this.machineCode,
     required this.machineName,
     required this.machineGroup,
