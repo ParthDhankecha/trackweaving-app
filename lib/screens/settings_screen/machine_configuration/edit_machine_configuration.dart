@@ -79,7 +79,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                           // if (value == null || value.isEmpty) {
                           //   return 'Machine Name Field can not be Empty';
                           // }
-                          // return null;
+                          return null;
                         },
                       ),
                       SizedBox(height: 12),
