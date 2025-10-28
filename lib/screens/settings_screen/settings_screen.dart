@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           children: [
             Divider(height: 1, thickness: 0.2),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             _settingsRow(
               title: 'machine_group',
               image: AppImages.imgSettings,

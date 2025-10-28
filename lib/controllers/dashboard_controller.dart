@@ -98,7 +98,7 @@ class DashBoardController extends GetxController implements GetxService {
 
       latestAppVersion.value = Platform.isAndroid
           ? data['androidVersion'] ?? packageInfo.version
-          : data['iosVersion'] ?? '1.1.0';
+          : data['iosVersion'] ?? packageInfo.version;
 
       forceUpdate.value = Platform.isAndroid
           ? data['androidForceUpdate'] ?? false

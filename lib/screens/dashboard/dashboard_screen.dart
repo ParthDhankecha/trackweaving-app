@@ -17,6 +17,29 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   DashBoardController dashBoardController = Get.find<DashBoardController>();
 
+  //check for version updates
+  checkforVersionUpdate() {
+    if (dashBoardController.isUpdateAvailable.value) {
+      if (dashBoardController.forceUpdate.value) {
+        // Show mandatory update dialog
+        Get.dialog(
+          barrierDismissible: false,
+          PopScope(canPop: false, child: AppUpdatesDialog()),
+        );
+        return;
+      }
+      dashBoardController.shouldPromptForUpdate().then((shouldPrompt) {
+        if (shouldPrompt) {
+          dashBoardController.saveLastUpdatePromptTime(DateTime.now());
+          Get.dialog(
+            barrierDismissible: true,
+            PopScope(canPop: true, child: AppUpdatesDialog()),
+          );
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,26 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     dashBoardController.getSettings().then((value) {
       dashBoardController.getData();
       dashBoardController.startTimer();
-
-      if (dashBoardController.isUpdateAvailable.value) {
-        if (dashBoardController.forceUpdate.value) {
-          // Show mandatory update dialog
-          Get.dialog(
-            barrierDismissible: false,
-            PopScope(canPop: false, child: AppUpdatesDialog()),
-          );
-          return;
-        }
-        dashBoardController.shouldPromptForUpdate().then((shouldPrompt) {
-          if (shouldPrompt) {
-            dashBoardController.saveLastUpdatePromptTime(DateTime.now());
-            Get.dialog(
-              barrierDismissible: true,
-              PopScope(canPop: true, child: AppUpdatesDialog()),
-            );
-          }
-        });
-      }
+      checkforVersionUpdate();
     });
   }
 
