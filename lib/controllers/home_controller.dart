@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/repository/notifications_repo.dart';
-import 'package:trackweaving/utils/shared_pref.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController implements GetxService {

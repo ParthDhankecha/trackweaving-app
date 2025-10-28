@@ -16,6 +16,11 @@ class UsersController extends GetxController implements GetxService {
 
   RxString userId = ''.obs;
 
+  getUserType() {
+    log('User Type: ${sp.userType}');
+    return sp.userType;
+  }
+
   setUserId() {
     userId.value = sp.currentLoginId;
     log('Current User ID: ${userId.value}');

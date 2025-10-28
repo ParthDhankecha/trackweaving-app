@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:trackweaving/repository/dashboard_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
@@ -15,35 +13,20 @@ class SplashController extends GetxController implements GetxService {
 
   RxBool isLoading = false.obs;
 
-  Future<void> checkPackageInfo() async {
+  Future<Map<String, String>> checkPackageInfo() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String appName = packageInfo.appName;
     String packageName = packageInfo.packageName;
     String version = packageInfo.version;
     String buildNumber = packageInfo.buildNumber;
 
-    log('App Name: $appName');
-    log('Package Name: $packageName');
-    log('Version: $version');
-    log('Build Number: $buildNumber');
-
-    //sp.appVersion = version;
+    return {
+      'appName': appName,
+      'packageName': packageName,
+      'version': version,
+      'buildNumber': buildNumber,
+    };
   }
-
-  //get configurations
-  // Future<void> getSettings() async {
-  //   await checkPackageInfo();
-  //   try {
-  //     isLoading.value = true;
-  //     var data = await dashboardRepo.getConfiguration();
-  //     sp.refreshInterval = data['refreshInterval'];
-  //   } on ApiException catch (e) {
-  //     //showErrorSnackbar('Remote Settings not Loaded. Try again');
-  //     log('getSettings : error : $e');
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
 
   checkUser() async {
     //await getSettings();

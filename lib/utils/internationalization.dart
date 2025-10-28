@@ -120,6 +120,14 @@ class AppTranslations extends Translations {
       'machine_max_limit': 'Machine Max Speed Limit',
       'enter_machine_max_limit': 'Enter Machine Max Limit',
       'machine_company_name': 'Machine Company Name',
+
+      //app update
+      'app_update': 'App Update',
+      'new_version_available':
+          'New version available. Please update the app to continue.',
+      'update_now': 'Update Now',
+      'current_version': 'Current Version',
+      'latest_version': 'Latest Version',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',

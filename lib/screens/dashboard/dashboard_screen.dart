@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/screens/app_update/app_updates_dialog.dart';
 import 'package:trackweaving/screens/dashboard/widgets/dashboard_card.dart';
 import 'package:trackweaving/screens/dashboard/widgets/refresh_loading_widget.dart';
 import 'package:trackweaving/screens/dashboard/widgets/top_row_widget.dart';
@@ -23,6 +24,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
     dashBoardController.getSettings().then((value) {
       dashBoardController.getData();
       dashBoardController.startTimer();
+
+      if (dashBoardController.isUpdateAvailable.value) {
+        if (dashBoardController.forceUpdate.value) {
+          // Show mandatory update dialog
+          Get.dialog(
+            barrierDismissible: false,
+            PopScope(canPop: false, child: AppUpdatesDialog()),
+          );
+          return;
+        }
+        dashBoardController.shouldPromptForUpdate().then((shouldPrompt) {
+          if (shouldPrompt) {
+            dashBoardController.saveLastUpdatePromptTime(DateTime.now());
+            Get.dialog(
+              barrierDismissible: true,
+              PopScope(canPop: true, child: AppUpdatesDialog()),
+            );
+          }
+        });
+      }
     });
   }
 

@@ -95,22 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icons.language_outlined,
             ),
             Divider(),
-            _settingsRow(
-              title: 'privacy_policy',
-              icon: Icons.privacy_tip_outlined,
-              onTap: () {
-                openUrl(AppConst.privacyPolicyUrl);
-              },
-            ),
-            Divider(),
-            _settingsRow(
-              title: 'terms_conditions',
-              icon: Icons.article_outlined,
-              onTap: () {
-                openUrl(AppConst.termsConditionsUrl);
-              },
-            ),
-            Divider(),
+
             _settingsRow(
               icon: Icons.logout_outlined,
               iconColor: AppColors.errorColor,
@@ -119,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => Get.dialog(LogoutDialog()),
             ),
             Divider(),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -129,6 +114,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: bodyStyle.copyWith(fontSize: 14, color: Colors.grey),
                 ),
               ],
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 10),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => openUrl(AppConst.privacyPolicyUrl),
+                    child: Text(
+                      'privacy_policy'.tr,
+                      style: bodyStyle.copyWith(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => openUrl(AppConst.termsConditionsUrl),
+                    child: Text(
+                      'terms_conditions'.tr,
+                      style: bodyStyle.copyWith(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
           ],

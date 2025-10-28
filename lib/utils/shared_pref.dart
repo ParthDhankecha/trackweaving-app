@@ -45,6 +45,9 @@ class Sharedprefs extends GetxService {
   set userID(String value) => _saveData('USER_ID', value);
   String get userID => _getData('USER_ID') ?? '';
 
+  set userType(int value) => _saveData('USER_TYPE', value);
+  int get userType => _getData('USER_TYPE') ?? 0;
+
   set currentLanguage(String value) => _saveData('USER_LAN', value);
   String get currentLanguage => _getData('USER_LAN') ?? 'en';
 
@@ -54,4 +57,8 @@ class Sharedprefs extends GetxService {
 
   set fcmToken(String value) => _saveData('FCM_TOKEN', value);
   String get fcmToken => _getData('FCM_TOKEN') ?? '';
+
+  set lastUpdatePromptTime(int value) =>
+      _saveData('LAST_UPDATE_PROMPT_TIME', value);
+  int get lastUpdatePromptTime => _getData('LAST_UPDATE_PROMPT_TIME') ?? 0;
 }

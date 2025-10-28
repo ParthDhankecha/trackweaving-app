@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:trackweaving/models/api_response_mode.dart';
 import 'package:trackweaving/models/part_changelog_list_response.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
@@ -92,7 +91,7 @@ class MachinePartsRepo extends GetxService {
       body: body,
       headers: {'authorization': sharedprefs.userToken},
     );
-    print(response);
+
     bool success = jsonDecode(response)['code'] == 'OK';
     return success;
   }

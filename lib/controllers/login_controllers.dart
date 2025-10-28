@@ -45,13 +45,14 @@ class LoginControllers extends GetxController implements GetxService {
         password: userPassword,
       );
 
-      log('login response :::');
+      log('login response ::: ${data.user.type}');
 
       log(data.token.accessToken);
       if (data.token.accessToken.isNotEmpty) {
         sp.currentLoginId = data.user.id;
         sp.userToken = data.token.accessToken;
         sp.userID = data.user.userId ?? '';
+        sp.userType = data.user.type ?? 0;
         Get.offAll(() => HomeScreen());
       } else {}
     } on ApiException catch (e) {

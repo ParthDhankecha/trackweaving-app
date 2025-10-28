@@ -107,7 +107,7 @@ class NotificationController extends GetxController implements GetxService {
     // Wait for APNs token (only iOS)
     String? apnsToken = await messaging.getAPNSToken();
     if (apnsToken == null) {
-      print('APNs token not yet available.');
+      log('APNs token not yet available.');
     }
 
     String? token = await FirebaseMessaging.instance.getToken();

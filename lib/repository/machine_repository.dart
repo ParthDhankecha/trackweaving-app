@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
@@ -68,7 +67,6 @@ class MachineRepository extends GetxService {
       headers: {'authorization': sp.userToken},
     );
     List<Machine> list = [];
-    print('data machine list: $data');
     list = machineListResponseModelFromMap(data).data;
     return list;
   }

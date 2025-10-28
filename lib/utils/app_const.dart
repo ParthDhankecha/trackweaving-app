@@ -50,6 +50,11 @@ class AppConst {
   static String termsConditionsUrl =
       'https://trackweaving.com/terms-and-condition';
 
+  static const String androidStoreUrl =
+      'https://play.google.com/store/apps/details?id=com.app.trackweaving';
+  static const String iosStoreUrl =
+      'https://apps.apple.com/us/app/trackweaving/id123456789';
+
   static String getUrl(String api, {String host = 'trackweaving.com'}) =>
       'https://$host/api/v1/$api';
 

@@ -37,7 +37,6 @@ class _MachineConfigurationScreenState
                 itemCount: controller.machineList.length,
                 itemBuilder: (context, index) {
                   Machine machine = controller.machineList[index];
-                  print('machine max limit: ${machine.maxSpeedLimit}');
                   return MachineConfigurationCard(
                     index: index,
                     //srNo: '#${machine.serialNumber}',

@@ -28,14 +28,16 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBg,
       appBar: CustomAppbar(title: 'user_list'.tr),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.mainColor,
-        onPressed: () {
-          //controller.clearSelections();
-          Get.to(() => const AddUpdateUsersScreen());
-        },
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
+      floatingActionButton: controller.getUserType() == 1
+          ? FloatingActionButton(
+              backgroundColor: AppColors.mainColor,
+              onPressed: () {
+                //controller.clearSelections();
+                Get.to(() => const AddUpdateUsersScreen());
+              },
+              child: const Icon(Icons.add, color: Colors.white),
+            )
+          : null,
       // 4. Use a single main ListView for the entire body content
       body: Column(
         children: [
@@ -50,7 +52,7 @@ class _UserListScreenState extends State<UserListScreen> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final user = controller.usersList[index];
-                  print('user id: ${user.id}');
+
                   return UserCard(
                     user: user,
                     isCurrentUser: controller.userId.value == user.id,

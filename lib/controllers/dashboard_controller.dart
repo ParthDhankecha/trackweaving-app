@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/models/status_enum.dart';
 import 'package:trackweaving/repository/api_exception.dart';
@@ -40,6 +42,11 @@ class DashBoardController extends GetxController implements GetxService {
   int efficiencyAveragePer = 85;
   int efficiencyGoodPer = 90;
 
+  RxString currentAppVersion = ''.obs;
+  RxString latestAppVersion = ''.obs;
+  RxBool forceUpdate = false.obs;
+  RxBool isUpdateAvailable = false.obs;
+
   //change status
   void changeStatus(MachineStatus status) {
     currentStatus.value = status;
@@ -58,16 +65,61 @@ class DashBoardController extends GetxController implements GetxService {
     getData();
   }
 
+  //save last update prompt time
+  void saveLastUpdatePromptTime(DateTime timestamp) {
+    sp.lastUpdatePromptTime = timestamp.millisecondsSinceEpoch;
+  }
+
+  Future<bool> shouldPromptForUpdate() async {
+    int lastPromptTime = sp.lastUpdatePromptTime;
+
+    DateTime lastPromptDateTime = DateTime.fromMillisecondsSinceEpoch(
+      lastPromptTime,
+    );
+    Duration difference = DateTime.now().difference(lastPromptDateTime);
+    log('Difference in hours: ${difference.inHours}');
+    if (difference.inMinutes >= 24 || lastPromptTime == 0) {
+      return true;
+    }
+    return false;
+  }
+
   //get configurations
 
   Future<void> getSettings() async {
     try {
       isLoading.value = true;
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
       var data = await dashboardRepo.getConfiguration();
       sp.refreshInterval = data['refreshInterval'];
       efficiencyAveragePer = data['efficiencyAveragePer'];
       efficiencyGoodPer = data['efficiencyGoodPer'];
-      log('getSettings : success : $data');
+
+      latestAppVersion.value = Platform.isAndroid
+          ? data['androidVersion'] ?? packageInfo.version
+          : data['iosVersion'] ?? '1.1.0';
+
+      forceUpdate.value = Platform.isAndroid
+          ? data['androidForceUpdate'] ?? false
+          : data['iosForceUpdate'] ?? false;
+
+      String version = packageInfo.version;
+      currentAppVersion.value = version;
+
+      int currentVersionInt = int.parse(version.replaceAll('.', ''));
+      int latestVersionInt = int.parse(
+        latestAppVersion.value.replaceAll('.', ''),
+      );
+
+      log(
+        'getSettings : version : $currentVersionInt , latestVersionInt: $latestVersionInt',
+      );
+      isUpdateAvailable.value = latestVersionInt > currentVersionInt
+          ? true
+          : false;
+
+      log('getSettings : isUpdateAvailable : ${isUpdateAvailable.value}');
     } on ApiException catch (e) {
       log('getSettings : error : $e');
     } finally {
