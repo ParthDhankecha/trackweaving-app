@@ -100,6 +100,16 @@ class NotificationController extends GetxController implements GetxService {
   }
 
   Future<void> getFCMToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    // Request notification permissions
+    await messaging.requestPermission();
+
+    // Wait for APNs token (only iOS)
+    String? apnsToken = await messaging.getAPNSToken();
+    if (apnsToken == null) {
+      print('APNs token not yet available.');
+    }
+
     String? token = await FirebaseMessaging.instance.getToken();
     if (token != null) {
       fcmToken.value = token;
