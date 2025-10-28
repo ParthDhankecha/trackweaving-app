@@ -107,10 +107,9 @@ class DashBoardController extends GetxController implements GetxService {
       String version = packageInfo.version;
       currentAppVersion.value = version;
 
-      int currentVersionInt = int.parse(version.replaceAll('.', ''));
-      int latestVersionInt = int.parse(
-        latestAppVersion.value.replaceAll('.', ''),
-      );
+      int currentVersionInt = int.tryParse(version.replaceAll('.', '')) ?? 0;
+      int latestVersionInt =
+          int.tryParse(latestAppVersion.value.replaceAll('.', '')) ?? 0;
 
       log(
         'getSettings : version : $currentVersionInt , latestVersionInt: $latestVersionInt',
