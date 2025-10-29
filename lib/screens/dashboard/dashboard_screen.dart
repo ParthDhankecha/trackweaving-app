@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/models/get_machinelog_model.dart';
@@ -29,7 +31,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return;
       }
       dashBoardController.shouldPromptForUpdate().then((shouldPrompt) {
-        if (shouldPrompt) {
+        log(
+          'shouldPrompt: $shouldPrompt and showPopup: ${dashBoardController.showPopup.value}',
+        );
+        if (shouldPrompt && dashBoardController.showPopup.value) {
           dashBoardController.saveLastUpdatePromptTime(DateTime.now());
           Get.dialog(
             barrierDismissible: true,

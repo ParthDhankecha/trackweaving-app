@@ -46,6 +46,7 @@ class DashBoardController extends GetxController implements GetxService {
   RxString latestAppVersion = ''.obs;
   RxBool forceUpdate = false.obs;
   RxBool isUpdateAvailable = false.obs;
+  RxBool showPopup = false.obs;
 
   //change status
   void changeStatus(MachineStatus status) {
@@ -103,6 +104,10 @@ class DashBoardController extends GetxController implements GetxService {
       forceUpdate.value = Platform.isAndroid
           ? data['androidForceUpdate'] ?? false
           : data['iosForceUpdate'] ?? false;
+
+      showPopup.value = Platform.isAndroid
+          ? data['androidShowPopup'] ?? false
+          : data['iosShowPopup'] ?? false;
 
       String version = packageInfo.version;
       currentAppVersion.value = version;

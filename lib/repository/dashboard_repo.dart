@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:trackweaving/models/get_machinelog_model.dart';
 import 'package:trackweaving/repository/api_client.dart';
@@ -37,6 +38,7 @@ class DashboardRepo extends GetxService {
     );
 
     var settings = jsonDecode(data);
+    log('settings data: $settings');
     return settings['data'];
   }
 }
