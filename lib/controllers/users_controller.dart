@@ -101,6 +101,7 @@ class UsersController extends GetxController implements GetxService {
         isActive: isActive,
       );
       if (isCreated) {
+        Get.back();
         getUsersList(); // Refresh the list after creation
       }
     } on ApiException catch (e) {
