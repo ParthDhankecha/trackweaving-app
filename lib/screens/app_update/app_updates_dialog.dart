@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/common_widgets/lunch_url.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_const.dart';
 
 class AppUpdatesDialog extends StatefulWidget {
   const AppUpdatesDialog({super.key});
@@ -56,6 +60,9 @@ class _AppUpdatesDialogState extends State<AppUpdatesDialog> {
         ElevatedButton(
           onPressed: () {
             Get.back();
+            Platform.isAndroid
+                ? openUrl(AppConst.androidStoreUrl)
+                : openUrl(AppConst.iosStoreUrl);
           },
           style: ElevatedButton.styleFrom(backgroundColor: AppColors.mainColor),
           child: Text(
