@@ -8,9 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:printing/printing.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/screens/report_screen/report_table/report_table_2.dart';
+import 'package:trackweaving/utils/app_colors.dart';
 
 class ReportResultScreen extends StatefulWidget {
   final ReportsResponse reportResponse;
@@ -21,6 +23,7 @@ class ReportResultScreen extends StatefulWidget {
 }
 
 class _ReportResultScreenState extends State<ReportResultScreen> {
+  RxBool isPDFLoading = false.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,28 +37,36 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
           ),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Row(
               children: [
-                // MainBtn(
-                //   label: 'Export',
-                //   onTap: () {
-                //     _generateCsv(widget.reportResponse);
-                //   },
-                // ),
-                // SizedBox(width: 12),
-                MainBtn(
-                  label: 'PDF',
-                  onTap: () {
-                    _generatePdf(widget.reportResponse);
-                  },
-                ),
-                SizedBox(width: 12),
-                MainBtn(
-                  label: 'Close',
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                Obx(
+                  () => isPDFLoading.value
+                      ? Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.mainColor,
+                              foregroundColor: AppColors.whiteColor,
+                              disabledBackgroundColor: AppColors.mainColor,
+                            ),
+                            onPressed: null,
+                            child: SizedBox(
+                              height: 40,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.whiteColor,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : MainBtn(
+                          label: 'PDF',
+                          onTap: () {
+                            _generatePdf(widget.reportResponse);
+                          },
+                        ),
                 ),
               ],
             ),
@@ -116,33 +127,6 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
     }
   }
 
-  // Generate CSV data and trigger download
-  // Future<void> _generateCsv(ReportsResponse report) async {
-  //   final exportData = ReportTableWidget2.getExportData(report.data);
-  //   final csvString = const ListToCsvConverter().convert(exportData);
-  //   final bytes = utf8.encode(csvString);
-  //   log('CSV Data:\n$csvString');
-  //   _openFile(bytes, 'production_report.csv', 'text/csv');
-  //   _saveFile(bytes, 'production_report.csv', 'text/csv');
-  // }
-
-  // _openFile(List<int> bytes, String fileName, String mimeType) async {
-  //   try {
-  //     final tempDir = await getTemporaryDirectory();
-  //     final filePath = '${tempDir.path}/$fileName';
-  //     final file = File(filePath);
-  //     await file.writeAsBytes(bytes);
-  //     var result = await OpenFile.open(filePath);
-  //     if (result.type != ResultType.done) {
-  //       log('Error opening file: ${result.message}');
-  //     } else {
-  //       log('File opened successfully: $filePath');
-  //     }
-  //   } catch (e) {
-  //     log('Error opening file: $e');
-  //   }
-  // }
-
   // Generate PDF document and trigger download
   Future<void> _generatePdf(ReportsResponse report) async {
     final pdf = pw.Document();
@@ -188,7 +172,36 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
       ),
     );
 
-    final bytes = await pdf.save();
-    _saveFile(bytes.toList(), 'production_report.pdf', 'application/pdf');
+    //final bytes = await pdf.save();
+
+    try {
+      isPDFLoading.value = true;
+      final String fileName =
+          'shift_report_${DateTime.now().millisecondsSinceEpoch}.pdf';
+
+      // Get a suitable directory for the file
+      final directory = await getTemporaryDirectory();
+      final file = File('${directory.path}/$fileName');
+
+      // Write the PDF bytes to the file
+      await file.writeAsBytes(await pdf.save());
+
+      // Use the printing package to share/open the file
+      await Printing.sharePdf(bytes: await pdf.save(), filename: fileName);
+
+      Get.snackbar(
+        'Success',
+        'PDF generated and ready to share/save.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to generate or save PDF: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isPDFLoading.value = false;
+    }
   }
 }
