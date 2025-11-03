@@ -203,12 +203,12 @@ class StopsData {
   });
 
   factory StopsData.fromMap(Map<String, dynamic> json) => StopsData(
-    warp: Feeder.fromMap(json["warp"]),
-    weft: Feeder.fromMap(json["weft"]),
-    feeder: Feeder.fromMap(json["feeder"]),
-    manual: Feeder.fromMap(json["manual"]),
-    other: Feeder.fromMap(json["other"]),
-    total: Feeder.fromMap(json["total"]),
+    warp: Feeder.fromMap(json["warp"] ?? {"count": 0, "duration": "00:00"}),
+    weft: Feeder.fromMap(json["weft"] ?? {"count": 0, "duration": "00:00"}),
+    feeder: Feeder.fromMap(json["feeder"] ?? {"count": 0, "duration": "00:00"}),
+    manual: Feeder.fromMap(json["manual"] ?? {"count": 0, "duration": "00:00"}),
+    other: Feeder.fromMap(json["other"] ?? {"count": 0, "duration": "00:00"}),
+    total: Feeder.fromMap(json["total"] ?? {"count": 0, "duration": "00:00"}),
   );
 
   Map<String, dynamic> toMap() => {
