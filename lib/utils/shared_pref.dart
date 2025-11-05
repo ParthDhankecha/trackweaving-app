@@ -61,4 +61,8 @@ class Sharedprefs extends GetxService {
   set lastUpdatePromptTime(int value) =>
       _saveData('LAST_UPDATE_PROMPT_TIME', value);
   int get lastUpdatePromptTime => _getData('LAST_UPDATE_PROMPT_TIME') ?? 0;
+
+  clearAll() {
+    pref.clear();
+  }
 }
