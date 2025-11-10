@@ -109,6 +109,8 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                           _nightCommentControllers['${comment.machineId}_night_${comment.shiftTime}']
                               ?.text;
 
+                      //already available comments
+
                       // Conditionally build the list based on shift type
                       if (comment.shiftType == 'all' ||
                           comment.shiftType == 'day') {
@@ -119,6 +121,20 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                             "shift": "day",
                             "comment": dayComment,
                           });
+                        } else {
+                          String commentDay = shiftCommentController.getComment(
+                            comment.machineId,
+                            comment.shiftTime,
+                            'day',
+                          );
+                          if (commentDay.isNotEmpty) {
+                            commentsList.add({
+                              "machineId": comment.machineId,
+                              "date": comment.shiftTime,
+                              "shift": "day",
+                              "comment": ' ',
+                            });
+                          }
                         }
                       }
 
@@ -131,6 +147,21 @@ class _CommentShowReportScreenState extends State<CommentShowReportScreen> {
                             "shift": "night",
                             "comment": nightComment,
                           });
+                        } else {
+                          String commentNight = shiftCommentController
+                              .getComment(
+                                comment.machineId,
+                                comment.shiftTime,
+                                'night',
+                              );
+                          if (commentNight.isNotEmpty) {
+                            commentsList.add({
+                              "machineId": comment.machineId,
+                              "date": comment.shiftTime,
+                              "shift": "night",
+                              "comment": ' ',
+                            });
+                          }
                         }
                       }
                     }

@@ -170,13 +170,24 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                   items: reportController
                                       .availableMachineGroupList,
                                   onChanged: (value) {
+                                    reportController.selectAllMachines.value =
+                                        false;
+                                    reportController.selectedMachineList
+                                        .clear();
+
                                     if (value?.id == 'all') {
+                                      print('Selected All Groups $value');
                                       reportController.filerMachineByGroup(
                                         'select',
                                       );
                                     } else {
+                                      reportController
+                                              .selectedMachineGroupId
+                                              .value =
+                                          value!.id;
+
                                       reportController.filerMachineByGroup(
-                                        value!.id,
+                                        value.id,
                                       );
                                     }
                                   },
@@ -188,8 +199,17 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                   title: 'Select All',
                                   value:
                                       reportController.selectAllMachines.value,
-                                  onChanged:
-                                      reportController.onSelectAllChanged,
+                                  onChanged: (value) {
+                                    reportController.onSelectAllChanged(
+                                      value,
+                                      groupId:
+                                          reportController.isGroupVisible.value
+                                          ? (reportController
+                                                .selectedMachineGroupId
+                                                .value)
+                                          : 'select',
+                                    );
+                                  },
                                 ),
                               ),
 

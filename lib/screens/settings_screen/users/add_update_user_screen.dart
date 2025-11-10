@@ -77,7 +77,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
                       ),
                       SizedBox(height: 10),
                       _buildPhoneField(
-                        title: 'user_name'.tr,
+                        title: "${'user_name'.tr} *",
                         hintText: 'user_name'.tr,
                         controller: userNameController,
                         validator: (String? value) {
@@ -97,6 +97,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
                           controller: userPasswordController,
                           ispassword: true,
                           showPassword: ispassword.value,
+
                           onPasswordTap: () {
                             ispassword.value = !ispassword.value;
                           },

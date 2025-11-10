@@ -80,7 +80,7 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
                 SizedBox(height: 10),
                 Obx(
                   () => _buildDateField(
-                    'Next Maintenance Date*',
+                    'Next Maintenance Date *',
                     controller.selectedNextDate.value,
                     (value) {
                       controller.changeNextDate(value);
@@ -163,7 +163,7 @@ class _MaintenanceEntryUpdateState extends State<MaintenanceEntryUpdate> {
         Padding(
           padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
           child: Text(
-            '$title:',
+            title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),

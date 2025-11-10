@@ -63,7 +63,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                     children: [
                       Row(
                         children: [
-                          Text('Sr. No:'),
+                          Text('Sr. No '),
                           SizedBox(width: 10),
                           Text('${widget.index + 1}', style: bodyStyle),
                         ],
@@ -124,7 +124,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text(
-                              'Alert:  ',
+                              'Alert  ',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -192,7 +192,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
         Padding(
           padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
           child: Text(
-            '$title:',
+            title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),

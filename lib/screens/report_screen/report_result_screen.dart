@@ -1,13 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:permission_handler/permission_handler.dart';
 import 'package:printing/printing.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/models/report_response.dart';
@@ -78,54 +75,6 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
   }
 
   // --- EXPORT FUNCTIONS ---
-
-  // Helper function to save file content to the user's device (Web/Desktop compatible)
-  void _saveFile(List<int> bytes, String fileName, String mimeType) async {
-    final PermissionStatus permissionGranted = await Permission.storage
-        .request();
-
-    if (!permissionGranted.isGranted) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Storage permission denied. Cannot save file.'),
-        ),
-      );
-      return;
-    }
-
-    try {
-      Directory? directory = await getDownloadsDirectory();
-      if (directory == null) {
-        // Fallback or error if Downloads directory is unavailable (rare, but possible)
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          const SnackBar(
-            content: Text('Could not access the public Downloads directory.'),
-          ),
-        );
-        return;
-      }
-
-      if (!await directory.exists()) {
-        await directory.create(recursive: true);
-      }
-
-      log('Using directory path: ${directory.path}');
-      final filePath = '${directory.path}/$fileName';
-      log('Using directory path: $filePath');
-
-      final file = File(filePath);
-      await file.writeAsBytes(bytes);
-      OpenFile.open(filePath).then(
-        (value) => log('File opened successfully: $filePath'),
-        onError: (e) {
-          log('Error opening file: $e');
-        },
-      );
-    } catch (e) {
-      log('Mobile/Desktop File Save Error: $e');
-      // print('Mobile/Desktop File Save Error: $e');
-    }
-  }
 
   // Generate PDF document and trigger download
   Future<void> _generatePdf(ReportsResponse report) async {

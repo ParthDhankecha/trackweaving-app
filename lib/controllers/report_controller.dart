@@ -22,6 +22,7 @@ class ReportController extends GetxController implements GetxService {
   RxList<Machine> checkboxMachineList = RxList();
 
   RxList<MachineGroup> availableMachineGroupList = RxList();
+  RxString selectedMachineGroupId = 'select'.obs;
 
   List<ShiftTypesModel> shiftTypeList = [
     ShiftTypesModel(type: 'all', title: 'all_shift'),
@@ -65,6 +66,7 @@ class ReportController extends GetxController implements GetxService {
   filerMachineByGroup(String groupId) {
     checkboxMachineList.value = [];
     List<Machine> filterList = [];
+    selectedMachineGroupId.value = groupId;
     if (groupId == 'select') {
       checkboxMachineList.value = List.from(availableMachineList);
     } else {
@@ -81,11 +83,25 @@ class ReportController extends GetxController implements GetxService {
     availableMachineGroupList.value = list;
   }
 
-  onSelectAllChanged(bool? value) {
+  onSelectAllChanged(bool? value, {String? groupId}) {
     selectAllMachines.value = value ?? false;
     if (selectAllMachines.value) {
-      selectedMachineList.value = List.from(availableMachineList);
-      selectedMachineList.refresh();
+      List<Machine> filterList = [];
+      print('groupId in onSelectAllChanged: $groupId');
+      if (groupId != 'select' && groupId != 'all') {
+        // if groupId is provided, filter by group
+        for (var machine in availableMachineList) {
+          if (machine.machineGroupId?.id == groupId) {
+            filterList.add(machine);
+          }
+        }
+        selectedMachineList.value = List.from(filterList);
+        selectedMachineList.refresh();
+      } else {
+        // select all machines
+        selectedMachineList.value = List.from(availableMachineList);
+        selectedMachineList.refresh();
+      }
     } else {
       selectedMachineList.clear();
     }

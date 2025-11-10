@@ -36,7 +36,7 @@ class _PartsSearchDropdownState extends State<PartsSearchDropdown> {
         Padding(
           padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
           child: Text(
-            '${widget.title}:',
+            widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),
