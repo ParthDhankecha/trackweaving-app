@@ -176,7 +176,6 @@ class _ProductionReportPageState extends State<ProductionReportPage> {
                                         .clear();
 
                                     if (value?.id == 'all') {
-                                      print('Selected All Groups $value');
                                       reportController.filerMachineByGroup(
                                         'select',
                                       );

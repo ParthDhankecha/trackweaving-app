@@ -17,67 +17,80 @@ class TopRowWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 8, right: 8),
         child: Obx(
           () => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildRowItemBox(
-                title: 'Eff.'.tr,
-                value: '${controller.eff.value}%',
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'Eff.'.tr,
+                  value: '${controller.eff.value}%',
+                ),
               ),
               SizedBox(width: 2),
-              _buildRowItemBox(
-                title: "picks".tr,
-                value: controller.picks.value,
+              Expanded(
+                child: _buildRowItemBox(
+                  title: "picks".tr,
+                  value: controller.picks.value,
+                ),
               ),
               SizedBox(width: 2),
 
-              _buildRowItemBox(
-                title: 'avg_picks'.tr,
-                value: controller.avgPick.value,
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'avg_picks'.tr,
+                  value: controller.avgPick.value,
+                ),
               ),
               SizedBox(width: 2),
 
-              _buildRowItemBox(
-                title: 'avg_speed'.tr,
-                value: controller.avgSpeed.value,
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'avg_speed'.tr,
+                  value: controller.avgSpeed.value,
+                ),
               ),
-              SizedBox(width: 2),
+              SizedBox(width: 4),
               Container(height: 30, width: 1.8, color: Colors.grey),
+              SizedBox(width: 4),
+
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'running'.tr,
+                  color: controller.currentStatus.value == MachineStatus.running
+                      ? AppColors.successColor
+                      : null,
+                  value: controller.running.value,
+                  isActive:
+                      controller.currentStatus.value == MachineStatus.running,
+                  onTap: () {
+                    controller.changeStatus(MachineStatus.running);
+                  },
+                ),
+              ),
               SizedBox(width: 2),
 
-              _buildRowItemBox(
-                title: 'running'.tr,
-                color: controller.currentStatus.value == MachineStatus.running
-                    ? AppColors.successColor
-                    : null,
-                value: controller.running.value,
-                isActive:
-                    controller.currentStatus.value == MachineStatus.running,
-                onTap: () {
-                  controller.changeStatus(MachineStatus.running);
-                },
-              ),
-              SizedBox(width: 6),
-
-              _buildRowItemBox(
-                title: 'stopped'.tr,
-                value: controller.stopped.value,
-                isActive:
-                    controller.currentStatus.value == MachineStatus.stopped,
-                onTap: () => controller.changeStatus(MachineStatus.stopped),
-                color: controller.currentStatus.value == MachineStatus.stopped
-                    ? AppColors.errorColor
-                    : null,
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'stopped'.tr,
+                  value: controller.stopped.value,
+                  isActive:
+                      controller.currentStatus.value == MachineStatus.stopped,
+                  onTap: () => controller.changeStatus(MachineStatus.stopped),
+                  color: controller.currentStatus.value == MachineStatus.stopped
+                      ? AppColors.errorColor
+                      : null,
+                ),
               ),
 
-              SizedBox(width: 6),
+              SizedBox(width: 2),
 
-              _buildRowItemBox(
-                title: 'all'.tr,
-                value: controller.all.value,
-                isActive: controller.currentStatus.value == MachineStatus.all,
-                onTap: () => controller.changeStatus(MachineStatus.all),
+              Expanded(
+                child: _buildRowItemBox(
+                  title: 'all'.tr,
+                  value: controller.all.value,
+                  isActive: controller.currentStatus.value == MachineStatus.all,
+                  onTap: () => controller.changeStatus(MachineStatus.all),
+                ),
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 2),
             ],
           ),
         ),
@@ -93,9 +106,10 @@ class TopRowWidget extends StatelessWidget {
 
     bool isActive = false,
   }) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: SizedBox(
+        // color: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

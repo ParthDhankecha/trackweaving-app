@@ -87,7 +87,6 @@ class ReportController extends GetxController implements GetxService {
     selectAllMachines.value = value ?? false;
     if (selectAllMachines.value) {
       List<Machine> filterList = [];
-      print('groupId in onSelectAllChanged: $groupId');
       if (groupId != 'select' && groupId != 'all') {
         // if groupId is provided, filter by group
         for (var machine in availableMachineList) {

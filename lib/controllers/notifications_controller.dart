@@ -35,6 +35,30 @@ class NotificationController extends GetxController implements GetxService {
     importance: Importance.max,
   );
 
+  // Channel for Urgent/High Priority (uses sound_a)
+  static const AndroidNotificationChannel _channelUrgent =
+      AndroidNotificationChannel(
+        'urgent_alerts_channel', // id: MUST be unique
+        'Urgent Alerts', // title
+        description: 'Notifications for high priority events, using sound A.',
+        importance: Importance.max,
+        sound: RawResourceAndroidNotificationSound(
+          'alarm1',
+        ), // Looks for 'sound_a.mp3' in res/raw/
+      );
+
+  // Channel for General/Low Priority (uses sound_b)
+  static const AndroidNotificationChannel _channelGeneral =
+      AndroidNotificationChannel(
+        'general_alerts_channel', // id: MUST be unique
+        'General Notifications', // title
+        description: 'Notifications for general updates, using sound B.',
+        importance: Importance.defaultImportance,
+        sound: RawResourceAndroidNotificationSound(
+          'alarm1',
+        ), // Looks for 'sound_b.mp3' in res/raw/
+      );
+
   Future<void> initializeNotifications() async {
     await _initLocalNotifications();
     await _requestPermission();
@@ -69,11 +93,18 @@ class NotificationController extends GetxController implements GetxService {
       },
     );
 
-    await _localNotifications
+    // await _localNotifications
+    //     .resolvePlatformSpecificImplementation<
+    //       AndroidFlutterLocalNotificationsPlugin
+    //     >()
+    //     ?.createNotificationChannel(_channel);
+    final androidImplementation = _localNotifications
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(_channel);
+        >();
+
+    await androidImplementation?.createNotificationChannel(_channelUrgent);
+    await androidImplementation?.createNotificationChannel(_channel);
 
     // IMPORTANT: Allow heads-up notifications when the app is in the foreground
     await FirebaseMessaging.instance
@@ -178,6 +209,23 @@ class NotificationController extends GetxController implements GetxService {
       final RemoteNotification? notification = message.notification;
       final AndroidNotification? android = message.notification?.android;
 
+      // --- NEW: Read the sound_type from the data payload ---
+      // We default to 'general' if the key is missing or invalid.
+      final String soundType = message.data['sound_type'] ?? 'general';
+
+      // Determine which channel and sound to use
+      AndroidNotificationChannel targetChannel;
+      String iosSoundFileName;
+
+      if (soundType == 'urgent') {
+        targetChannel = _channelUrgent;
+        iosSoundFileName = 'sound_a.mp3';
+      } else {
+        targetChannel = _channelGeneral;
+        iosSoundFileName = 'sound_b.mp3';
+      }
+      // --- END NEW LOGIC ---
+
       // Use local notifications to display the heads-up notification in the foreground
       if (notification != null && android != null) {
         _localNotifications.show(
@@ -190,6 +238,10 @@ class NotificationController extends GetxController implements GetxService {
               _channel.name,
               channelDescription: _channel.description,
               icon: android.smallIcon,
+            ),
+            iOS: DarwinNotificationDetails(
+              sound:
+                  iosSoundFileName, // Use the dynamically selected sound file name
             ),
           ),
           // Pass any custom data to the payload so it can be handled on tap
