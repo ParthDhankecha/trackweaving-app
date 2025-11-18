@@ -25,7 +25,6 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
@@ -34,11 +33,9 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Notifications')),
+      appBar: AppBar(title: Text('notifications'.tr)),
       body: Column(
         children: [
-          Divider(height: 1, thickness: 0.2),
-          SizedBox(height: 1),
           Expanded(
             child: Obx(() {
               if (notificationController.isLoading.value &&
@@ -46,32 +43,11 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
 
-              // if (notificationController.isLoading.value) {
-              //   return const Center(child: CircularProgressIndicator());
-              // } else if (notificationController.notificationsList.isEmpty) {
-              //   return const Center(child: Text('No notifications available.'));
-              // } else {
-              //   return ListView.builder(
-              //     itemCount: notificationController.notificationsList.length,
-              //     itemBuilder: (context, index) {
-              //       final notification =
-              //           notificationController.notificationsList[index];
-              //       return NotificationCard(notification: notification);
-              //     },
-              //   );
-
               return ListView(
-                controller: _scrollController, // Attach the scroll controller
-                padding: const EdgeInsets.only(
-                  top: 12,
-                  bottom: 80,
-                ), // Add padding for FAB
+                controller: _scrollController,
+                padding: const EdgeInsets.only(top: 12, bottom: 80),
                 children: [
-                  // Machine Group Card
-
-                  // List of machine parts
                   if (notificationController.notificationsList.isEmpty)
-                    // Show 'No Data' message if list is empty after loading
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(24.0),
@@ -79,7 +55,6 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
                       ),
                     )
                   else
-                    // Use Column or List.generate to build items inside the main ListView
                     ...List.generate(
                       notificationController.notificationsList.length,
                       (index) {

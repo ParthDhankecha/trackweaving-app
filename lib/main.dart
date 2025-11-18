@@ -80,10 +80,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: themeController.lightTheme,
       translations: AppTranslations(), // translations
       //locale: Locale('en', 'US'), // Default locale
-      fallbackLocale: const Locale(
-        'en',
-        'US',
-      ), // Fallback for missing translations
+      fallbackLocale: const Locale('en', 'US'),
       home: SplashScreen(),
       //
     );

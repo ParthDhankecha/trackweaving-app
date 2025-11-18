@@ -11,6 +11,7 @@ import 'package:trackweaving/repository/notifications_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
 import 'package:trackweaving/screens/home/home_screen.dart';
 
+//old controller
 class NotificationController extends GetxController implements GetxService {
   RxBool isLoading = false.obs;
   RxList<NotificationModel> notificationsList = RxList();
@@ -234,9 +235,9 @@ class NotificationController extends GetxController implements GetxService {
           notification.body,
           NotificationDetails(
             android: AndroidNotificationDetails(
-              _channel.id, // Must match the channel ID defined above
-              _channel.name,
-              channelDescription: _channel.description,
+              targetChannel.id, // Must match the channel ID defined above
+              targetChannel.name,
+              channelDescription: targetChannel.description,
               icon: android.smallIcon,
             ),
             iOS: DarwinNotificationDetails(
@@ -287,7 +288,7 @@ class NotificationController extends GetxController implements GetxService {
 
       if (data.isEmpty) {
         hasNextPage.value = false; // Stop further calls
-        // Decrement page if nothing was loaded to stay on the last valid page
+
         if (!isRefresh) currentPage.value--;
       } else {
         notificationsList.addAll(data);
@@ -323,10 +324,8 @@ class NotificationController extends GetxController implements GetxService {
         notificationIds.add(element.id);
       }
     }
-    log('Marking notifications as read: $notificationIds');
-    for (var element in notificationIds) {
-      log('Marking notification as read: $element');
-    }
+    log('Marking notifications as read: ${notificationIds.length}');
+
     if (notificationIds.isEmpty) {
       //when list is empty then no need to call api
       return;
@@ -335,16 +334,7 @@ class NotificationController extends GetxController implements GetxService {
       isLoading.value = true;
       var success = await notificationsRepo.markAsRead(notificationIds);
       if (success) {
-        // Update local list to reflect changes
-        // for (var id in notificationIds) {
-        //   int index = notificationsList.indexWhere(
-        //     (notification) => notification.id == id,
-        //   );
-        //   if (index != -1) {
-        //     notificationsList[index].isRead = true;
-        //   }
-        // }
-        // notificationsList.refresh();
+        log('Notifications marked as read successfully.');
       }
     } on ApiException catch (e) {
       log('Error marking notifications as read: $e');
