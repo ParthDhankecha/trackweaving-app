@@ -220,10 +220,10 @@ class NotificationController extends GetxController implements GetxService {
 
       if (soundType == 'urgent') {
         targetChannel = _channelUrgent;
-        iosSoundFileName = 'sound_a.mp3';
+        iosSoundFileName = 'alaram1.mp3';
       } else {
-        targetChannel = _channelGeneral;
-        iosSoundFileName = 'sound_b.mp3';
+        targetChannel = _channel;
+        iosSoundFileName = '';
       }
       // --- END NEW LOGIC ---
 
