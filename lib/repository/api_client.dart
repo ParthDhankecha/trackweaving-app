@@ -52,6 +52,8 @@ class ApiClient extends GetxService {
               .timeout(Duration(seconds: 15));
       }
 
+      log('res: ${response.body}');
+
       switch (response.statusCode) {
         case 200:
         case 201:

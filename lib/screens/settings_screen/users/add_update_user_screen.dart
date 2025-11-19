@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:get/get.dart';
+import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/controllers/users_controller.dart';
+import 'package:trackweaving/models/login_auth_model.dart';
 import 'package:trackweaving/models/users_list_response.dart';
+import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/users/widgets/user_active_switch.dart';
+import 'package:trackweaving/screens/settings_screen/users/widgets/user_shift_dropdown.dart';
+import 'package:trackweaving/screens/settings_screen/users/widgets/user_type_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
+import 'package:trackweaving/utils/app_const.dart';
 
 class AddUpdateUsersScreen extends StatefulWidget {
   final UserModel? userModel;
@@ -30,16 +36,31 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
+  int currentUserTypeIndex = 0;
+
   @override
   void initState() {
     super.initState();
-
+    currentUserTypeIndex = controller.getUserType();
     if (widget.userModel != null) {
       userFullNameController.text = widget.userModel?.fullname ?? '';
       userNameController.text = widget.userModel?.userName ?? '';
       userEmailController.text = widget.userModel?.email ?? '';
       userMobileController.text = widget.userModel?.mobile ?? '';
       isActive.value = widget.userModel?.isActive ?? false;
+      log('Editing User type: ${widget.userModel?.userType}');
+      controller.selectedUserTypeIndex.value =
+          widget.userModel?.userType == AppConst.masterUser ? 1 : 0;
+
+      if (widget.userModel?.shift == 'day') {
+        controller.changeShiftType(controller.shiftTypeList[1]);
+      } else if (widget.userModel?.shift == 'night') {
+        controller.changeShiftType(controller.shiftTypeList[2]);
+      } else {
+        controller.changeShiftType(controller.shiftTypeList.first);
+      }
+    } else {
+      controller.changeShiftType(controller.shiftTypeList.first);
     }
   }
 
@@ -76,6 +97,54 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
                         },
                       ),
                       SizedBox(height: 10),
+                      if (currentUserTypeIndex != AppConst.masterUser)
+                        Column(
+                          children: [
+                            Obx(
+                              () => controller.userTypes.isEmpty
+                                  ? SizedBox.shrink()
+                                  : UserTypeDropdown(
+                                      title: 'user_type'.tr,
+                                      items: controller.userTypes,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          log('Selected User Type: $value');
+                                          int selectedIndex = controller
+                                              .userTypes
+                                              .indexOf(value);
+                                          if (selectedIndex < 0) {
+                                            selectedIndex = 0;
+                                          }
+                                          controller
+                                                  .selectedUserTypeIndex
+                                                  .value =
+                                              selectedIndex;
+
+                                          log(
+                                            'User Role Type: ${controller.getUserRoleType()}',
+                                          );
+                                        }
+                                      },
+                                      selectedValue:
+                                          controller.userTypes[controller
+                                              .selectedUserTypeIndex
+                                              .value],
+                                    ),
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
+
+                      UserShiftDropdown(
+                        title: 'shift'.tr,
+                        items: controller.shiftTypeList,
+                        selectedValue: controller.selectedShiftType.value,
+                        onChanged: (value) {
+                          controller.changeShiftType(value);
+                        },
+                      ),
+                      SizedBox(height: 10),
+
                       _buildPhoneField(
                         title: "${'user_name'.tr} *",
                         hintText: 'user_name'.tr,
@@ -178,8 +247,19 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
   }
 
   void onSaveOrUpdate() {
+    if (controller.selectedShiftType.value.type == 'select') {
+      showErrorSnackbar('Please select a valid shift type');
+      return;
+    }
+
+    int userType = controller
+        .getUserRoleType(); // Get user type from controller
     if (widget.userModel == null) {
       // Create new user
+
+      int shiftType = controller.selectedShiftType.value.type == 'day'
+          ? AppConst.dayShift
+          : AppConst.nightShift; // Get shift type from
       controller
           .createUser(
             fullname: userFullNameController.text.trim(),
@@ -187,6 +267,8 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
             password: userPasswordController.text.trim(),
             email: userEmailController.text.trim(),
             mobile: userMobileController.text.trim(),
+            shiftType: shiftType,
+            userType: userType,
             isActive: isActive.value,
           )
           .then((success) {
@@ -206,6 +288,10 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
             email: userEmailController.text.trim(),
             mobile: userMobileController.text.trim(),
             isActive: isActive.value,
+            userType: userType,
+            shiftType: controller.selectedShiftType.value.type == 'day'
+                ? AppConst.dayShift
+                : AppConst.nightShift,
           )
           .then((success) {
             log('User update success: $success');

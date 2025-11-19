@@ -44,15 +44,18 @@ class UserModel {
   String mobile;
   String email;
   bool isActive;
+  String? shift;
+  int? userType;
 
   UserModel({
     required this.id,
     required this.fullname,
-
     required this.userName,
     required this.mobile,
     required this.email,
     required this.isActive,
+    this.shift,
+    this.userType,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -63,6 +66,12 @@ class UserModel {
     mobile: json["mobile"],
     email: json["email"],
     isActive: json["isActive"],
+    shift: json["shift"] == 0
+        ? 'day'
+        : json["shift"] == 1
+        ? 'night'
+        : null,
+    userType: json["userType"],
   );
 
   Map<String, dynamic> toMap() => {

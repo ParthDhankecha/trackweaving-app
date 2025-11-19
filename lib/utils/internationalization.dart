@@ -128,6 +128,10 @@ class AppTranslations extends Translations {
       'update_now': 'Update Now',
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
+
+      'user_type': 'User Type',
+      'admin': 'Admin',
+      'master': 'Master',
     },
     'hi_IN': {
       'language_change': 'भाषा बदलें',
@@ -248,6 +252,17 @@ class AppTranslations extends Translations {
       'machine_max_limit': 'मशीन अधिकतम सीमा',
       'enter_machine_max_limit': 'मशीन अधिकतम सीमा दर्ज करें',
       'machine_company_name': 'मशीन कंपनी का नाम',
+
+      //app update
+      'app_update': 'ऐप अपडेट',
+      'new_version_available':
+          'नया संस्करण उपलब्ध है। जारी रखने के लिए कृपया ऐप अपडेट करें।',
+      'update_now': 'अभी अपडेट करें',
+      'current_version': 'वर्तमान संस्करण',
+      'latest_version': 'नवीनतम संस्करण',
+      'user_type': 'उपयोगकर्ता प्रकार',
+      'admin': 'प्रशासक',
+      'master': 'मास्टर',
     },
     'gu_IN': {
       'language_change': 'ભાષા બદલો',
@@ -367,6 +382,16 @@ class AppTranslations extends Translations {
       'machine_max_limit': 'મશીનની મહત્તમ મર્યાદા',
       'enter_machine_max_limit': 'મશીનની મહત્તમ મર્યાદા દાખલ કરો',
       'machine_company_name': 'મશીન કંપનીનું નામ',
+      //app update
+      'app_update': 'એપ્લિકેશન અપડેટ',
+      'new_version_available':
+          'નવું સંસ્કરણ ઉપલબ્ધ છે. એપ્લિકેશન ચાલુ રાખવા માટે કૃપા કરીને અપડેટ કરો.',
+      'update_now': 'હવે અપડેટ કરો',
+      'current_version': 'વર્તમાન સંસ્કરણ',
+      'latest_version': 'નવતર સંસ્કરણ',
+      'user_type': 'વપરાશકર્તા પ્રકાર',
+      'admin': 'એડમિન',
+      'master': 'માસતર',
     },
   };
 }

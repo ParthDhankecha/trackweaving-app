@@ -35,6 +35,8 @@ class UsersRepository extends GetxService {
     required String password,
     String? email,
     String? mobile,
+    required int shiftType,
+    required int userType,
     bool isActive = true,
   }) async {
     final body = {
@@ -44,6 +46,8 @@ class UsersRepository extends GetxService {
       "email": email,
       "mobile": mobile,
       "isActive": isActive,
+      "shift": shiftType,
+      "userType": userType,
     };
 
     final response = await apiClient.request(
@@ -65,6 +69,8 @@ class UsersRepository extends GetxService {
     String? email,
     String? mobile,
     bool isActive = true,
+    int? shiftType,
+    int? userType,
   }) async {
     final body = {
       "fullname": fullname,
@@ -73,6 +79,8 @@ class UsersRepository extends GetxService {
       if (email != null) "email": email,
       if (mobile != null) "mobile": mobile,
       "isActive": isActive,
+      "shift": shiftType,
+      "userType": userType,
     };
 
     final response = await apiClient.request(

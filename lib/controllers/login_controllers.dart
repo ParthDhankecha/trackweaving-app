@@ -65,10 +65,10 @@ class LoginControllers extends GetxController implements GetxService {
     }
   }
 
-  void logout() {
+  void logout() async {
+    await repo.deleFcmToken();
     sp.userToken = '';
     sp.fcmToken = '';
-    repo.deleFcmToken();
     sp.clearAll();
     Get.offAll(() => LoginScreen());
   }

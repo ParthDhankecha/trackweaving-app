@@ -65,4 +65,8 @@ class AppConst {
   //shift types
   static int dayShift = 0;
   static int nightShift = 1;
+
+  //user types
+  static int adminUser = 1;
+  static int masterUser = 2;
 }
