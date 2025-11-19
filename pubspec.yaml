@@ -4,7 +4,8 @@ description: "A new Flutter project.  name need to be change"
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.2.0+20
+#v21 - user type added - master
+version: 1.2.1+21
 
 environment:
   sdk: ^3.9.2
