@@ -33,7 +33,7 @@ class UsersController extends GetxController implements GetxService {
     title: 'Select',
   ).obs;
 
-  changeShiftType(ShiftTypesModel? model) {
+  void changeShiftType(ShiftTypesModel? model) {
     selectedShiftType.value = model ?? shiftTypeList.first;
   }
 
@@ -54,13 +54,13 @@ class UsersController extends GetxController implements GetxService {
     return sp.userType;
   }
 
-  setUserId() {
+  void setUserId() {
     userId.value = sp.currentLoginId;
     log('Current User ID: ${userId.value}');
   }
 
   // Add methods to fetch, add, update, and delete users as needed.
-  getUsersList() async {
+  Future<void> getUsersList() async {
     try {
       isLoading.value = true;
       var data = await repository.getUsers();
@@ -160,7 +160,7 @@ class UsersController extends GetxController implements GetxService {
     return false;
   }
 
-  updateOnlyActive({
+  Future<void> updateOnlyActive({
     required UserModel user,
     required bool isActive,
     required int index,

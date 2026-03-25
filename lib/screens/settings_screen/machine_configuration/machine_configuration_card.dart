@@ -71,9 +71,7 @@ class MachineConfigurationCard extends StatelessWidget {
               const SizedBox(height: 8),
               _buildInfoRow('IP', udid),
               const SizedBox(height: 8),
-              maxLimit == 0
-                  ? SizedBox()
-                  : _buildInfoRow('max_limit', maxLimit.toString()),
+              _buildInfoRow('max_limit', maxLimit.toString()),
             ],
           ),
         ),

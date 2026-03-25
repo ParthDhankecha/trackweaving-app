@@ -70,7 +70,7 @@ class NotificationController extends GetxController implements GetxService {
     const initSettings = InitializationSettings(android: android, iOS: ios);
 
     await _localNotifications.initialize(
-      initSettings,
+      settings: initSettings,
       onDidReceiveNotificationResponse: (resp) {
         _handleMessageAction(resp.payload);
       },
@@ -167,10 +167,10 @@ class NotificationController extends GetxController implements GetxService {
 
       if (notif != null) {
         _localNotifications.show(
-          notif.hashCode,
-          notif.title,
-          notif.body,
-          NotificationDetails(
+          id: notif.hashCode,
+          title: notif.title,
+          body: notif.body,
+          notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,

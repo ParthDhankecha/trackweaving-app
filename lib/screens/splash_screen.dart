@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:trackweaving/controllers/notifications_controller.dart';
 import 'package:trackweaving/controllers/splash_controller.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/app_images.dart';
 import 'package:trackweaving/utils/app_strings.dart';
-import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,13 +15,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   SplashController splashController = Get.find();
-  final NotificationController controller = Get.find<NotificationController>();
 
   @override
   void initState() {
     super.initState();
     splashController.checkUser();
-    controller.initializeNotifications();
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/models/notifications_list_response.dart';
 import 'package:trackweaving/repository/api_exception.dart';
@@ -87,7 +87,7 @@ class NotificationController extends GetxController implements GetxService {
         );
 
     await _localNotifications.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
         // Handle notification tap when the app is in the foreground/background
         _handleMessageAction(response.payload);
@@ -230,10 +230,10 @@ class NotificationController extends GetxController implements GetxService {
       // Use local notifications to display the heads-up notification in the foreground
       if (notification != null && android != null) {
         _localNotifications.show(
-          notification.hashCode, // Unique ID
-          notification.title,
-          notification.body,
-          NotificationDetails(
+          id: notification.hashCode, // Unique ID
+          title: notification.title,
+          body: notification.body,
+          notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(
               targetChannel.id, // Must match the channel ID defined above
               targetChannel.name,
@@ -252,18 +252,8 @@ class NotificationController extends GetxController implements GetxService {
     });
   }
 
-  // In your NotificationController class:
-  Future<bool> shouldNavigateToNotificationsTab() async {
-    // Check for message received while the app was terminated
-    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null) {
-      return true;
-    }
-    return false;
-  }
-
   //----- notification list -----
-  getNotifications({bool isRefresh = false}) async {
+  Future<void> getNotifications({bool isRefresh = false}) async {
     if (!hasNextPage.value && !isRefresh) {
       log('No more pages to load.', name: 'NotificationsController');
       return;
@@ -317,7 +307,7 @@ class NotificationController extends GetxController implements GetxService {
     }
   }
 
-  markAsRead() async {
+  Future<void> markAsRead() async {
     List<String> notificationIds = [];
     for (var element in notificationsList) {
       if (!element.isRead) {

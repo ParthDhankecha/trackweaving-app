@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:get/get.dart';
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
-import 'package:get/get.dart';
 
 class MachineRepository extends GetxService {
   final ApiClient apiClient;
@@ -77,7 +77,7 @@ class MachineRepository extends GetxService {
     required String machineName,
     required String machineGroupId,
     required bool isAlertActive,
-    required String machineMaxLimit,
+    required String maxSpeedLimit,
   }) async {
     String endPoint = AppConst.getUrl(AppConst.machines);
     var reqBody = {
@@ -85,7 +85,7 @@ class MachineRepository extends GetxService {
       'machineName': machineName,
       'machineGroupId': machineGroupId,
       'isAlertActive': '$isAlertActive',
-      'maxSpeedLimit': int.tryParse(machineMaxLimit) ?? 0,
+      'maxSpeedLimit': int.tryParse(maxSpeedLimit) ?? 0,
     };
 
     var data = await apiClient.request(

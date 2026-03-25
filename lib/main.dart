@@ -3,14 +3,12 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:trackweaving/controllers/home_controller.dart';
-import 'package:trackweaving/controllers/localization_controller.dart';
-import 'package:trackweaving/controllers/notifications_controller.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/screens/splash_screen.dart';
 import 'package:trackweaving/utils/app_strings.dart';
 import 'package:trackweaving/utils/internationalization.dart';
 import 'package:trackweaving/utils/my_theme_controller.dart';
-import 'package:get/get.dart';
+
 import 'utils/get_di.dart' as getit;
 
 @pragma('vm:entry-point')
@@ -44,31 +42,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ThemeController themeController = Get.put(ThemeController());
-
-  final LocalizationController localizationController = Get.find();
-
-  final NotificationController controller = Get.find<NotificationController>();
-  final HomeController? homeController = Get.isRegistered<HomeController>()
-      ? Get.find<HomeController>()
-      : null;
-
-  @override
-  void initState() {
-    super.initState();
-    controller.initializeNotifications();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _handleInitialNotificationNavigation();
-    });
-  }
-
-  void _handleInitialNotificationNavigation() {
-    controller.shouldNavigateToNotificationsTab().then((shouldNavigate) {
-      if (shouldNavigate && homeController != null) {
-        homeController!.changeNavIndex(2); // Assuming index 2 is Notifications
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

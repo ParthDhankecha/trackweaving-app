@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
@@ -8,7 +9,6 @@ import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/machine_repository.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
-import 'package:get/get.dart';
 
 class MachineController extends GetxController implements GetxService {
   final Sharedprefs sp;
@@ -32,7 +32,7 @@ class MachineController extends GetxController implements GetxService {
   RxBool machineAlert = false.obs;
   Rx<MachineGroup?> selectedMachineGrpId = Rx(null);
 
-  changeMachineAlert() {
+  void changeMachineAlert() {
     if (machineAlert.value) {
       machineAlert.value = false;
     } else {
@@ -40,7 +40,7 @@ class MachineController extends GetxController implements GetxService {
     }
   }
 
-  setFields({
+  void setFields({
     String name = '',
     String code = '',
     bool alert = false,
@@ -60,18 +60,18 @@ class MachineController extends GetxController implements GetxService {
     }
   }
 
-  disposeControllers() {
+  void disposeControllers() {
     machineCodeController.dispose();
     machineNameController.dispose();
     maxLimitController.dispose();
   }
 
-  setSelectedMachineId(String id) {
+  void setSelectedMachineId(String id) {
     selectedMachineId = id;
   }
 
   //get list machine groups
-  getList() async {
+  Future<void> getList() async {
     try {
       isLoading.value = true;
 
@@ -168,7 +168,7 @@ class MachineController extends GetxController implements GetxService {
   }
 
   //api to update machine configurations;
-  updateMachineConfig(String id) async {
+  Future<void> updateMachineConfig(String id) async {
     try {
       isLoading.value = true;
 
@@ -176,7 +176,7 @@ class MachineController extends GetxController implements GetxService {
         id: id,
         machineCode: machineCodeController.text.trim(),
         machineName: machineNameController.text.trim(),
-        machineMaxLimit: maxLimitController.text.trim(),
+        maxSpeedLimit: maxLimitController.text.trim(),
         machineGroupId: selectedMachineGrpId.value?.id ?? '',
         isAlertActive: machineAlert.value,
       );
@@ -199,7 +199,7 @@ class MachineController extends GetxController implements GetxService {
     }
   }
 
-  updateMachineConfigAlert(String id, bool isOn) async {
+  Future<void> updateMachineConfigAlert(String id, bool isOn) async {
     try {
       isLoading.value = true;
 

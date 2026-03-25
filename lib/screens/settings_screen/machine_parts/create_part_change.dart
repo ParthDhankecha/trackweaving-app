@@ -56,7 +56,7 @@ class _MachinePartsUpdateState extends State<MachinePartsUpdate> {
       ),
       body: Form(
         key: formKey,
-        child: Column(
+        child: ListView(
           children: [
             Divider(height: 1, thickness: 0.2),
             Padding(

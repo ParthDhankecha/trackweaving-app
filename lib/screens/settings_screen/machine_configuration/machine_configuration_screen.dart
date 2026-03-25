@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/edit_machine_configuration.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
-import 'package:get/get.dart';
 
 class MachineConfigurationScreen extends StatefulWidget {
   const MachineConfigurationScreen({super.key});
@@ -48,7 +48,7 @@ class _MachineConfigurationScreenState
                             ?.groupName ??
                         '',
                     udid: machine.ip,
-                    maxLimit: machine.maxSpeedLimit ?? 0,
+                    maxLimit: machine.maxSpeedLimit,
                     alertEnabled: machine.isAlertActive,
                     onAlertChange: (isOn) {
                       //controller.changeMachineAlert();

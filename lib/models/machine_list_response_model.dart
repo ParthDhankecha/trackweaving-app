@@ -45,7 +45,7 @@ class Machine {
   String machineName;
   String ip;
   bool isAlertActive;
-  int? maxSpeedLimit;
+  int maxSpeedLimit;
 
   Machine({
     required this.machineGroupId,
@@ -55,7 +55,7 @@ class Machine {
     required this.machineName,
     required this.ip,
     required this.isAlertActive,
-    this.maxSpeedLimit,
+    this.maxSpeedLimit = 0,
   });
 
   factory Machine.fromMap(Map<String, dynamic> json) => Machine(
@@ -68,7 +68,7 @@ class Machine {
     machineName: json["machineName"],
     ip: json["ip"],
     isAlertActive: json["isAlertActive"],
-    maxSpeedLimit: json["machineMaxLimit"] ?? 0,
+    maxSpeedLimit: int.tryParse('${json["maxSpeedLimit"]}') ?? 0,
   );
 
   Map<String, dynamic> toMap() => {
@@ -79,7 +79,7 @@ class Machine {
     "machineName": machineName,
     "ip": ip,
     "isAlertActive": isAlertActive,
-    "machineMaxLimit": maxSpeedLimit,
+    "maxSpeedLimit": maxSpeedLimit,
   };
 
   @override
