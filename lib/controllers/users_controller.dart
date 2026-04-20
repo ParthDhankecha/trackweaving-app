@@ -6,7 +6,6 @@ import 'package:trackweaving/models/users_list_response.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/users_repository.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
-import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
 
 class UsersController extends GetxController implements GetxService {
@@ -18,10 +17,10 @@ class UsersController extends GetxController implements GetxService {
 
   RxString userId = ''.obs;
 
-  List<String> userTypes = ['admin', 'master'];
+  Map<int, String> userTypes = {1: 'admin', 2: 'master'};
   //admin == 1, master == 2
 
-  RxInt selectedUserTypeIndex = 0.obs;
+  RxInt selectedUserType = 1.obs;
 
   List<ShiftTypesModel> shiftTypeList = [
     ShiftTypesModel(type: 'select', title: 'Select'),
@@ -37,19 +36,7 @@ class UsersController extends GetxController implements GetxService {
     selectedShiftType.value = model ?? shiftTypeList.first;
   }
 
-  //for apis call
-  int getUserRoleType() {
-    log('Selected User Type Index: ${selectedUserTypeIndex.value}');
-    switch (selectedUserTypeIndex.value) {
-      case 1:
-        return AppConst.masterUser;
-
-      default:
-        return AppConst.adminUser;
-    }
-  }
-
-  getUserType() {
+  int getUserType() {
     log('User Type: ${sp.userType}');
     return sp.userType;
   }

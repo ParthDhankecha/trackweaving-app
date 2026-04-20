@@ -1,14 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
-import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/controllers/users_controller.dart';
-import 'package:trackweaving/models/login_auth_model.dart';
 import 'package:trackweaving/models/users_list_response.dart';
-import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/users/widgets/user_active_switch.dart';
 import 'package:trackweaving/screens/settings_screen/users/widgets/user_shift_dropdown.dart';
 import 'package:trackweaving/screens/settings_screen/users/widgets/user_type_dropdown.dart';
@@ -49,9 +47,7 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
       userMobileController.text = widget.userModel?.mobile ?? '';
       isActive.value = widget.userModel?.isActive ?? false;
       log('Editing User type: ${widget.userModel?.userType}');
-      controller.selectedUserTypeIndex.value =
-          widget.userModel?.userType == AppConst.masterUser ? 1 : 0;
-
+      controller.selectedUserType.value = widget.userModel?.userType ?? 1;
       if (widget.userModel?.shift == 'day') {
         controller.changeShiftType(controller.shiftTypeList[1]);
       } else if (widget.userModel?.shift == 'night') {
@@ -96,56 +92,56 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
                           return null;
                         },
                       ),
+                      if (currentUserTypeIndex == 1) ...[
+                        SizedBox(height: 10),
+                        Obx(() {
+                          if (controller.userTypes.isEmpty) {
+                            return SizedBox.shrink();
+                          }
+                          final typeInt = controller.selectedUserType.value;
+                          final userType = controller.userTypes[typeInt];
+
+                          return Column(
+                            children: [
+                              UserTypeDropdown(
+                                title: 'user_type'.tr,
+                                items: controller.userTypes.values.toList(),
+                                selectedValue: userType,
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    log('Selected User Type: $value');
+                                    int sel = controller.userTypes.entries
+                                        .firstWhere(
+                                          (entry) => entry.value == value,
+                                        )
+                                        .key;
+                                    if (sel < 1) sel = 1;
+                                    controller.selectedUserType.value = sel;
+                                    log(
+                                      'User Role Type: ${controller.selectedUserType.value}',
+                                    );
+                                  }
+                                },
+                              ),
+                              if (typeInt == 2) ...[
+                                SizedBox(height: 10),
+                                UserShiftDropdown(
+                                  title: 'shift'.tr,
+                                  items: controller.shiftTypeList,
+                                  selectedValue:
+                                      controller.selectedShiftType.value,
+                                  onChanged: (value) {
+                                    controller.changeShiftType(value);
+                                  },
+                                ),
+                              ],
+                            ],
+                          );
+                        }),
+                      ],
                       SizedBox(height: 10),
-                      if (currentUserTypeIndex != AppConst.masterUser)
-                        Column(
-                          children: [
-                            Obx(
-                              () => controller.userTypes.isEmpty
-                                  ? SizedBox.shrink()
-                                  : UserTypeDropdown(
-                                      title: 'user_type'.tr,
-                                      items: controller.userTypes,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          log('Selected User Type: $value');
-                                          int selectedIndex = controller
-                                              .userTypes
-                                              .indexOf(value);
-                                          if (selectedIndex < 0) {
-                                            selectedIndex = 0;
-                                          }
-                                          controller
-                                                  .selectedUserTypeIndex
-                                                  .value =
-                                              selectedIndex;
 
-                                          log(
-                                            'User Role Type: ${controller.getUserRoleType()}',
-                                          );
-                                        }
-                                      },
-                                      selectedValue:
-                                          controller.userTypes[controller
-                                              .selectedUserTypeIndex
-                                              .value],
-                                    ),
-                            ),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-
-                      UserShiftDropdown(
-                        title: 'shift'.tr,
-                        items: controller.shiftTypeList,
-                        selectedValue: controller.selectedShiftType.value,
-                        onChanged: (value) {
-                          controller.changeShiftType(value);
-                        },
-                      ),
-                      SizedBox(height: 10),
-
-                      _buildPhoneField(
+                      _buildInputField(
                         title: "${'user_name'.tr} *",
                         hintText: 'user_name'.tr,
                         controller: userNameController,
@@ -252,8 +248,8 @@ class _AddUpdateUsersScreenState extends State<AddUpdateUsersScreen> {
       return;
     }
 
-    int userType = controller
-        .getUserRoleType(); // Get user type from controller
+    int userType =
+        controller.selectedUserType.value; // Get user type from controller
     if (widget.userModel == null) {
       // Create new user
 
