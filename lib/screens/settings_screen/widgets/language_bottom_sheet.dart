@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/controllers/localization_controller.dart';
 import 'package:trackweaving/utils/internationalization.dart';
-import 'package:get/get.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   LanguageBottomSheet({super.key});
@@ -13,8 +13,7 @@ class LanguageBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of supported locales
     final List<Locale> locales = AppTranslations().keys.keys.map((langCode) {
-      final parts = langCode.split('_');
-      return Locale(parts[0], parts[1]);
+      return Locale(langCode);
     }).toList();
 
     final languageNames = localizationController.languageNames;
@@ -39,7 +38,7 @@ class LanguageBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           ...locales.map((locale) {
-            final languageCode = '${locale.languageCode}_${locale.countryCode}';
+            final languageCode = locale.languageCode;
             return ListTile(
               title: Text(languageNames[languageCode]!),
               trailing: Get.locale == locale

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-    'en_US': {
+    'en': {
       'language_change': 'Change Language',
       'english': 'English',
       'hindi': 'Hindi',
@@ -133,7 +133,7 @@ class AppTranslations extends Translations {
       'admin': 'Admin',
       'master': 'Master',
     },
-    'hi_IN': {
+    'hi': {
       'language_change': 'भाषा बदलें',
       'english': 'अंग्रेज़ी',
       'hindi': 'हिंदी',
@@ -264,7 +264,7 @@ class AppTranslations extends Translations {
       'admin': 'प्रशासक',
       'master': 'मास्टर',
     },
-    'gu_IN': {
+    'gu': {
       'language_change': 'ભાષા બદલો',
       'english': 'અંગ્રેજી',
       'hindi': 'હિન્દી',

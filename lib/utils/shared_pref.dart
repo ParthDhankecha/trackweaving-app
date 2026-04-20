@@ -62,7 +62,7 @@ class Sharedprefs extends GetxService {
       _saveData('LAST_UPDATE_PROMPT_TIME', value);
   int get lastUpdatePromptTime => _getData('LAST_UPDATE_PROMPT_TIME') ?? 0;
 
-  clearAll() {
+  void clearAll() {
     pref.clear();
   }
 }
