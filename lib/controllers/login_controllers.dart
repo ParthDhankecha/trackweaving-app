@@ -1,12 +1,14 @@
 import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/login_repo.dart';
 import 'package:trackweaving/screens/auth_screens/login_screen.dart';
 import 'package:trackweaving/screens/home/home_screen.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
-import 'package:get/get.dart';
 
 class LoginControllers extends GetxController implements GetxService {
   RxBool isLoading = false.obs;
@@ -28,13 +30,13 @@ class LoginControllers extends GetxController implements GetxService {
     isLoading.value = load;
   }
 
-  intialize() {
+  int intialize() {
     emailCont.text = '';
     passwordCont.text = '';
     return 0;
   }
 
-  loginWithEmailPassword() async {
+  Future<void> loginWithEmailPassword() async {
     try {
       isLoading.value = true;
       String userEmail = emailCont.text.trim();
@@ -53,6 +55,8 @@ class LoginControllers extends GetxController implements GetxService {
         sp.userToken = data.token.accessToken;
         sp.userID = data.user.userId ?? '';
         sp.userType = data.user.type ?? 0;
+        print("Subscribed to ${sp.currentLoginId}");
+        FirebaseMessaging.instance.subscribeToTopic(sp.currentLoginId);
         Get.offAll(() => HomeScreen());
       } else {}
     } on ApiException catch (e) {
@@ -66,9 +70,9 @@ class LoginControllers extends GetxController implements GetxService {
   }
 
   void logout() async {
-    await repo.deleFcmToken();
+    print("UnSubscribed from ${sp.currentLoginId}");
+    FirebaseMessaging.instance.unsubscribeFromTopic(sp.currentLoginId);
     sp.userToken = '';
-    sp.fcmToken = '';
     sp.clearAll();
     Get.offAll(() => LoginScreen());
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:trackweaving/models/login_auth_model.dart';
 import 'package:trackweaving/repository/api_client.dart';
@@ -30,34 +28,5 @@ class LoginRepo extends GetxService {
 
     AuthData authData = loginAuthFromMap(data).data;
     return authData;
-  }
-
-  Future<void> saveFcmToken(String token) async {
-    sp.fcmToken = token;
-    log("FCM Token saved: $token");
-    var endPoint = AppConst.getUrl(AppConst.saveFcmToken);
-    Map<String, String> body = {'fcmToken': token};
-    var response = await apiClient.request(
-      endPoint,
-      method: ApiType.put,
-      headers: {'Authorization': sp.userToken},
-      body: body,
-    );
-
-    log("FCM Token response: $response");
-  }
-
-  Future<void> deleFcmToken() async {
-    sp.fcmToken = '';
-    log("FCM Token deleted");
-    var endPoint = AppConst.getUrl(AppConst.saveFcmToken);
-
-    var response = await apiClient.request(
-      endPoint,
-      method: ApiType.delete,
-      headers: {'Authorization': sp.userToken},
-    );
-
-    log("FCM Token delete response: $response");
   }
 }

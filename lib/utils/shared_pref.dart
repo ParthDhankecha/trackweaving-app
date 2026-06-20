@@ -55,9 +55,6 @@ class Sharedprefs extends GetxService {
   set refreshInterval(int value) => _saveData('REFRESH_INTERVAL', value);
   int get refreshInterval => _getData('REFRESH_INTERVAL') ?? 12;
 
-  set fcmToken(String value) => _saveData('FCM_TOKEN', value);
-  String get fcmToken => _getData('FCM_TOKEN') ?? '';
-
   set lastUpdatePromptTime(int value) =>
       _saveData('LAST_UPDATE_PROMPT_TIME', value);
   int get lastUpdatePromptTime => _getData('LAST_UPDATE_PROMPT_TIME') ?? 0;

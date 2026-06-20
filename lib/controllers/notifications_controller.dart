@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,9 +16,8 @@ import 'package:trackweaving/screens/home/home_screen.dart';
 class NotificationController extends GetxController implements GetxService {
   RxBool isLoading = false.obs;
   RxList<NotificationModel> notificationsList = RxList();
-  final fcmToken = ''.obs;
 
-  final lastNotificationAction = 'Awaiting events...'.obs;
+  final lastAction = 'Awaiting events...'.obs;
 
   RxInt currentPage = 1.obs; // Start at page 1
   RxBool hasNextPage = true.obs; // Flag to stop loading when no more data
@@ -26,135 +26,63 @@ class NotificationController extends GetxController implements GetxService {
   LoginRepo loginRepo = Get.find<LoginRepo>();
   NotificationsRepo notificationsRepo = Get.find<NotificationsRepo>();
 
-  final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin();
+  final _plugin = FlutterLocalNotificationsPlugin();
 
-  static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.',
-    importance: Importance.max,
+  static const _channel = AndroidNotificationChannel(
+    'general_notifications',
+    'General',
+    enableVibration: true,
+    importance: Importance.high,
+    playSound: true,
+    description: 'Used for general notifications',
   );
 
-  // Channel for Urgent/High Priority (uses sound_a)
-  static const AndroidNotificationChannel _channelUrgent =
-      AndroidNotificationChannel(
-        'urgent_alerts_channel', // id: MUST be unique
-        'Urgent Alerts', // title
-        description: 'Notifications for high priority events, using sound A.',
-        importance: Importance.max,
-        sound: RawResourceAndroidNotificationSound(
-          'alarm1',
-        ), // Looks for 'sound_a.mp3' in res/raw/
-      );
-
-  // Channel for General/Low Priority (uses sound_b)
-  static const AndroidNotificationChannel _channelGeneral =
-      AndroidNotificationChannel(
-        'general_alerts_channel', // id: MUST be unique
-        'General Notifications', // title
-        description: 'Notifications for general updates, using sound B.',
-        importance: Importance.defaultImportance,
-        sound: RawResourceAndroidNotificationSound(
-          'alarm1',
-        ), // Looks for 'sound_b.mp3' in res/raw/
-      );
+  static const _alertChannel = AndroidNotificationChannel(
+    'alert_notifications',
+    'Alerts',
+    enableVibration: true,
+    importance: Importance.max,
+    description: 'Used for alert notifications',
+    playSound: true,
+    sound: RawResourceAndroidNotificationSound('siren'),
+  );
 
   Future<void> initializeNotifications() async {
     await _initLocalNotifications();
-    await _requestPermission();
-    await _setupInteractions();
-    _handleForegroundMessages();
-    getFCMToken();
   }
 
   // --- 1. LOCAL NOTIFICATION SETUP (For Foreground Messages) ---
   Future<void> _initLocalNotifications() async {
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    const DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
+    await _plugin.initialize(
+      settings: InitializationSettings(
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        iOS: DarwinInitializationSettings(
           requestAlertPermission: true,
           requestBadgePermission: true,
           requestSoundPermission: true,
-        );
-
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-          android: initializationSettingsAndroid,
-          iOS: initializationSettingsDarwin,
-        );
-
-    await _localNotifications.initialize(
-      settings: initializationSettings,
+        ),
+      ),
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        // Handle notification tap when the app is in the foreground/background
         _handleMessageAction(response.payload);
       },
     );
 
-    // await _localNotifications
-    //     .resolvePlatformSpecificImplementation<
-    //       AndroidFlutterLocalNotificationsPlugin
-    //     >()
-    //     ?.createNotificationChannel(_channel);
-    final androidImplementation = _localNotifications
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >();
-
-    await androidImplementation?.createNotificationChannel(_channelUrgent);
-    await androidImplementation?.createNotificationChannel(_channel);
-
-    // IMPORTANT: Allow heads-up notifications when the app is in the foreground
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-          alert: true, // Required to display a heads up notification
-          badge: true,
-          sound: true,
-        );
-  }
-
-  Future<void> _requestPermission() async {
-    NotificationSettings settings = await FirebaseMessaging.instance
-        .requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-        );
-
-    log('User granted permission: ${settings.authorizationStatus}');
-  }
-
-  Future<void> getFCMToken() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    // Request notification permissions
-    await messaging.requestPermission();
-
-    // Wait for APNs token (only iOS)
-    String? apnsToken = await messaging.getAPNSToken();
-    if (apnsToken == null) {
-      log('APNs token not yet available.');
-    }
-
-    String? token = await FirebaseMessaging.instance.getToken();
-    if (token != null) {
-      fcmToken.value = token;
-      log("FCM Token: $token");
-      loginRepo.saveFcmToken(token); // Save token using LoginRepo
-    }
-
-    // Listen for token changes
-    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
-      fcmToken.value = newToken;
-      log("FCM Token Refreshed: $newToken");
-      loginRepo.saveFcmToken(newToken);
+    // dart format off
+    final impl = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    await impl?.createNotificationChannel(_channel);
+    await impl?.createNotificationChannel(_alertChannel);
+    final settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    if (settings.authorizationStatus != AuthorizationStatus.authorized) return;
+    await _setupInteractions();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log(jsonEncode(message.toMap()));
+      _showForegroundNotification(message);
     });
+    // dart format on
   }
 
   // --- 3. MESSAGE HANDLING LOGIC ---
@@ -165,8 +93,7 @@ class NotificationController extends GetxController implements GetxService {
       // In a real app, you would navigate to a specific screen based on the payload.
       // E.g., Get.toNamed(payload);
 
-      lastNotificationAction.value =
-          'Tapped on notification with payload: $payload';
+      lastAction.value = 'Tapped on notification with payload: $payload';
 
       Get.to(() => HomeScreen(), arguments: {'navigateToNotifications': true});
       if (Get.isRegistered<HomeController>()) {
@@ -183,73 +110,58 @@ class NotificationController extends GetxController implements GetxService {
     }
   }
 
-  // --- 4. APP STATE LISTENERS ---
-
   /// Handles messages when the app is in the **TERMINATED** or **BACKGROUND** state
   Future<void> _setupInteractions() async {
-    // 1. Get any message which caused the application to open from a terminated state
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance
-        .getInitialMessage();
+    // Get any message which caused the application to open from a terminated state
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      lastNotificationAction.value = 'App opened from terminated state.';
+      lastAction.value = 'App opened from terminated state.';
       _handleMessageAction(initialMessage.data['route']);
     }
 
-    // 2. Stream listener when the application is opened from a background state
+    // Stream listener when the application is opened from a background state
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      lastNotificationAction.value = 'App opened from background state.';
+      log(jsonEncode(message.data));
+      lastAction.value = 'App opened from background state.';
       _handleMessageAction(message.data['route']);
     });
   }
 
   /// Handles messages when the app is in the **FOREGROUND** state
-  void _handleForegroundMessages() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      lastNotificationAction.value = 'Received FOREGROUND message.';
 
-      final RemoteNotification? notification = message.notification;
-      final AndroidNotification? android = message.notification?.android;
-
-      // --- NEW: Read the sound_type from the data payload ---
-      // We default to 'general' if the key is missing or invalid.
-      final String soundType = message.data['sound_type'] ?? 'general';
-
-      // Determine which channel and sound to use
-      AndroidNotificationChannel targetChannel;
-      String iosSoundFileName;
-
-      if (soundType == 'urgent') {
-        targetChannel = _channelUrgent;
-        iosSoundFileName = 'alaram1.mp3';
-      } else {
-        targetChannel = _channel;
-        iosSoundFileName = '';
-      }
-      // --- END NEW LOGIC ---
-
-      // Use local notifications to display the heads-up notification in the foreground
-      if (notification != null && android != null) {
-        _localNotifications.show(
-          id: notification.hashCode, // Unique ID
-          title: notification.title,
-          body: notification.body,
-          notificationDetails: NotificationDetails(
-            android: AndroidNotificationDetails(
-              targetChannel.id, // Must match the channel ID defined above
-              targetChannel.name,
-              channelDescription: targetChannel.description,
-              icon: android.smallIcon,
-            ),
-            iOS: DarwinNotificationDetails(
-              sound:
-                  iosSoundFileName, // Use the dynamically selected sound file name
-            ),
-          ),
-          // Pass any custom data to the payload so it can be handled on tap
-          payload: message.data['route'] ?? 'default_route',
-        );
-      }
-    });
+  void _showForegroundNotification(
+    RemoteMessage message, {
+    String? source,
+  }) async {
+    log('_showForegroundNotification called from $source');
+    final title = message.notification?.title ?? message.data['title'];
+    final body = message.notification?.body ?? message.data['body'];
+    if (title == null) return;
+    final sound = message.data['sound'] ?? 'default';
+    final isCritical = sound == 'siren.caf';
+    final channel = isCritical ? _alertChannel : _channel;
+    _plugin.show(
+      id: message.hashCode,
+      title: title,
+      body: body,
+      notificationDetails: NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          importance: channel.importance,
+          channelDescription: channel.description,
+          playSound: true,
+          sound: channel.sound,
+        ),
+        iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          sound: message.data['sound'] ?? 'default',
+        ),
+      ),
+      payload: jsonEncode(message.data),
+    );
   }
 
   //----- notification list -----
@@ -278,7 +190,6 @@ class NotificationController extends GetxController implements GetxService {
 
       if (data.isEmpty) {
         hasNextPage.value = false; // Stop further calls
-
         if (!isRefresh) currentPage.value--;
       } else {
         notificationsList.addAll(data);

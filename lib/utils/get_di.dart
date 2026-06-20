@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackweaving/controllers/dashboard_controller.dart';
 import 'package:trackweaving/controllers/home_controller.dart';
 import 'package:trackweaving/controllers/localization_controller.dart';
@@ -21,8 +23,6 @@ import 'package:trackweaving/repository/report_repository.dart';
 import 'package:trackweaving/repository/shift_comment_repository.dart';
 import 'package:trackweaving/repository/users_repository.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> init() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -75,4 +75,5 @@ Future<void> init() async {
   Get.lazyPut(() => MachinePartsController());
 
   Get.lazyPut(() => UsersController());
+  Get.lazyPut(() => NotificationController());
 }
