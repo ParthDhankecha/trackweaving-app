@@ -113,7 +113,7 @@ class MachineLog {
   int stops;
   int beamLeft;
   int setPicks;
-  StopsData stopsData;
+  Map<String, Map> stopsData;
   String totalDuration;
   DateTime logTime;
 
@@ -146,7 +146,7 @@ class MachineLog {
     stops: json["stops"],
     beamLeft: json["beamLeft"],
     setPicks: json["setPicks"],
-    stopsData: StopsData.fromMap(json["stopsData"]),
+    stopsData: Map<String, Map>.from(json["stopsData"]),
     totalDuration: json["totalDuration"],
     logTime: json["logTime"] == null
         ? DateTime.now()
@@ -165,56 +165,8 @@ class MachineLog {
     "stops": stops,
     "beamLeft": beamLeft,
     "setPicks": setPicks,
-    "stopsData": stopsData.toMap(),
+    "stopsData": stopsData,
     "totalDuration": totalDuration,
     "logTime": logTime,
   };
-}
-
-class StopsData {
-  Feeder warp;
-  Feeder weft;
-  Feeder feeder;
-  Feeder manual;
-  Feeder other;
-  Feeder total;
-
-  StopsData({
-    required this.warp,
-    required this.weft,
-    required this.feeder,
-    required this.manual,
-    required this.other,
-    required this.total,
-  });
-
-  factory StopsData.fromMap(Map<String, dynamic> json) => StopsData(
-    warp: Feeder.fromMap(json["warp"] ?? Feeder(count: 0, duration: '')),
-    weft: Feeder.fromMap(json["weft"] ?? Feeder(count: 0, duration: '')),
-    feeder: Feeder.fromMap(json["feeder"] ?? Feeder(count: 0, duration: '')),
-    manual: Feeder.fromMap(json["manual"] ?? Feeder(count: 0, duration: '')),
-    other: Feeder.fromMap(json["other"] ?? Feeder(count: 0, duration: '')),
-    total: Feeder.fromMap(json["total"] ?? Feeder(count: 0, duration: '')),
-  );
-
-  Map<String, dynamic> toMap() => {
-    "warp": warp.toMap(),
-    "weft": weft.toMap(),
-    "feeder": feeder.toMap(),
-    "manual": manual.toMap(),
-    "other": other.toMap(),
-    "total": total.toMap(),
-  };
-}
-
-class Feeder {
-  int count;
-  String duration;
-
-  Feeder({required this.count, required this.duration});
-
-  factory Feeder.fromMap(Map<String, dynamic> json) =>
-      Feeder(count: json["count"], duration: json["duration"] ?? '');
-
-  Map<String, dynamic> toMap() => {"count": count, "duration": duration};
 }

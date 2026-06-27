@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 class AppConst {
-  static String host = 'trackweaving.com';
-  static String defHost = 'trackweaving.com';
+  static String host = 'https://trackweaving.com';
+  // static String host = 'http://192.168.1.2:3000';
   //base url
-  static String baseUrl = 'https://$host/api/v1/';
+  static String baseUrl = '$host/api/v1/';
 
   //apis
   static String loginWithEmail = 'device/auth/sign-in';
@@ -52,8 +52,8 @@ class AppConst {
   static const String iosStoreUrl =
       'https://apps.apple.com/in/app/trackweaving/id6753007448';
 
-  static String getUrl(String api, {String host = 'trackweaving.com'}) =>
-      'https://$host/api/v1/$api';
+  static String getUrl(String api, {String? customHost}) =>
+      '${customHost ?? host}/api/v1/$api';
 
   //API LOG
   static void showLog({String tag = 'TAG', required String logText}) =>
@@ -62,4 +62,15 @@ class AppConst {
   //shift types
   static int dayShift = 0;
   static int nightShift = 1;
+}
+
+extension StringUtils on String {
+  String get titleCase {
+    return split(RegExp(r'[\s_-]')).map((e) => e.capitalize).join(' ');
+  }
+
+  String get capitalize {
+    if (length < 2) return toUpperCase();
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
 }
