@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/machine_search_dropdown.dart';
 import 'package:trackweaving/controllers/maintenance_category_controller.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/screens/settings_screen/maintenance_entry/maintenance_entry_card.dart';
-import 'package:get/get.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class MaintenanceEntryScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _MaintenanceEntryScreenState extends State<MaintenanceEntryScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBg,
 
-      appBar: AppBar(title: Text('alert'.tr)),
+      appBar: AppBar(title: Text('maintenance_entry'.tr)),
       body: Obx(
         () => controller.isLoading.value
             ? Column(children: [Center(child: CircularProgressIndicator())])
