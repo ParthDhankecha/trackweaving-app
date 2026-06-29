@@ -1,18 +1,14 @@
-// To parse this JSON data, do
-//
-//     final reportsResponse = reportsResponseFromMap(jsonString);
+import 'package:get/get.dart';
 
-import 'dart:convert';
+import 'json_convertors/serializer.dart';
 
-ReportsResponse reportsResponseFromMap(String str) =>
-    ReportsResponse.fromMap(json.decode(str));
+part 'report_response.g.dart';
 
-String reportsResponseToMap(ReportsResponse data) => json.encode(data.toMap());
-
+@CustomSerializer
 class ReportsResponse {
   String code;
   String message;
-  Data data;
+  Reports data;
 
   ReportsResponse({
     required this.code,
@@ -20,27 +16,19 @@ class ReportsResponse {
     required this.data,
   });
 
-  factory ReportsResponse.fromMap(Map<String, dynamic> json) => ReportsResponse(
-    code: json["code"],
-    message: json["message"],
-    data: Data.fromMap(json["data"]),
-  );
-
-  Map<String, dynamic> toMap() => {
-    "code": code,
-    "message": message,
-    "data": data.toMap(),
-  };
+  factory ReportsResponse.fromJson(Map<String, dynamic> json) =>
+      _$ReportsResponseFromJson(json);
 }
 
-class Data {
+@CustomSerializer
+class Reports {
   List<DataList> list;
   int totalPicks;
   int totalEfficiency;
-  double avgProdMeter;
+  num avgProdMeter;
   int avgPicks;
 
-  Data({
+  Reports({
     required this.list,
     required this.totalPicks,
     required this.totalEfficiency,
@@ -48,64 +36,56 @@ class Data {
     required this.avgPicks,
   });
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
-    list: List<DataList>.from(json["list"].map((x) => DataList.fromMap(x))),
-    totalPicks: json["totalPicks"],
-    totalEfficiency: json["totalEfficiency"],
-    avgProdMeter: json["avgProdMeter"]?.toDouble(),
-    avgPicks: json["avgPicks"],
-  );
+  factory Reports.fromJson(Map<String, dynamic> json) =>
+      _$ReportsFromJson(json);
 
-  Map<String, dynamic> toMap() => {
-    "list": List<dynamic>.from(list.map((x) => x.toMap())),
-    "totalPicks": totalPicks,
-    "totalEfficiency": totalEfficiency,
-    "avgProdMeter": avgProdMeter,
-    "avgPicks": avgPicks,
-  };
+  List<String> get stopTypes {
+    final data = list.firstWhereOrNull((e) {
+      final shift = e.reportData.dayShift ?? e.reportData.nightShift;
+      return shift?.list.firstOrNull?.stopsData.isNotEmpty ?? false;
+    });
+    final shift = data?.reportData.dayShift ?? data?.reportData.nightShift;
+    return shift?.list.first.stopsData.keys.toList() ?? [];
+  }
+
+  int get stopTypeCount {
+    final data = list.firstWhereOrNull((e) {
+      final shift = e.reportData.dayShift ?? e.reportData.nightShift;
+      return shift?.list.firstOrNull?.stopsData.isNotEmpty ?? false;
+    });
+    final shift = data?.reportData.dayShift ?? data?.reportData.nightShift;
+    return shift?.list.first.stopsData.length ?? 0;
+  }
 }
 
+@CustomSerializer
 class DataList {
   DateTime reportDate;
   ReportData reportData;
 
   DataList({required this.reportDate, required this.reportData});
 
-  factory DataList.fromMap(Map<String, dynamic> json) => DataList(
-    reportDate: DateTime.parse(json["reportDate"]).toLocal(),
-    reportData: ReportData.fromMap(json["reportData"]),
-  );
-
-  Map<String, dynamic> toMap() => {
-    "reportDate": reportDate.toLocal(),
-    "reportData": reportData.toMap(),
-  };
+  factory DataList.fromJson(Map<String, dynamic> json) =>
+      _$DataListFromJson(json);
 }
 
+@CustomSerializer
 class ReportData {
   Shift? dayShift;
   Shift? nightShift;
 
   ReportData({required this.dayShift, required this.nightShift});
 
-  factory ReportData.fromMap(Map<String, dynamic> json) => ReportData(
-    dayShift: json["dayShift"] != null ? Shift.fromMap(json["dayShift"]) : null,
-    nightShift: json["nightShift"] != null
-        ? Shift.fromMap(json["nightShift"])
-        : null,
-  );
-
-  Map<String, dynamic> toMap() => {
-    "dayShift": dayShift?.toMap(),
-    "nightShift": nightShift?.toMap(),
-  };
+  factory ReportData.fromJson(Map<String, dynamic> json) =>
+      _$ReportDataFromJson(json);
 }
 
+@CustomSerializer
 class Shift {
-  List<DayShiftList> list;
+  List<ShiftList> list;
   int totalPicks;
-  double efficiency;
-  double prodMeter;
+  num efficiency;
+  num prodMeter;
   int avgPicks;
 
   Shift({
@@ -116,37 +96,12 @@ class Shift {
     required this.avgPicks,
   });
 
-  factory Shift.fromMap(Map<String, dynamic> json) => Shift(
-    list: List<DayShiftList>.from(
-      json["list"].map((x) => DayShiftList.fromMap(x)),
-    ),
-    totalPicks: json["totalPicks"],
-    efficiency: double.tryParse(json["efficiency"].toString()) ?? 0.0,
-    prodMeter: json["prodMeter"]?.toDouble(),
-    avgPicks: json["avgPicks"],
-  );
-
-  Map<String, dynamic> toMap() => {
-    "list": List<dynamic>.from(list.map((x) => x.toMap())),
-    "totalPicks": totalPicks,
-    "efficiency": efficiency,
-    "prodMeter": prodMeter,
-    "avgPicks": avgPicks,
-  };
+  factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
 }
 
-class DayShiftList {
-  int shift;
-  String machineCode;
-  double pieceLengthM;
-  int picksCurrentShift;
-  double efficiencyPercent;
-  String runTime;
-  int beamLeft;
-  StopsData stopsData;
-  DateTime? reportDate;
-
-  DayShiftList({
+@CustomSerializer
+class ShiftList {
+  ShiftList({
     required this.shift,
     required this.machineCode,
     required this.pieceLengthM,
@@ -158,108 +113,17 @@ class DayShiftList {
     this.reportDate,
   });
 
-  factory DayShiftList.fromMap(Map<String, dynamic> json) => DayShiftList(
-    shift: json["shift"],
-    machineCode: json["machineCode"] ?? '',
-    pieceLengthM: json["pieceLengthM"]?.toDouble(),
-    picksCurrentShift: json["picksCurrentShift"],
-    efficiencyPercent: json["efficiencyPercent"]?.toDouble(),
-    runTime: json["runTime"],
-    beamLeft: json["beamLeft"],
-    stopsData: StopsData.fromMap(json["stopsData"]),
-    reportDate: json["reportDate"] == null
-        ? null
-        : DateTime.parse(json["reportDate"]),
-  );
+  int shift;
+  String machineCode;
+  num pieceLengthM;
+  int picksCurrentShift;
+  num efficiencyPercent;
+  String runTime;
+  int beamLeft;
+  Map<String, Map> stopsData;
+  @DateNullParser()
+  DateTime? reportDate;
 
-  Map<String, dynamic> toMap() => {
-    "shift": shift,
-    "machineCode": machineCode,
-    "pieceLengthM": pieceLengthM,
-    "picksCurrentShift": picksCurrentShift,
-    "efficiencyPercent": efficiencyPercent,
-    "runTime": runTime,
-    "beamLeft": beamLeft,
-    "stopsData": stopsData.toMap(),
-    "reportDate": reportDate?.toIso8601String(),
-  };
+  factory ShiftList.fromJson(Map<String, dynamic> json) =>
+      _$ShiftListFromJson(json);
 }
-
-class StopsData {
-  Feeder warp;
-  Feeder weft;
-  Feeder feeder;
-  Feeder manual;
-  Feeder other;
-  Feeder total;
-
-  StopsData({
-    required this.warp,
-    required this.weft,
-    required this.feeder,
-    required this.manual,
-    required this.other,
-    required this.total,
-  });
-
-  factory StopsData.fromMap(Map<String, dynamic> json) => StopsData(
-    warp: Feeder.fromMap(json["warp"] ?? {"count": 0, "duration": "00:00"}),
-    weft: Feeder.fromMap(json["weft"] ?? {"count": 0, "duration": "00:00"}),
-    feeder: Feeder.fromMap(json["feeder"] ?? {"count": 0, "duration": "00:00"}),
-    manual: Feeder.fromMap(json["manual"] ?? {"count": 0, "duration": "00:00"}),
-    other: Feeder.fromMap(json["other"] ?? {"count": 0, "duration": "00:00"}),
-    total: Feeder.fromMap(json["total"] ?? {"count": 0, "duration": "00:00"}),
-  );
-
-  Map<String, dynamic> toMap() => {
-    "warp": warp.toMap(),
-    "weft": weft.toMap(),
-    "feeder": feeder.toMap(),
-    "manual": manual.toMap(),
-    "other": other.toMap(),
-  };
-}
-
-class Feeder {
-  int count;
-  String duration;
-  Feeder({required this.count, required this.duration});
-
-  factory Feeder.fromMap(Map<String, dynamic> json) =>
-      Feeder(count: json["count"], duration: json["duration"]);
-
-  Map<String, dynamic> toMap() => {"count": count, "duration": duration};
-}
-
-// Extension updated to use the new class name StopsData
-// extension StopsDataExtensions on StopsData {
-//   int get totalCount =>
-//       warp.count + weft.count + feeder.count + manual.count + other.count;
-
-//   String get totalDuration {
-//     // Helper to convert "HH:MM" string to total minutes (assuming HH:MM or MM:SS)
-//     int durationToMinutes(String duration) {
-//       final parts = duration.split(':');
-//       if (parts.length == 2) {
-//         final h = int.tryParse(parts[0]) ?? 0;
-//         final m = int.tryParse(parts[1]) ?? 0;
-//         // Treating as H:M for production run time data
-//         return (h * 60) + m;
-//       }
-//       return 0;
-//     }
-
-//     int totalMinutes =
-//         durationToMinutes(warp.duration) +
-//         durationToMinutes(weft.duration) +
-//         durationToMinutes(feeder.duration) +
-//         durationToMinutes(manual.duration) +
-//         durationToMinutes(other.duration);
-
-//     // Convert total minutes back to "HH:MM" format for display
-//     final hours = (totalMinutes ~/ 60).toString().padLeft(2, '0');
-//     final minutes = (totalMinutes % 60).toString().padLeft(2, '0');
-
-//     return "$hours:$minutes";
-//   }
-//}

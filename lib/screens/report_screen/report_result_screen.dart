@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/models/report_response.dart';
-import 'package:trackweaving/screens/report_screen/report_table/report_table_2.dart';
+import 'package:trackweaving/screens/report_screen/report_table/report_table.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class ReportResultScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
           Divider(height: 1, thickness: 0.2),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ReportTableWidget2(reportResponse: widget.reportResponse),
+            child: ReportTableWidget(reportResponse: widget.reportResponse),
           ),
           Spacer(),
           Padding(
@@ -79,7 +79,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
   // Generate PDF document and trigger download
   Future<void> _generatePdf(ReportsResponse report) async {
     final pdf = pw.Document();
-    final exportData = ReportTableWidget2.getExportData(report.data);
+    final exportData = ReportTableWidget.getExportData(report.data);
 
     // Determine column widths for PDF (proportional)
     final List<double> columnWidths = [
@@ -125,18 +125,24 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
 
     try {
       isPDFLoading.value = true;
-      final String fileName =
-          'shift_report_${DateTime.now().millisecondsSinceEpoch}.pdf';
+
+      final time = DateTime.now().millisecondsSinceEpoch;
+      final fileName = 'shift_report_$time.pdf';
 
       // Get a suitable directory for the file
       final directory = await getTemporaryDirectory();
-      final file = File('${directory.path}/$fileName');
+      final pdfFile = File('${directory.path}/$fileName');
 
       // Write the PDF bytes to the file
-      await file.writeAsBytes(await pdf.save());
+      await pdfFile.writeAsBytes(await pdf.save());
 
       // Use the printing package to share/open the file
-      await Printing.sharePdf(bytes: await pdf.save(), filename: fileName);
+      final file = XFile(
+        pdfFile.path,
+        mimeType: 'application/pdf',
+        name: 'shift_report_$time.pdf',
+      );
+      await SharePlus.instance.share(ShareParams(files: [file]));
 
       Get.snackbar(
         'Success',

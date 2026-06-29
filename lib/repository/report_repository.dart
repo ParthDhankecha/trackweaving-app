@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/repository/api_client.dart';
@@ -26,13 +28,13 @@ class ReportRepository extends GetxService {
     };
 
     String endpoint = AppConst.getUrl(AppConst.reports);
-    var data = await apiClient.request(
+
+    final data = await apiClient.request(
       endpoint,
       method: ApiType.post,
       body: body,
       headers: {'Authorization': sp.userToken},
     );
-
-    return reportsResponseFromMap(data);
+    return ReportsResponse.fromJson(jsonDecode(data.toString()));
   }
 }

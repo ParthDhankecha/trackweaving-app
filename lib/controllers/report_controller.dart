@@ -1,11 +1,11 @@
 import 'dart:developer';
 
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
 import 'package:trackweaving/models/machine_group_response_model.dart';
 import 'package:trackweaving/models/machine_list_response_model.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/models/shift_types_model.dart';
-import 'package:get/get.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/report_repository.dart';
 import 'package:trackweaving/utils/app_const.dart';
@@ -40,20 +40,20 @@ class ReportController extends GetxController implements GetxService {
 
   RxBool isLoading = false.obs;
 
-  changeShiftType(ShiftTypesModel? model) {
+  void changeShiftType(ShiftTypesModel? model) {
     selectedShift.value = model ?? shiftTypeList.first;
   }
 
-  changeGroupVisible() {
+  void changeGroupVisible() {
     isGroupVisible.value = isGroupVisible.value ? false : true;
   }
 
-  setAvailableMachines(List<Machine> machines) {
+  void setAvailableMachines(List<Machine> machines) {
     availableMachineList.value = machines;
     checkboxMachineList.value = machines;
   }
 
-  clearSelection() {
+  void clearSelection() {
     selectedMachineList.clear();
     selectAllMachines.value = false;
     checkboxMachineList.clear();
@@ -63,7 +63,7 @@ class ReportController extends GetxController implements GetxService {
     selectedShift.value = shiftTypeList.first;
   }
 
-  filerMachineByGroup(String groupId) {
+  void filerMachineByGroup(String groupId) {
     checkboxMachineList.value = [];
     List<Machine> filterList = [];
     selectedMachineGroupId.value = groupId;
@@ -79,11 +79,11 @@ class ReportController extends GetxController implements GetxService {
     }
   }
 
-  setAvailableMachinesGroups(List<MachineGroup> list) {
+  void setAvailableMachinesGroups(List<MachineGroup> list) {
     availableMachineGroupList.value = list;
   }
 
-  onSelectAllChanged(bool? value, {String? groupId}) {
+  void onSelectAllChanged(bool? value, {String? groupId}) {
     selectAllMachines.value = value ?? false;
     if (selectAllMachines.value) {
       List<Machine> filterList = [];
@@ -106,7 +106,7 @@ class ReportController extends GetxController implements GetxService {
     }
   }
 
-  onMachineSelect(Machine machine, bool? value) {
+  void onMachineSelect(Machine machine, bool? value) {
     if (value == true) {
       selectedMachineList.add(machine);
     } else {
@@ -144,21 +144,16 @@ class ReportController extends GetxController implements GetxService {
     }
 
     try {
-      isLoading.value = true;
-
-      var data = await repository.getReportData(
+      return await repository.getReportData(
         machineIds,
         startDate.value.yyyymmddFormat,
         endDate.value.yyyymmddFormat,
         shift,
         'productionShiftWise',
       );
-      return data;
     } on ApiException catch (e) {
       log('Error in getReportData: $e');
       return null;
-    } finally {
-      isLoading.value = false;
     }
   }
 }

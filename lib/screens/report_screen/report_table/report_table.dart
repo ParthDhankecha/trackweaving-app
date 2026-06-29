@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
+import 'package:trackweaving/utils/extensions/string.extension.dart';
 
-class ReportTableWidget2 extends StatelessWidget {
+class ReportTableWidget extends StatelessWidget {
   final ReportsResponse reportResponse;
 
-  const ReportTableWidget2({super.key, required this.reportResponse});
+  const ReportTableWidget({super.key, required this.reportResponse});
 
   // Base style and colors
   static const TextStyle _cellTextStyle = TextStyle(fontSize: 12);
@@ -116,7 +117,7 @@ class ReportTableWidget2 extends StatelessWidget {
   }
 
   // Combines all rows (summary, detail, and total) into one list
-  List<Widget> _buildAllRows(Data data) {
+  List<Widget> _buildAllRows(Reports data) {
     final List<Widget> rows = [];
 
     for (var reportByDate in data.list) {
@@ -213,14 +214,9 @@ class ReportTableWidget2 extends StatelessWidget {
             _headerCell('Beam Left', _beamLeftWidth),
 
             // 4. Stops Sub-Headers (10 columns: Count/Duration for 5 types)
-            _buildStopTypeHeader('Warp', 2 * _stopCellWidth),
-            _buildStopTypeHeader('Weft', 2 * _stopCellWidth),
-            _buildStopTypeHeader('Feeder', 2 * _stopCellWidth),
-            _buildStopTypeHeader('Manual', 2 * _stopCellWidth),
-            _buildStopTypeHeader('Other', 2 * _stopCellWidth),
-
-            // 5. Total Stop Header (2 columns: Count/Duration)
-            _headerCell('Total Stops', 2 * _stopCellWidth),
+            ...reportResponse.data.stopTypes.expand((type) sync* {
+              yield _buildStopTypeHeader(type.capitalize, 2 * _stopCellWidth);
+            }),
           ],
         ),
       ),
@@ -395,7 +391,7 @@ class ReportTableWidget2 extends StatelessWidget {
 
         // 8. Remaining 12 Stop columns (Empty in the summary row)
         ...List.generate(
-          12,
+          reportResponse.data.stopTypes.length * 2,
           (_) => _dataCell(
             '',
             _stopCellWidth,
@@ -409,17 +405,12 @@ class ReportTableWidget2 extends StatelessWidget {
 
   // Builds a detailed machine data row
   Widget _buildDetailRow(
-    DayShiftList detail, {
+    ShiftList detail, {
     required bool isDayShift,
     DateTime? reportDate,
     isFirst = false,
   }) {
     final Color bgColor = isDayShift ? Colors.white : _shiftSummaryColor;
-
-    // Calculate total stops data
-    final totalStops = detail.stopsData;
-    final int totalCount = totalStops.total.count;
-    final String totalDuration = totalStops.total.duration;
 
     final String shiftName = isDayShift ? 'Day Shift' : 'Night Shift';
 
@@ -498,29 +489,26 @@ class ReportTableWidget2 extends StatelessWidget {
         ),
 
         // 9. Individual Stops Data
-        ..._buildStops(detail.stopsData, _stopCellWidth, bgColor),
-
-        // 10. Total Stops
-        _dataCell(
-          '$totalCount',
-          _stopCellWidth,
-          bgColor: bgColor,
-          fontWeight: FontWeight.w600,
-          borderColor: Colors.grey.shade300,
-        ),
-        _dataCell(
-          totalDuration,
-          _stopCellWidth,
-          bgColor: bgColor,
-          fontWeight: FontWeight.w600,
-          borderColor: Colors.grey.shade300,
-        ),
+        ...detail.stopsData.values.expand((entry) sync* {
+          yield _dataCell(
+            '${entry['count'] ?? '0'}',
+            _stopCellWidth,
+            bgColor: bgColor,
+            borderColor: Colors.grey.shade300,
+          );
+          yield _dataCell(
+            '${entry['duration'] ?? 'N/A'}',
+            _stopCellWidth,
+            bgColor: bgColor,
+            borderColor: Colors.grey.shade300,
+          );
+        }),
       ],
     );
   }
 
   // Builds the total row at the bottom
-  Widget _buildTotalRow(Data totals) {
+  Widget _buildTotalRow(Reports totals) {
     // Width of Date, Shift, and Machine columns combined for the 'Total' label
     final double totalLabelWidth = _dateWidth + _shiftWidth + _machineWidth;
     final double avgPicksWidth = _runTimeWidth + _beamLeftWidth;
@@ -579,7 +567,7 @@ class ReportTableWidget2 extends StatelessWidget {
           // 6. Remaining 12 Stop columns (Empty for this total row)
           // Total stop columns: 5 types * 2 cells/type = 10 cells + 2 total cells = 12 cells
           ...List.generate(
-            12,
+            reportResponse.data.stopTypes.length * 2,
             (_) => _dataCell(
               '',
               _stopCellWidth,
@@ -590,77 +578,6 @@ class ReportTableWidget2 extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  // Helper to build stop count/duration pairs
-  List<Widget> _buildStops(StopsData stops, double width, Color bgColor) {
-    return [
-      // Warp
-      _dataCell(
-        '${stops.warp.count}',
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      _dataCell(
-        stops.warp.duration,
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      // Weft
-      _dataCell(
-        '${stops.weft.count}',
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      _dataCell(
-        stops.weft.duration,
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      // Feeder
-      _dataCell(
-        '${stops.feeder.count}',
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      _dataCell(
-        stops.feeder.duration,
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      // Manual
-      _dataCell(
-        '${stops.manual.count}',
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      _dataCell(
-        stops.manual.duration,
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      // Other
-      _dataCell(
-        '${stops.other.count}',
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-      _dataCell(
-        stops.other.duration,
-        width,
-        bgColor: bgColor,
-        borderColor: Colors.grey.shade300,
-      ),
-    ];
   }
 
   // Helper to build a standard data cell
@@ -690,7 +607,7 @@ class ReportTableWidget2 extends StatelessWidget {
     );
   }
 
-  static List<List<dynamic>> getExportData(Data data) {
+  static List<List<dynamic>> getExportData(Reports data) {
     final List<List<dynamic>> exportData = [];
 
     // --- 1.1 Top Header Row (Spanning Titles for PDF Grouping) ---
@@ -704,19 +621,11 @@ class ReportTableWidget2 extends StatelessWidget {
       'Run Time',
       'Beam Left',
     ];
-    final List<String> stopTypes = [
-      'Warp',
-      'Weft',
-      'Feeder',
-      'Manual',
-      'Other',
-    ];
 
     // Top Row: Main headers (span 2 rows), Stop types (span 1 row/2 columns)
     final List<dynamic> topHeader = [
       ...mainHeaders,
-      ...stopTypes.expand((type) => [type, type]),
-      'Total Stops', 'Total Stops', // Total Stops spans 2 columns
+      ...data.stopTypes.expand((type) => [type.capitalize, type.capitalize]),
     ];
     exportData.add(topHeader);
 
@@ -726,7 +635,10 @@ class ReportTableWidget2 extends StatelessWidget {
       ...List.generate(mainHeaders.length, (_) => ''),
 
       // Stop Metrics (Count/Duration repeated 6 times)
-      ...List.generate(6, (_) => ['Count', 'Duration']).expand((e) => e),
+      ...List.generate(
+        data.stopTypes.length,
+        (_) => ['Count', 'Duration'],
+      ).expand((e) => e),
     ];
     exportData.add(bottomHeader);
 
@@ -752,8 +664,6 @@ class ReportTableWidget2 extends StatelessWidget {
 
         // DETAIL ROWS
         for (var detail in shift.list) {
-          final totalStops = detail.stopsData;
-
           final List<dynamic> detailRow = [
             '', // Date (Empty)
             '', // Shift (Empty)
@@ -764,17 +674,10 @@ class ReportTableWidget2 extends StatelessWidget {
             detail.runTime,
             '${detail.beamLeft}',
 
-            // Stops Data
-            '${detail.stopsData.warp.count}', detail.stopsData.warp.duration,
-            '${detail.stopsData.weft.count}', detail.stopsData.weft.duration,
-            '${detail.stopsData.feeder.count}',
-            detail.stopsData.feeder.duration,
-            '${detail.stopsData.manual.count}',
-            detail.stopsData.manual.duration,
-            '${detail.stopsData.other.count}', detail.stopsData.other.duration,
-
-            // Total Stops
-            '${totalStops.total.count}', totalStops.total.duration,
+            ...detail.stopsData.entries.expand((entry) sync* {
+              yield '${detail.stopsData[entry.key]?['count'] ?? '0'}';
+              yield '${detail.stopsData[entry.key]?['duration'] ?? 'N/A'}';
+            }),
           ];
           exportData.add(detailRow);
         }
@@ -802,7 +705,7 @@ class ReportTableWidget2 extends StatelessWidget {
     return exportData;
   }
 
-  static List<List<dynamic>> getExportDataCSV(Data data) {
+  static List<List<dynamic>> getExportDataCSV(Reports data) {
     final List<List<dynamic>> exportData = [];
 
     final List<String> mainHeaders = [
@@ -815,20 +718,13 @@ class ReportTableWidget2 extends StatelessWidget {
       'Run Time',
       'Beam Left',
     ];
-    final List<String> stopTypes = [
-      'Warp',
-      'Weft',
-      'Feeder',
-      'Manual',
-      'Other',
-    ];
 
     // Top Row: Main headers (span 2 rows), Stop types (span 1 row/2 columns)
     final List<dynamic> topHeader = [
       ...mainHeaders,
-      ...stopTypes.expand((type) => [type, type]),
-      'Total Stops', 'Total Stops', // Total Stops spans 2 columns
+      ...data.stopTypes.expand((type) => [type.capitalize, type.capitalize]),
     ];
+
     exportData.add(topHeader);
 
     // --- 1.2 Bottom Header Row (Metrics) ---
@@ -863,8 +759,6 @@ class ReportTableWidget2 extends StatelessWidget {
 
         // DETAIL ROWS
         for (var detail in shift.list) {
-          final totalStops = detail.stopsData;
-
           final List<dynamic> detailRow = [
             '', // Date (Empty)
             '', // Shift (Empty)
@@ -875,17 +769,10 @@ class ReportTableWidget2 extends StatelessWidget {
             detail.runTime,
             '${detail.beamLeft}',
 
-            // Stops Data
-            '${detail.stopsData.warp.count}', detail.stopsData.warp.duration,
-            '${detail.stopsData.weft.count}', detail.stopsData.weft.duration,
-            '${detail.stopsData.feeder.count}',
-            detail.stopsData.feeder.duration,
-            '${detail.stopsData.manual.count}',
-            detail.stopsData.manual.duration,
-            '${detail.stopsData.other.count}', detail.stopsData.other.duration,
-
-            // Total Stops
-            '${totalStops.total.count}', totalStops.total.duration,
+            ...detail.stopsData.entries.expand((entry) sync* {
+              yield '${detail.stopsData[entry.key]?['count'] ?? '0'}';
+              yield '${detail.stopsData[entry.key]?['duration'] ?? 'N/A'}';
+            }),
           ];
           exportData.add(detailRow);
         }
