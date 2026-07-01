@@ -1,9 +1,10 @@
 {
-    "cSpell.words": [
-        "Tabwidget",
-        "texmunimx",
-        "भाषा",
-        "અંગ્રેજી",
-        "ગુજરાતી"
-    ]
+  "cSpell.words": [
+    "Tabwidget",
+    "texmunimx",
+    "भाषा",
+    "અંગ્રેજી",
+    "ગુજરાતી"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.41.9"
 }
