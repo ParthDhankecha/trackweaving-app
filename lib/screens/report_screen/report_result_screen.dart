@@ -84,7 +84,10 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
     // Determine column widths for PDF (proportional)
     final List<double> columnWidths = [
       2.0, 1.5, 1.0, 1.2, 1.2, 0.8, 1.2, 1.0, // Main columns
-      ...List.generate(12, (_) => 0.8), // Stop columns
+      ...List.generate(
+        report.data.stopTypeCount * 2,
+        (_) => 0.8,
+      ), // Stop columns
     ];
 
     pdf.addPage(
@@ -107,6 +110,7 @@ class _ReportResultScreenState extends State<ReportResultScreen> {
               headerDecoration: const pw.BoxDecoration(
                 color: PdfColor.fromInt(0xFF1D5C93),
               ),
+              headerCount: 2,
               cellStyle: const pw.TextStyle(fontSize: 7),
               columnWidths: Map.fromEntries(
                 List.generate(

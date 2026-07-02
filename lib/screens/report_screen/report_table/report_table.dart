@@ -108,12 +108,10 @@ class ReportTableWidget extends StatelessWidget {
         _beamLeftWidth;
 
     // 2. Stops Columns (5 types * 2 cells/type = 10 cells)
-    const double stopsColsWidth = 10 * _stopCellWidth;
+    double stopsColsWidth =
+        reportResponse.data.stopTypeCount * 2 * _stopCellWidth;
 
-    // 3. Total Stops Columns (2 cells)
-    const double totalStopsColsWidth = 2 * _stopCellWidth;
-
-    return mainColsWidth + stopsColsWidth + totalStopsColsWidth;
+    return mainColsWidth + stopsColsWidth;
   }
 
   // Combines all rows (summary, detail, and total) into one list
@@ -324,33 +322,15 @@ class ReportTableWidget extends StatelessWidget {
 
     return Row(
       children: [
-        // 1. Date Column
-        _dataCell(
-          // dateText,
-          '',
-          _dateWidth,
-          bgColor: bgColor,
-          fontWeight: FontWeight.bold,
-          borderColor: Colors.grey.shade300,
-        ),
-
         // 2. Shift Column
         _dataCell(
           //shiftName,
           '$dateText - $shiftName',
-          _shiftWidth + _machineWidth,
+          _dateWidth + _shiftWidth + _machineWidth,
           bgColor: bgColor,
           fontWeight: FontWeight.bold,
           borderColor: Colors.grey.shade300,
         ),
-
-        // 3. Machine Code (Empty)
-        // _dataCell(
-        //   '',
-        //   _machineWidth,
-        //   bgColor: bgColor,
-        //   borderColor: Colors.grey.shade300,
-        // ),
 
         // 4. Prod. [Mtrs] (Total Production)
         _dataCell(
@@ -391,7 +371,7 @@ class ReportTableWidget extends StatelessWidget {
 
         // 8. Remaining 12 Stop columns (Empty in the summary row)
         ...List.generate(
-          reportResponse.data.stopTypes.length * 2,
+          reportResponse.data.stopTypeCount * 2,
           (_) => _dataCell(
             '',
             _stopCellWidth,
@@ -564,10 +544,8 @@ class ReportTableWidget extends StatelessWidget {
             borderColor: Colors.grey.shade500,
           ),
 
-          // 6. Remaining 12 Stop columns (Empty for this total row)
-          // Total stop columns: 5 types * 2 cells/type = 10 cells + 2 total cells = 12 cells
           ...List.generate(
-            reportResponse.data.stopTypes.length * 2,
+            reportResponse.data.stopTypeCount * 2,
             (_) => _dataCell(
               '',
               _stopCellWidth,
@@ -631,15 +609,13 @@ class ReportTableWidget extends StatelessWidget {
 
     // --- 1.2 Bottom Header Row (Metrics) ---
     final List<dynamic> bottomHeader = [
-      // Main headers are empty placeholders as they are spanned by the top row
       ...List.generate(mainHeaders.length, (_) => ''),
-
-      // Stop Metrics (Count/Duration repeated 6 times)
       ...List.generate(
-        data.stopTypes.length,
+        data.stopTypeCount,
         (_) => ['Count', 'Duration'],
       ).expand((e) => e),
     ];
+
     exportData.add(bottomHeader);
 
     // --- 1.3 Data Rows (Grouped by Date and Shift) ---
@@ -648,25 +624,11 @@ class ReportTableWidget extends StatelessWidget {
       final String reportDateStr = reportByDate.reportDate.ddmmyyFormat;
 
       void processShift(Shift shift, String shiftName) {
-        // SUMMARY ROW
-        final List<dynamic> summaryRow = [
-          reportDateStr,
-          shiftName,
-          '',
-          shift.prodMeter.toStringAsFixed(2),
-          NumberFormat('#,###').format(shift.totalPicks),
-          '${shift.efficiency}',
-          'Avg: ${NumberFormat('#,###').format(shift.avgPicks)}',
-          '',
-          ...List.generate(12, (_) => ''), // Empty stop columns
-        ];
-        exportData.add(summaryRow);
-
         // DETAIL ROWS
         for (var detail in shift.list) {
           final List<dynamic> detailRow = [
-            '', // Date (Empty)
-            '', // Shift (Empty)
+            reportDateStr,
+            shiftName,
             detail.machineCode,
             detail.pieceLengthM.toStringAsFixed(2),
             NumberFormat('#,###').format(detail.picksCurrentShift),
@@ -681,6 +643,23 @@ class ReportTableWidget extends StatelessWidget {
           ];
           exportData.add(detailRow);
         }
+
+        // SUMMARY ROW
+        final List<dynamic> summaryRow = [
+          '',
+          '',
+          '$shiftName Summary',
+          shift.prodMeter.toStringAsFixed(2),
+          'Sum: ${NumberFormat('#,###').format(shift.totalPicks)}',
+          '${shift.efficiency}',
+          'Avg Picks: ${NumberFormat('#,###').format(shift.avgPicks)}',
+          '',
+          ...List.generate(
+            data.stopTypeCount * 2,
+            (_) => '',
+          ), // Empty stop columns
+        ];
+        exportData.add(summaryRow);
       }
 
       reportByDate.reportData.dayShift != null
@@ -693,12 +672,17 @@ class ReportTableWidget extends StatelessWidget {
 
     // --- 1.4 Total Row ---
     final List<dynamic> finalTotalRow = [
+      '',
+      '',
       'TOTAL',
       'Total Prod Avg: ${data.avgProdMeter.toStringAsFixed(2)}',
       'Total Picks: ${NumberFormat('#,###').format(data.totalPicks)}',
       'Total Eff: ${data.totalEfficiency}',
       'Total Avg Picks: ${NumberFormat('#,###').format(data.avgPicks)}',
-      ...List.generate(15, (_) => ''), // Pad remaining columns
+      ...List.generate(
+        data.stopTypeCount * 2 + 1,
+        (_) => '',
+      ), // Pad remaining columns
     ];
     exportData.add(finalTotalRow);
 
@@ -733,7 +717,10 @@ class ReportTableWidget extends StatelessWidget {
       ...List.generate(mainHeaders.length, (_) => ''),
 
       // Stop Metrics (Count/Duration repeated 6 times)
-      ...List.generate(6, (_) => ['Count', 'Duration']).expand((e) => e),
+      ...List.generate(
+        data.stopTypeCount,
+        (_) => ['Count', 'Duration'],
+      ).expand((e) => e),
     ];
     exportData.add(bottomHeader);
 
@@ -753,7 +740,10 @@ class ReportTableWidget extends StatelessWidget {
           '${shift.efficiency}',
           'Avg: ${NumberFormat('#,###').format(shift.avgPicks)}',
           '',
-          ...List.generate(12, (_) => ''), // Empty stop columns
+          ...List.generate(
+            data.stopTypeCount * 2,
+            (_) => '',
+          ), // Empty stop columns
         ];
         exportData.add(summaryRow);
 
