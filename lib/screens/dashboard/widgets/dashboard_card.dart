@@ -74,8 +74,8 @@ class DashboardCard extends StatelessWidget {
                         children: [
                           _picksRow(
                             AppImages.imgStopNtn,
-                            'stops',
-                            '${machineLog.stops}',
+                            'run_time',
+                            machineLog.runTime,
                           ),
                           _picksRow(
                             AppImages.imgYarn,
