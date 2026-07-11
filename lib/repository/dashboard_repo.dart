@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:get/get.dart';
+import 'package:trackweaving/models/machine_log_response.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
-import 'package:get/get.dart';
 
 class DashboardRepo extends GetxService {
   final ApiClient apiClient;
@@ -14,7 +14,7 @@ class DashboardRepo extends GetxService {
 
   Sharedprefs sp = Get.find<Sharedprefs>();
 
-  Future<GetMachineLogModel> getMachineLogs({String status = 'all'}) async {
+  Future<MachineLogResponse> getMachineLogs({String status = 'all'}) async {
     String endPoint = AppConst.getUrl(AppConst.machineLogs);
 
     var data = await apiClient.request(
@@ -23,9 +23,8 @@ class DashboardRepo extends GetxService {
       body: {'status': status},
       headers: {'authorization': sp.userToken},
     );
-
-    GetMachineLogModel getMachineLogModel = getMachineLogModelFromMap(data);
-    return getMachineLogModel;
+    final json = jsonDecode(data);
+    return MachineLogResponse.fromJson(json);
   }
 
   //settings api

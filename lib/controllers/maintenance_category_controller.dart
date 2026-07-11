@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/models/maintenance_alert_reponse.dart';
 import 'package:trackweaving/models/maintenance_category_list_model.dart';
 import 'package:trackweaving/repository/api_exception.dart';

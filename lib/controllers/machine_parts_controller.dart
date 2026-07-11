@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_success_snackbar.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/models/part_changelog_list_response.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/machine_parts_repo.dart';

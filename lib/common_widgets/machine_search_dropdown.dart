@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 
 class MachineSearchDropdown extends StatefulWidget {
   final String title;

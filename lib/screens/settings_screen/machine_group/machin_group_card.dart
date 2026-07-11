@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/my_text_widget.dart';
-import 'package:trackweaving/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_group_response.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class MachineGroupCard extends StatelessWidget {

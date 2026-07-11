@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:trackweaving/models/get_machinelog_model.dart';
+import 'package:trackweaving/models/machine_log_response.dart';
 import 'package:trackweaving/models/status_enum.dart';
 import 'package:trackweaving/repository/api_exception.dart';
 import 'package:trackweaving/repository/dashboard_repo.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
 import 'package:trackweaving/controllers/shift_comment_controller.dart';
@@ -6,7 +7,6 @@ import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/mach
 import 'package:trackweaving/screens/settings_screen/shift_comments/widgets/shift_dropdown.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 import 'package:trackweaving/utils/date_formate_extension.dart';
-import 'package:get/get.dart';
 
 class ShiftComments extends StatefulWidget {
   const ShiftComments({super.key});

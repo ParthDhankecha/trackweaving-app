@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/models/shift_coment_update_model.dart';
 import 'package:trackweaving/models/shift_comment_list_response.dart';
 import 'package:trackweaving/models/shift_comment_model.dart';

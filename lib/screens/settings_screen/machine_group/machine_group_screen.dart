@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/my_text_widget.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
-import 'package:trackweaving/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_group_response.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/create_machine_group.dart';
 import 'package:trackweaving/screens/settings_screen/machine_group/machin_group_card.dart';
-import 'package:get/get.dart';
 import 'package:trackweaving/utils/app_colors.dart';
 
 class MachineGroupScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 
 class MachineDropdown extends StatelessWidget {
   final String title;
@@ -17,7 +17,7 @@ class MachineDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Machine machine = Machine(
-      machineGroupId: null,
+      machineGroup: null,
       id: 'all',
       serialNumber: 'all',
       machineCode: 'Select All',

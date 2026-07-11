@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trackweaving/models/machine_group_response_model.dart';
+import 'package:trackweaving/models/machine_group_response.dart';
 
 class MachineGroupDropdown extends StatelessWidget {
   final String title;

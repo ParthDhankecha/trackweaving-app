@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:trackweaving/common_widgets/show_error_snackbar.dart';
-import 'package:trackweaving/models/machine_group_response_model.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_group_response.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/models/report_response.dart';
 import 'package:trackweaving/models/shift_types_model.dart';
 import 'package:trackweaving/repository/api_exception.dart';
@@ -71,7 +71,7 @@ class ReportController extends GetxController implements GetxService {
       checkboxMachineList.value = List.from(availableMachineList);
     } else {
       for (var machine in availableMachineList) {
-        if (machine.machineGroupId?.id == groupId) {
+        if (machine.machineGroup?.id == groupId) {
           filterList.add(machine);
         }
       }
@@ -90,7 +90,7 @@ class ReportController extends GetxController implements GetxService {
       if (groupId != 'select' && groupId != 'all') {
         // if groupId is provided, filter by group
         for (var machine in availableMachineList) {
-          if (machine.machineGroupId?.id == groupId) {
+          if (machine.machineGroup?.id == groupId) {
             filterList.add(machine);
           }
         }

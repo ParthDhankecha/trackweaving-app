@@ -5,7 +5,7 @@ import 'package:trackweaving/common_widgets/app_text_styles.dart';
 import 'package:trackweaving/common_widgets/custom_progress_btn_.dart';
 import 'package:trackweaving/common_widgets/main_btn.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/widgets/machine_group_dropdown.dart';
 
 class EditMachineConfiguration extends StatefulWidget {
@@ -35,7 +35,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
       name: widget.machine.machineName.capitalizeFirst!,
       code: widget.machine.machineCode,
       alert: widget.machine.isAlertActive,
-      grpId: widget.machine.machineGroupId?.id,
+      grpId: widget.machine.machineGroup?.id,
       maxLimit: widget.machine.maxSpeedLimit,
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trackweaving/controllers/machine_controller.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/edit_machine_configuration.dart';
 import 'package:trackweaving/screens/settings_screen/machine_configuration/machine_configuration_card.dart';
 
@@ -44,7 +44,7 @@ class _MachineConfigurationScreenState
                     machineName: machine.machineName,
                     machineGroup:
                         controller
-                            .getGroupFromID(machine.machineGroupId?.id ?? '')
+                            .getGroupFromID(machine.machineGroup?.id ?? '')
                             ?.groupName ??
                         '',
                     udid: machine.ip,

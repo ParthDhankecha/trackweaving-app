@@ -12,7 +12,7 @@ class MachineConfigurationCard extends StatelessWidget {
   final String machineGroup;
   final String udid;
   final bool alertEnabled;
-  final int maxLimit;
+  final num maxLimit;
   final Function(bool isOn) onAlertChange;
   final Function()? onTap;
 

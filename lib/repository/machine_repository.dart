@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:trackweaving/models/machine_group_response_model.dart';
-import 'package:trackweaving/models/machine_list_response_model.dart';
+import 'package:trackweaving/models/machine_group_response.dart';
+import 'package:trackweaving/models/machine_list_response.dart';
 import 'package:trackweaving/repository/api_client.dart';
 import 'package:trackweaving/utils/app_const.dart';
 import 'package:trackweaving/utils/shared_pref.dart';
@@ -22,9 +22,8 @@ class MachineRepository extends GetxService {
       endPoint,
       headers: {'authorization': sp.userToken},
     );
-    List<MachineGroup> list = [];
-    list = machineGroupResponseModelFromMap(data).data;
-    return list;
+    final json = jsonDecode(data);
+    return MachineGroupResponse.fromJson(json).data;
   }
 
   //create and update machine group
@@ -66,9 +65,8 @@ class MachineRepository extends GetxService {
       endPoint,
       headers: {'authorization': sp.userToken},
     );
-    List<Machine> list = [];
-    list = machineListResponseModelFromMap(data).data;
-    return list;
+    final json = jsonDecode(data);
+    return MachineListResponse.fromJson(json).data;
   }
 
   Future<dynamic> updateMachineConfiguration({
