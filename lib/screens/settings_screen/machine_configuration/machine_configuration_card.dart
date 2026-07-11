@@ -10,6 +10,7 @@ class MachineConfigurationCard extends StatelessWidget {
   final String machineCode;
   final String machineName;
   final String machineGroup;
+  final String quality;
   final String udid;
   final bool alertEnabled;
   final num maxLimit;
@@ -22,6 +23,7 @@ class MachineConfigurationCard extends StatelessWidget {
     required this.machineCode,
     required this.machineName,
     required this.machineGroup,
+    required this.quality,
     required this.udid,
     required this.alertEnabled,
     required this.onAlertChange,
@@ -68,6 +70,8 @@ class MachineConfigurationCard extends StatelessWidget {
               _buildInfoRow('machine_name', machineName.capitalizeFirst!),
               const SizedBox(height: 8),
               _buildInfoRow('machine_group', machineGroup),
+              const SizedBox(height: 8),
+              _buildInfoRow('quality', quality),
               const SizedBox(height: 8),
               _buildInfoRow('IP', udid),
               const SizedBox(height: 8),

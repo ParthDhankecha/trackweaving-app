@@ -26,6 +26,7 @@ class MachineController extends GetxController implements GetxService {
 
   TextEditingController machineNameController = TextEditingController();
   TextEditingController machineCodeController = TextEditingController();
+  TextEditingController qualityController = TextEditingController();
   TextEditingController groupController = TextEditingController();
   TextEditingController maxLimitController = TextEditingController();
 
@@ -46,9 +47,11 @@ class MachineController extends GetxController implements GetxService {
     bool alert = false,
     String? grpId,
     num maxLimit = 0,
+    String quality = '',
   }) {
     machineCodeController.text = code;
     machineNameController.text = name;
+    qualityController.text = quality;
     machineAlert.value = alert;
     maxLimitController.text = maxLimit == 0 ? '' : maxLimit.toString();
     if (grpId != null) {
@@ -64,6 +67,7 @@ class MachineController extends GetxController implements GetxService {
     machineCodeController.dispose();
     machineNameController.dispose();
     maxLimitController.dispose();
+    qualityController.dispose();
   }
 
   void setSelectedMachineId(String id) {
@@ -178,6 +182,7 @@ class MachineController extends GetxController implements GetxService {
         machineName: machineNameController.text.trim(),
         maxSpeedLimit: maxLimitController.text.trim(),
         machineGroupId: selectedMachineGrpId.value?.id ?? '',
+        quality: qualityController.text.trim(),
         isAlertActive: machineAlert.value,
       );
 

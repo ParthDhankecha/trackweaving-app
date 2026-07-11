@@ -162,7 +162,7 @@ class DashboardCard extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            machineLog.machineName.capitalizeFirst!,
+            machineLog.quality.capitalizeFirst!,
             style: bodyStyle1.copyWith(color: AppColors.whiteColor),
           ),
           Spacer(),

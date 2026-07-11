@@ -47,6 +47,7 @@ AggregateReport _$AggregateReportFromJson(Map<String, dynamic> json) =>
 MachineLog _$MachineLogFromJson(Map<String, dynamic> json) => MachineLog(
   machineCode: json['machineCode'] as String,
   machineName: json['machineName'] as String,
+  quality: json['quality'] as String,
   efficiency: json['efficiency'] == null
       ? 0
       : const NumParser().fromJson(json['efficiency']),

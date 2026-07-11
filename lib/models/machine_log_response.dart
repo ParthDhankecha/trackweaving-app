@@ -61,6 +61,7 @@ class AggregateReport {
 class MachineLog {
   String machineCode;
   String machineName;
+  String quality;
   num efficiency;
   num picks;
   num speed;
@@ -78,6 +79,7 @@ class MachineLog {
   MachineLog({
     required this.machineCode,
     required this.machineName,
+    required this.quality,
     this.efficiency = 0,
     this.picks = 0,
     this.speed = 0,

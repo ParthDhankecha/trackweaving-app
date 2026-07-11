@@ -74,6 +74,7 @@ class MachineRepository extends GetxService {
     required String machineCode,
     required String machineName,
     required String machineGroupId,
+    required String quality,
     required bool isAlertActive,
     required String maxSpeedLimit,
   }) async {
@@ -84,6 +85,7 @@ class MachineRepository extends GetxService {
       'machineGroupId': machineGroupId,
       'isAlertActive': '$isAlertActive',
       'maxSpeedLimit': int.tryParse(maxSpeedLimit) ?? 0,
+      'quality': quality,
     };
 
     var data = await apiClient.request(

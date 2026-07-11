@@ -37,6 +37,7 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
       alert: widget.machine.isAlertActive,
       grpId: widget.machine.machineGroup?.id,
       maxLimit: widget.machine.maxSpeedLimit,
+      quality: widget.machine.quality,
     );
   }
 
@@ -117,6 +118,14 @@ class _EditMachineConfigurationState extends State<EditMachineConfiguration> {
                         controller: controller.maxLimitController,
                         inputType: TextInputType.number,
                       ),
+                      SizedBox(height: 12),
+
+                      _buildInputField(
+                        title: 'quality'.tr,
+                        hintText: 'enter_quality'.tr,
+                        controller: controller.qualityController,
+                      ),
+                      SizedBox(height: 12),
 
                       SizedBox(height: 16),
                       Row(

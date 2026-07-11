@@ -42,6 +42,7 @@ class _MachineConfigurationScreenState
                     //srNo: '#${machine.serialNumber}',
                     machineCode: machine.machineCode,
                     machineName: machine.machineName,
+                    quality: machine.quality,
                     machineGroup:
                         controller
                             .getGroupFromID(machine.machineGroup?.id ?? '')
